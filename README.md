@@ -1,20 +1,42 @@
 # NVE Case 1 – Fra kildedata til lagring og tilbake
 
-Casepresentasjon av **Usman Ghafoorzai** · Dataingeniør · ca. 11 minutter
+Casebesvarelse av **Usman Ghafoorzai**
 
 I bachelorprosjektet utviklet og verifiserte vi to dataflyter: **treningsdata inn til strukturert lagring**, og **klinisk kontekst tilbake til en konsument**. Arbeidet ble gjennomført av to studenter.
 
 > **Ramme:** Lokal Proof of Concept (PoC), simulert EPJ-miljø og syntetiske data. Resultatet viser teknisk gjennomførbarhet. Produksjonsintegrasjon, klinisk effekt og en ferdig brukerflate inngikk ikke.
 
-**Behov → domene → krav → arkitektur → push og pull → kvalitet → ansvar → designvalg → læring**
+## Tilnærming
 
-## 1. Problem og verdi
+**Behov og aktører → handlinger → begreper og data → informasjonsflyt → krav → teknisk realisering → verifikasjon → ansvar og læring**
+
+Besvarelsen følger denne kjeden, mens prosjektet ble utviklet iterativt. Domene, krav, arkitektur og tester ble justert etter hvert som vi avklarte behov og tekniske begrensninger.
+
+## Spørsmål som styrte arbeidet
+
+- **Hva måtte utveksles?** Treningsdata inn og utvalgt klinisk kontekst tilbake.
+- **Hvordan bevares betydningen?** Pasienttilknytning og innhold må henge sammen gjennom modellskiftene.
+- **Hvem initierer og har ansvar?** Push og pull starter hos ulike roller og stiller ulike krav.
+- **Hvor mye må systemene kjenne til hverandre?** Integrasjonsgrensen tilpasser data uten å eksponere hele lagringsmodellen.
+- **Hva viser at flyten virker?** Både lagret innhold og returnert utvalg må kontrolleres.
+
+Spørsmålene binder behovene til valgene og verifikasjonen nedenfor.
+
+## 1. Problem og behov
 
 En treningsapplikasjon produserer data som kan være relevante for oppfølging. Samtidig kan applikasjonen ha behov for klinisk kontekst fra et annet system. Informasjonen ligger i forskjellige modeller og må få en struktur mottakeren kan bruke.
 
 - **Push-behov:** Gjøre utvalgte treningsresultater tilgjengelige som strukturerte, søkbare data i et klinisk repository.
 - **Pull-behov:** Hente relevant legemiddelkontekst tilbake i et enkelt konsumentformat.
 - **Verdien av PoC-en:** Redusere teknisk usikkerhet ved å demonstrere begge retninger. Mindre manuell informasjonsinnhenting er en mulig senere gevinst, ikke en målt effekt.
+
+Behovene har to initiativtakere: kildeapplikasjonen sender treningsdata, mens konsumenten ber om kontekst. Disse rollene kan ligge i samme applikasjon, men representerer forskjellige handlinger.
+
+### Use Case
+
+Før vi velger tekniske mekanismer, må vi avklare hva hver aktør skal få utført. Integrasjonsløsningen skal støtte innsending til strukturert lagring og forespørsel om relevant klinisk kontekst. Det simulerte EPJ-miljøet deltar i begge handlingene.
+
+Handlingene forutsetter et felles begrepsgrunnlag: hva er en økt, hvem gjelder dataene, og hvilken kontekst trenger konsumenten?
 
 ## 2. Domene og data
 
@@ -24,7 +46,17 @@ Modellen viser begreper og relasjoner. Hver økt tilhører én pasient i testsce
 
 **Modelleringspoeng:** Pasienttilknytning, tidspunkt og betydningen av verdiene må følge informasjonen gjennom representasjonene. Klinisk relevans måtte fortsatt vurderes av domeneeksperter.
 
-## 3. Krav til dataflytene
+Begrepene avklarer hva informasjonen gjelder. For å avgrense utvekslingen må vi også skille mellom hvor den oppstår og hvor den skal brukes.
+
+## 3. Informasjonsflyt
+
+Informasjonsflyten knytter dataene til systemgrensene før transport og tekniske representasjoner velges.
+
+**Push:** Kildeapplikasjonen sender treningsdata gjennom integrasjonsgrensen til det simulerte EPJ-miljøet. **Pull:** Konsumenten ber om klinisk kontekst fra EPJ-miljøet og får et utvalg tilbake gjennom samme grense.
+
+Flytene gjelder forskjellige datasett. Pull henter legemiddelkontekst, ikke treningsdataene som ble sendt inn. Retning og bruksbehov gir dermed ulike krav til lagring, utvalg og respons.
+
+## 4. Krav til dataflytene
 
 | Behov | Krav som styrte implementasjonen |
 |---|---|
@@ -35,7 +67,9 @@ Modellen viser begreper og relasjoner. Hver økt tilhører én pasient i testsce
 
 **Avgrensning:** Autentisering og autorisasjon var beskrevet på designnivå. Full OAuth 2.0/OpenID Connect, komplett synkronisering og fullstendig synkroniseringslogging ble ikke implementert.
 
-## 4. Arkitektur og teknologier
+Kravene gir konkrete oppgaver til løsningen: kontrollere input, skifte representasjon og lagre eller hente data. Den tekniske arkitekturen må plassere disse oppgavene ved tydelige grenser.
+
+## 5. Arkitektur og teknologier
 
 ![Arkitektur: Integrasjonsgrensen sender push via FHIR-serveren til mapping og klinisk repository. Pull går direkte mellom integrasjonsgrensen og mapping- og uthentingslaget.](docs/diagrammer/02-arkitektur.svg)
 
@@ -49,9 +83,11 @@ Modellen viser begreper og relasjoner. Hver økt tilhører én pasient i testsce
 
 FHIR var utvekslingsmodellen; openEHR var lagringsmodellen. Data ble lagret og hentet gjennom tjenestenes grensesnitt. Docker Compose samordnet det lokale testmiljøet; selve flytene ble styrt av forespørsler og hendelser.
 
-## 5. Implementerte dataflyter
+Komponentansvaret forklarer oppdelingen, men hver flyt må også vise hva som utløser arbeidet og hva som skjer med informasjonen underveis.
 
-### 5.1 Push – fra kildedata til strukturert lagring
+## 6. Implementerte dataflyter
+
+### 6.1 Push – fra kildedata til strukturert lagring
 
 ![Push: Syntetiske treningsdata valideres og representeres som FHIR, videresendes ved Subscription og transformeres til openEHR for lagring og kontroll.](docs/diagrammer/03-push.svg)
 
@@ -62,7 +98,9 @@ FHIR var utvekslingsmodellen; openEHR var lagringsmodellen. Data ble lagret og h
 
 **Verifikasjon:** Vi kontrollerte både FHIR-representasjonen og det faktisk lagrede openEHR-innholdet. Kvitteringen fra første API-kall var ikke alene bevis på at hele den hendelsesdrevne kjeden var fullført.
 
-### 5.2 Pull – fra klinisk kontekst til konsument
+Med treningsdata lagret er push-behovet dekket. Pull starter hos konsumenten, som trenger et utvalg av den kliniske konteksten som allerede finnes i EPJ-miljøet.
+
+### 6.2 Pull – fra klinisk kontekst til konsument
 
 ![Pull: Konsumenten ber om oppdateringer. Forespørselen valideres, klinisk kontekst hentes for pasient og tidspunkt, og resultatet transformeres via FHIR til konsumentformat.](docs/diagrammer/04-pull.svg)
 
@@ -73,7 +111,7 @@ FHIR var utvekslingsmodellen; openEHR var lagringsmodellen. Data ble lagret og h
 
 **Verifikasjon:** Vi kontrollerte uthenting fra repositoryet, transformert respons og oppførsel med ulike tidsgrenser. Konsumentsiden hadde ansvar for når den spurte; integrasjonsgrensen hadde ingen egen periodisk polling eller varig lagring av pasientkoblinger.
 
-### 5.3 Hvorfor flytene er forskjellige
+### 6.3 Hvorfor flytene er forskjellige
 
 | | Push | Pull |
 |---|---|---|
@@ -83,9 +121,11 @@ FHIR var utvekslingsmodellen; openEHR var lagringsmodellen. Data ble lagret og h
 | Mekanisme | Innsending, deretter Subscription. | Eksplisitt request/response og filtrert uthenting. |
 | Kontrollpunkt | Riktig struktur faktisk persistert. | Riktig utvalg og respons, også uten nye data. |
 
-Den valgte Subscription-mekanismen reagerte på ressursendringer, ikke på en GET-forespørsel. Pull måtte derfor få en egen uthentingsvei. Konsekvensen for standardkompatibilitet kommer i del 8.
+Den valgte Subscription-mekanismen reagerte på ressursendringer, ikke på en GET-forespørsel. Pull måtte derfor få en egen uthentingsvei. Dette ga et bevisst avvik fra den opprinnelige arkitekturen, utdypet i del 9.
 
-## 6. Datakvalitet og verifisering
+Begge veiene inneholder flere representasjonsskifter. For å vurdere om de virker, må vi følge både innholdet gjennom transformasjonene og resultatet ved enden av hver flyt.
+
+## 7. Datakvalitet og verifisering
 
 ![Datakvalitet: Validering og transformasjon kontrolleres i begge retninger, deretter kontrolleres lagring for push og uthenting for pull før sluttresultatet verifiseres.](docs/diagrammer/05-datakvalitet.svg)
 
@@ -98,7 +138,9 @@ Den valgte Subscription-mekanismen reagerte på ressursendringer, ikke på en GE
 
 **Sporbarhet:** Identifikatorer, API-responser og lagret/hentet innhold gjorde det mulig å følge testdata gjennom kjeden. Dette var teknisk verifikasjon av utvalgte scenarioer; modellene var ikke klinisk validert.
 
-## 7. Ansvar, eierskap og kontrakter
+Kontrollpunktene viser også hvor én komponents leveranse blir en annens input. Ved disse grensene må det være tydelig hvem som validerer, transformerer og forvalter informasjonen.
+
+## 8. Ansvar, eierskap og kontrakter
 
 | Grense | Ansvar i PoC-en | Teknisk kontrakt |
 |---|---|---|
@@ -108,9 +150,11 @@ Den valgte Subscription-mekanismen reagerte på ressursendringer, ikke på en GE
 
 Vi hadde komponentansvar og tekniske kontrakter. **Formelt dataeierskap og driftsansvar var ikke etablert som i et produksjonsdataprodukt.** Der ville jeg formalisert eiere, versjonerte kontrakter, kvalitetskrav, endringshåndtering og ansvar ved feil.
 
-## 8. Utfordring og designvalg
+Ansvarsdelingen ga en avgrenset integrasjonsløsning. Som flytene viser, kunne likevel ikke samme tekniske vei brukes i begge retninger. Det krevde et valg mellom arkitekturlikhet og gjennomførbarhet.
 
-**Problem:** Den opprinnelige arkitekturen la opp til samme FHIR-lag i begge retninger, men videresending av nye data og uthenting krevde ulike mekanismer.
+## 9. Utfordring og designvalg
+
+**Problem:** Ambisjonen om ett felles FHIR-lag støtte på forskjellen mellom hendelsesdrevet videresending og forespørselsstyrt uthenting.
 
 **Alternativer:** Vi vurderte å endre FHIR-serverens interne oppførsel. Det ville økt kompleksiteten og omfanget. For push kunne vi bruke eksisterende Subscription-støtte.
 
@@ -120,7 +164,9 @@ Vi hadde komponentansvar og tekniske kontrakter. **Formelt dataeierskap og drift
 
 **Læring:** Verifiser hver retning før arkitekturen låses. En felles representasjon betyr ikke at samme transportmekanisme dekker alle behov.
 
-## 9. Utviklingsflyt og CI/CD
+Slike justeringer måtte kunne innføres uten å bryte flytene som allerede fungerte. Avgrensede endringer og repeterbare kontroller ble derfor en viktig del av utviklingsarbeidet.
+
+## 10. Utviklingsflyt og CI/CD
 
 **Avgrenset endring → Pull Request → automatiserte tester og byggkontroller → merge/integrasjon**
 
@@ -128,7 +174,9 @@ Kodeansvaret var delt i API-håndtering, tjenester, klienter og mapping, med tes
 
 GitHub Actions kjørte tester og bygg/verifikasjon. **Full Docker-basert E2E var utenfor standard CI**, fordi testene krevde kjørende tjenester og klargjorte testdata. Derfor supplerte vi med lokal og manuell verifikasjon. Dette var CI frem mot integrasjon, ikke en automatisert produksjonsleveranse.
 
-## 10. Læring og videre arbeid
+Utviklingskontrollene støttet leveransen, men resultatet må vurderes mot de opprinnelige behovene og grensene for PoC-en.
+
+## 11. Resultat, læring og videre arbeid
 
 Jeg ville prioritert tre forbedringer:
 
@@ -144,4 +192,4 @@ Jeg ville prioritert tre forbedringer:
 
 ---
 
-[Presentasjonsnotater og tidsplan](docs/presentasjonsnotater.md) · [Publiseringsgrense](docs/publiseringsgrense.md)
+[Publiseringsgrense](docs/publiseringsgrense.md)

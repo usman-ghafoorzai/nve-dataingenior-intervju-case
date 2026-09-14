@@ -1,6 +1,6 @@
 # Publiseringsgrense
 
-Dette er en separat, sanitert presentasjon av en lokal PoC. Beskrivelsene og figurene er laget fra bunnen av på konseptuelt nivå.
+Dette er en separat, sanitert casebesvarelse av en lokal PoC. Beskrivelsene og figurene er laget fra bunnen av på konseptuelt nivå.
 
 Grensen følger [Publication Boundary i det offentlige portfolio-repoet](https://github.com/usman-ghafoorzai/healthcare-interoperability-showcase/blob/main/docs/publication-boundary.md).
 
