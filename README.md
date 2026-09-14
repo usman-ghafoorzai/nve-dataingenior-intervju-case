@@ -131,7 +131,9 @@ Begge veiene inneholder flere representasjonsskifter. For å vurdere om de virke
 
 ## 7. Datakvalitet og verifisering
 
-![Datakvalitet: Validering og transformasjon kontrolleres i begge retninger, deretter kontrolleres lagring for push og uthenting for pull før sluttresultatet verifiseres.](docs/diagrammer/08-datakvalitet.svg)
+![Datakvalitet: Validering og transformasjon følges av lagring eller uthenting. Verifikasjon er et eget kontrollnivå: faktisk persistens for push og riktig utvalg eller tom respons for pull.](docs/diagrammer/08-datakvalitet.svg)
+
+Figuren skiller behandlingen av data fra kontrollen av resultatet. **Lagring** er å persistere data; **EHRbase-inspeksjon** er én måte å kontrollere persistensen på. For pull må både uthentingen og det returnerte utvalget verifiseres.
 
 **Kvalitet ble kontrollert på flere nivåer:**
 
@@ -182,7 +184,11 @@ Utviklingskontrollene støttet leveransen, men resultatet må vurderes mot de op
 
 ## 11. Resultat, læring og videre arbeid
 
-Jeg ville prioritert tre forbedringer:
+**Resultatet:** Vi implementerte og verifiserte toveis strukturert datautveksling i et lokalt simulert miljø. Push ga strukturert lagring av syntetiske treningsdata. Pull ga selektiv uthenting av syntetisk legemiddelkontekst, med tidsfiltrering og tom respons når ingen nyere data fantes.
+
+Dette var ikke en produksjonsintegrasjon. Klinisk validering og påvist klinisk effekt inngikk ikke. Erfaringen var at tydelige grenser og kontroll av faktiske sluttresultater gjorde designvalgene etterprøvbare, også når retningene krevde ulike løsninger.
+
+Med dette som grunnlag ville jeg prioritert tre forbedringer:
 
 1. **Standardisere pull:** Undersøke en standardtilpasset uthentingsvei gjennom et FHIR-lag, med tydelige versjonerte kontrakter.
 2. **Styrke kvalitet og drift:** Automatisere et repeterbart E2E-miljø i CI, definere kvalitetskrav og forbedre overvåking og feilsporing.

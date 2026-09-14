@@ -1,54 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="395" viewBox="0 0 1040 395" role="img" aria-labelledby="title desc">
-<title id="title">Kvalitet gjennom begge flytene</title><desc id="desc">Begge flytene har inputvalidering og transformasjonstester. Push-verifikasjon omfatter FHIR-resultat og separat kontroll av openEHR-persistens. Pull-verifikasjon omfatter AQL-uthenting, tidsfiltrering og respons med data eller tom liste.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="425" viewBox="0 0 1200 425" role="img" aria-labelledby="title desc">
+<title id="title">Datakvalitet og verifisering</title><desc id="desc">Validering, transformasjon og lagring eller uthenting skilles fra kontrollen av resultatet. Push kontrolleres med FHIR-resultat og EHRbase-inspeksjon. Pull kontrolleres med AQL/API-verifikasjon av utvalg og forventet respons, inkludert tom liste.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
-<rect width="1040" height="395" rx="16" fill="#ffffff"/>
-<text x="30" y="37" font-size="25" fill="#172b44" font-weight="700" text-anchor="start">Kvalitet gjennom begge flytene</text>
-<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Dokumenterte kontrollnivåer · struktur, modellskifte og faktisk resultat</text>
-<text x="30" y="108" font-size="16" fill="#526477" font-weight="700" text-anchor="start">VALIDER</text>
-<text x="285" y="108" font-size="16" fill="#526477" font-weight="700" text-anchor="start">TRANSFORMER</text>
-<text x="540" y="108" font-size="16" fill="#526477" font-weight="700" text-anchor="start">LAGRE / HENT</text>
-<text x="795" y="108" font-size="16" fill="#526477" font-weight="700" text-anchor="start">VERIFISER</text>
-<rect x="30" y="124" width="225" height="100" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="47" y="153" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">Push · input</text>
-<text x="47" y="180" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">DTO-struktur</text>
-<text x="47" y="203" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">API-grense</text>
-<polyline points="255,174 285,174" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<rect x="285" y="124" width="225" height="100" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="302" y="153" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">Mapping</text>
-<text x="302" y="180" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Kilde → FHIR</text>
-<text x="302" y="203" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">FHIR → openEHR</text>
-<polyline points="510,174 540,174" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<rect x="540" y="124" width="225" height="100" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="557" y="153" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">Persistens</text>
-<text x="557" y="180" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">FHIR-resultat</text>
-<text x="557" y="203" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">EHRbase-inspeksjon</text>
-<polyline points="765,174 795,174" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<rect x="795" y="124" width="225" height="100" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="812" y="153" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">Sluttresultat</text>
-<text x="812" y="180" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Forventet struktur</text>
-<text x="812" y="203" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">i lagrede data</text>
-<rect x="30" y="244" width="225" height="100" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="47" y="273" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">Pull · forespørsel</text>
-<text x="47" y="300" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Pasienttilknytning</text>
-<text x="47" y="323" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Tidsgrense</text>
-<polyline points="255,294 285,294" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<rect x="285" y="244" width="225" height="100" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="302" y="273" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">Mapping / parsing</text>
-<text x="302" y="300" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">openEHR → FHIR</text>
-<text x="302" y="323" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">→ konsumentformat</text>
-<polyline points="510,294 540,294" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<rect x="540" y="244" width="225" height="100" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="557" y="273" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">Uthenting</text>
-<text x="557" y="300" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">AQL-verifikasjon</text>
-<text x="557" y="323" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Tidsfiltrering</text>
-<polyline points="765,294 795,294" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<rect x="795" y="244" width="225" height="100" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="812" y="273" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">Sluttresultat</text>
-<text x="812" y="300" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Utvalgt kontekst</text>
-<text x="812" y="323" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">eller tom liste</text>
-<text x="30" y="377" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Unit tests og API-tester + lokal E2E og manuell kontroll. Full-stack E2E var utenfor standard CI.</text>
+<rect width="1200" height="425" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Datakvalitet og verifisering</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Kontrollmodell for begge flytene – ikke et teknisk sekvensdiagram</text>
+<text x="40" y="114" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">VALIDER</text>
+<text x="335" y="114" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">TRANSFORMER</text>
+<text x="630" y="114" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">LAGRE / HENT</text>
+<text x="925" y="114" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">VERIFISER</text>
+<rect x="20" y="133" width="1160" height="108" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="40" y="163" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Push · input</text>
+<text x="40" y="191" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">DTO-struktur</text>
+<text x="40" y="215" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">API-grense</text>
+<polyline points="276,186 317,186" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="335" y="163" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Mapping</text>
+<text x="335" y="191" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">Kilde → FHIR</text>
+<text x="335" y="215" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">FHIR → openEHR</text>
+<polyline points="571,186 612,186" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="630" y="163" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Persister</text>
+<text x="630" y="191" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">openEHR composition</text>
+<text x="630" y="215" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">i klinisk repository</text>
+<polyline points="866,186 907,186" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="925" y="163" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Kontroller persistens</text>
+<text x="925" y="191" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">FHIR-resultat og</text>
+<text x="925" y="215" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">EHRbase-inspeksjon</text>
+<rect x="20" y="264" width="1160" height="108" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="40" y="294" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Pull · forespørsel</text>
+<text x="40" y="322" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">Pasienttilknytning</text>
+<text x="40" y="346" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">Tidsgrense</text>
+<polyline points="276,317 317,317" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="335" y="294" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Mapping / parsing</text>
+<text x="335" y="322" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">openEHR → FHIR</text>
+<text x="335" y="346" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">→ konsumentformat</text>
+<polyline points="571,317 612,317" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="630" y="294" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Hent utvalg</text>
+<text x="630" y="322" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">Pasient og tidsfilter</text>
+<text x="630" y="346" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">fra klinisk repository</text>
+<polyline points="866,317 907,317" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="925" y="294" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Kontroller respons</text>
+<text x="925" y="322" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">AQL-/API-kontroll</text>
+<text x="925" y="346" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">Riktig utvalg / tom liste</text>
+<text x="30" y="407" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Unit tests og API-tester ble supplert med lokal E2E og manuell verifikasjon av den samlede flyten.</text>
 </g></svg>

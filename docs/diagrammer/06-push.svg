@@ -1,41 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="444" viewBox="0 0 1040 444" role="img" aria-labelledby="title desc">
-<title id="title">Push: nye treningsdata inn</title><desc id="desc">Syntetiske treningsdata går fra kilde via inputvalidering og FHIR-representasjon til Subscription, mapping til openEHR, lagring og kontroll av faktisk resultat.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="543" viewBox="0 0 1200 543" role="img" aria-labelledby="title desc">
+<title id="title">Push – fra kilde til strukturert lagring</title><desc id="desc">Kildeapplikasjonen sender syntetiske treningsdata. Integrasjonsgrensen validerer og transformerer til FHIR. Subscription videresender til semantisk mapping og openEHR-lagring. Verifikasjon av FHIR-resultat og persistens er vist som en separat kontrollaktivitet.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
-<rect width="1040" height="444" rx="16" fill="#ffffff"/>
-<text x="30" y="37" font-size="25" fill="#172b44" font-weight="700" text-anchor="start">Push: nye treningsdata inn</text>
-<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Initiert av kilden · les øvre rad mot høyre, deretter ned og tilbake</text>
-<rect x="30" y="105" width="270" height="105" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="47" y="134" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">1. Kilden sender</text>
-<text x="47" y="161" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Syntetiske øktdata</text>
-<text x="47" y="184" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Knyttet til pasient</text>
-<rect x="385" y="105" width="270" height="105" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="402" y="134" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">2. Integrasjonsgrense</text>
-<text x="402" y="161" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Validerer input</text>
-<text x="402" y="184" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Kildeformat → FHIR</text>
-<rect x="740" y="105" width="270" height="105" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="757" y="134" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">3. FHIR-server</text>
-<text x="757" y="161" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Lagrer ressurs</text>
-<text x="757" y="184" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Subscription videresender</text>
-<rect x="740" y="282" width="270" height="105" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="757" y="311" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">4. Mapping</text>
-<text x="757" y="338" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Semantisk transformasjon</text>
-<text x="757" y="361" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">FHIR → openEHR</text>
-<rect x="385" y="282" width="270" height="105" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="402" y="311" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">5. Klinisk repository</text>
-<text x="402" y="338" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Strukturert composition</text>
-<text x="402" y="361" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Persistent lagring</text>
-<rect x="30" y="282" width="270" height="105" rx="12" fill="#fff4eb" stroke="#a54b13" stroke-width="1.4"/>
-<text x="47" y="311" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">6. Kontroll av resultat</text>
-<text x="47" y="338" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">FHIR-representasjon</text>
-<text x="47" y="361" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Faktisk openEHR-innhold</text>
-<polyline points="300,157 385,157" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<polyline points="655,157 740,157" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<polyline points="875,210 875,282" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<polyline points="740,334 655,334" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<polyline points="385,334 300,334" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<text x="30" y="427" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Kvittering ved innsending og kontroll av ferdig lagring er ulike verifikasjonspunkter.</text>
+<rect width="1200" height="543" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Push – fra kilde til strukturert lagring</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Kilden initierer innsending; en hendelse driver videresendingen</text>
+<rect x="20" y="99" width="1160" height="175" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="38" y="128" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Kilde, integrasjon og utveksling</text>
+<rect x="400" y="322" width="780" height="172" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="418" y="350" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Mapping og klinisk lagring</text>
+<rect x="40" y="153" width="280" height="99" rx="3" fill="#fff3cd" stroke="#87919c" stroke-width="1.2"/>
+<text x="180.0" y="182" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Kildeapplikasjon</text>
+<text x="180.0" y="209" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Syntetiske treningsdata</text>
+<text x="180.0" y="234" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Pasienttilknytning</text>
+<rect x="460" y="153" width="280" height="99" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="600.0" y="182" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsgrense</text>
+<text x="600.0" y="209" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Validerer input</text>
+<text x="600.0" y="234" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Kildeformat → FHIR</text>
+<rect x="880" y="153" width="280" height="99" rx="3" fill="#ffe6c9" stroke="#87919c" stroke-width="1.2"/>
+<text x="1020.0" y="182" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">FHIR-server</text>
+<text x="1020.0" y="209" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Lagrer Observation</text>
+<rect x="880" y="370" width="280" height="99" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="1020.0" y="399" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Semantisk mapping</text>
+<text x="1020.0" y="426" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">FHIR → openEHR</text>
+<rect x="460" y="370" width="280" height="99" rx="3" fill="#e5f3e5" stroke="#87919c" stroke-width="1.2"/>
+<text x="600.0" y="399" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Klinisk repository</text>
+<text x="600.0" y="426" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Lagrer composition</text>
+<text x="600.0" y="451" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Strukturert persistens</text>
+<rect x="40" y="370" width="280" height="99" rx="3" fill="#f2f3f5" stroke="#87919c" stroke-width="1.2"/>
+<text x="180.0" y="399" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Verifikasjon</text>
+<text x="180.0" y="426" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">FHIR-resultat og</text>
+<text x="180.0" y="451" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">lagret openEHR-innhold</text>
+<polyline points="320,203 460,203" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="390" y="187" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">Input</text>
+<polyline points="740,203 880,203" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="810" y="187" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">FHIR</text>
+<polyline points="1020,252 1020,370" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="1036" y="303" font-size="17" fill="#a54b13" font-weight="400" text-anchor="start">Subscription</text>
+<polyline points="880,419 740,419" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="810" y="405" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">openEHR</text>
+<polyline points="460,419 320,419" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)" stroke-dasharray="6 5"/>
+<text x="390" y="405" font-size="17" fill="#526477" font-weight="400" text-anchor="middle">Kontroller</text>
+<text x="30" y="524" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Stiplet pil viser kontroll av resultatet. En kvittering ved innsending bekrefter ikke hele kjeden.</text>
 </g></svg>

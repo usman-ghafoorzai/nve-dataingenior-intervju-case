@@ -22,8 +22,8 @@ def text(x, y, value, size=18, color=INK, weight=400, anchor="start"):
 
 def begin(title, subtitle, height, description):
     PARTS.clear()
-    PARTS.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="{height}" '
-                 f'viewBox="0 0 1040 {height}" role="img" aria-labelledby="title desc">')
+    PARTS.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="{height}" '
+                 f'viewBox="0 0 1200 {height}" role="img" aria-labelledby="title desc">')
     PARTS.append(f'<title id="title">{escape(title)}</title><desc id="desc">{escape(description)}</desc>')
     PARTS.append('<defs>')
     for name, color in [("neutral", MUTED), ("push", PUSH), ("pull", PULL)]:
@@ -31,17 +31,9 @@ def begin(title, subtitle, height, description):
                      f'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
                      f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{color}"/></marker>')
     PARTS.append('</defs><g font-family="Arial, Helvetica, sans-serif">')
-    PARTS.append(f'<rect width="1040" height="{height}" rx="16" fill="#ffffff"/>')
-    text(30, 37, title, 25, weight=700)
+    PARTS.append(f'<rect width="1200" height="{height}" rx="0" fill="#ffffff"/>')
+    text(30, 37, title, 30, "#111111", weight=700)
     text(30, 66, subtitle, 17, MUTED)
-
-
-def box(x, y, w, h, title, lines=(), color=BLUE, fill="#eff5fd"):
-    PARTS.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" '
-                 f'fill="{fill}" stroke="{color}" stroke-width="1.4"/>')
-    text(x + 17, y + 29, title, 19, color, 700)
-    for i, line in enumerate(lines):
-        text(x + 17, y + 56 + 23 * i, line, 17)
 
 
 def arrow(points, kind="neutral", both=False, dashed=False):
@@ -61,13 +53,6 @@ def end(name):
 
 def sheet(title, subtitle, height, description):
     begin(title, subtitle, height, description)
-    PARTS[0] = PARTS[0].replace('width="1040"', 'width="1200"').replace('1040 ', '1200 ')
-    # Samme hvite flate, svart overskrift og diskrete rammer i alle analysefigurene.
-    for i, part in enumerate(PARTS):
-        if '<rect width="1040"' in part:
-            PARTS[i] = part.replace('1040', '1200').replace('rx="16"', 'rx="0"')
-        elif '<text x="30" y="37"' in part:
-            PARTS[i] = part.replace('font-size="25"', 'font-size="30"').replace(INK, '#111111')
 
 
 def panel(x, y, w, h, fill="#eaf3ff", dashed=False):
@@ -176,71 +161,130 @@ def information():
     end("04-informasjonsflyt.svg")
 
 
+def technical_box(x, y, w, h, title, lines, fill="#ffffff"):
+    panel(x, y, w, h, fill)
+    centered(x+w/2, y+29, [title], 20, 700)
+    centered(x+w/2, y+56, lines, 18)
+
+
 def architecture():
-    begin("Felles arkitektur, to veier", "Logiske komponenter i den implementerte PoC-en", 578,
-          "Kilde og konsument bruker integrasjonsgrensen. Push går via FHIR-serveren og Subscription "
-          "til mapping og repository. Pull går direkte til mapping- og uthentingslaget. "
-          "EPJ-tjenestene bruker PostgreSQL for persistens.")
-    PARTS.append('<rect x="558" y="92" width="456" height="425" rx="14" fill="#f8fafc" '
-                 'stroke="#aebaca" stroke-dasharray="7 5"/>')
-    text(578, 119, "SIMULERT EPJ-MILJØ", 15, MUTED, 700)
-    box(30, 233, 200, 104, "Kilde / konsument", ["Sender treningsdata", "Ber om kontekst"])
-    box(298, 233, 210, 104, "Integrasjonsgrense", ["Validerer / tilpasser", "Koordinerer kall"])
-    box(582, 150, 190, 102, "FHIR-server", ["Utveksling", "Subscription"], PUSH, "#fff4eb")
-    box(582, 336, 190, 102, "Mapping", ["Modellskifte", "Uthenting / filter"])
-    box(812, 336, 180, 102, "Repository", ["openEHR", "Lagrer / henter"])
-    arrow([(230, 279), (298, 279)], both=True)
-    arrow([(405, 233), (405, 192), (582, 192)], "push")
-    text(414, 178, "PUSH", 16, PUSH, 700)
-    arrow([(677, 252), (677, 336)], "push")
-    text(692, 299, "Hendelse", 16, PUSH)
-    arrow([(405, 337), (405, 387), (582, 387)], "pull", both=True)
-    text(417, 374, "PULL", 16, PULL, 700)
-    text(417, 414, "Forespørsel / svar", 16, PULL)
-    arrow([(772, 387), (812, 387)], both=True)
-    text(582, 483, "PostgreSQL: persistens for EPJ-tjenestene", 17, MUTED)
-    text(30, 554, "Pull går direkte til uthentingslaget. Docker Compose samordnet det lokale miljøet.", 17, MUTED)
+    sheet("Teknisk arkitektur", "Hvordan realiseres de to dataflytene?", 825,
+          "Fire logiske lag: applikasjon, integrasjon, semantisk mapping og klinisk datalag. "
+          "Push bruker FHIR-server og Subscription. Pull går direkte til mapping og uthenting. "
+          "EHRbase og HAPI FHIR bruker PostgreSQL til persistens.")
+    for y, h, label, line in [(105, 128, "Applikasjonslag", "Kilde og konsument"),
+                              (258, 158, "Integrasjonslag", "Validering og utveksling"),
+                              (441, 139, "Semantisk mapping", "Transformasjon og uthenting"),
+                              (605, 155, "Klinisk datalag", "Strukturert lagring")]:
+        panel(20, y, 1160, h, "#e4f0ff")
+        text(37, y+43, label, 21, weight=700)
+        text(37, y+69, line, 16, MUTED)
+    panel(680, 273, 490, 476, "none", dashed=True)
+    centered(1057, 300, ["Simulert", "EPJ-miljø"], 18, 700, MUTED)
+    technical_box(300, 132, 240, 77, "Kilde / konsument", ["Sender eller spør"], "#fff3cd")
+    technical_box(300, 285, 240, 105, "Integrasjonsgrense", ["NestJS / TypeScript", "Validerer og tilpasser"], "#f0eafa")
+    technical_box(715, 285, 230, 105, "FHIR-server", ["HAPI FHIR", "Ressurser / Subscription"], "#ffe6c9")
+    technical_box(715, 467, 230, 87, "Mapping / uthenting", ["Java / Spring"], "#f0eafa")
+    technical_box(715, 633, 230, 99, "Klinisk repository", ["openEHR / EHRbase", "Lagrer og henter"], "#e5f3e5")
+    technical_box(1000, 633, 160, 99, "PostgreSQL", ["Persistent", "lagring"], "#fff3cd")
+    arrow([(420, 209), (420, 285)], both=True)
+    arrow([(540, 330), (715, 330)], "push")
+    text(627, 316, "Push · FHIR", 18, PUSH, anchor="middle")
+    arrow([(830, 390), (830, 467)], "push")
+    text(847, 432, "Subscription", 17, PUSH)
+    arrow([(420, 390), (420, 511), (715, 511)], "pull", both=True)
+    text(558, 493, "Pull · forespørsel / svar", 18, PULL, anchor="middle")
+    arrow([(830, 554), (830, 633)], both=True)
+    text(847, 596, "Lagre / hente", 17, MUTED)
+    arrow([(945, 682), (1000, 682)], both=True)
+    text(30, 792, "HAPI FHIR bruker også PostgreSQL for tjenestedata. Docker Compose samordnet testmiljøet.", 18, MUTED)
     end("05-arkitektur.svg")
 
 
-def flow(name, title, subtitle, labels, color, fill, kind, footer, desc):
-    begin(title, subtitle, 444, desc)
-    positions = [(30, 105), (385, 105), (740, 105), (740, 282), (385, 282), (30, 282)]
-    for i, ((x, y), (head, lines)) in enumerate(zip(positions, labels), 1):
-        box(x, y, 270, 105, f"{i}. {head}", lines, color, fill)
-    arrow([(300, 157), (385, 157)], kind)
-    arrow([(655, 157), (740, 157)], kind)
-    arrow([(875, 210), (875, 282)], kind)
-    arrow([(740, 334), (655, 334)], kind)
-    arrow([(385, 334), (300, 334)], kind)
-    text(30, 427, footer, 17, MUTED)
-    end(name)
+def push_flow():
+    sheet("Push – fra kilde til strukturert lagring", "Kilden initierer innsending; en hendelse driver videresendingen", 543,
+          "Kildeapplikasjonen sender syntetiske treningsdata. Integrasjonsgrensen validerer og "
+          "transformerer til FHIR. Subscription videresender til semantisk mapping og openEHR-lagring. "
+          "Verifikasjon av FHIR-resultat og persistens er vist som en separat kontrollaktivitet.")
+    panel(20, 99, 1160, 175, "#eaf3ff")
+    text(38, 128, "Kilde, integrasjon og utveksling", 19, weight=700)
+    panel(400, 322, 780, 172, "#eaf3ff")
+    text(418, 350, "Mapping og klinisk lagring", 19, weight=700)
+    technical_box(40, 153, 280, 99, "Kildeapplikasjon", ["Syntetiske treningsdata", "Pasienttilknytning"], "#fff3cd")
+    technical_box(460, 153, 280, 99, "Integrasjonsgrense", ["Validerer input", "Kildeformat → FHIR"], "#f0eafa")
+    technical_box(880, 153, 280, 99, "FHIR-server", ["Lagrer Observation"], "#ffe6c9")
+    technical_box(880, 370, 280, 99, "Semantisk mapping", ["FHIR → openEHR"], "#f0eafa")
+    technical_box(460, 370, 280, 99, "Klinisk repository", ["Lagrer composition", "Strukturert persistens"], "#e5f3e5")
+    technical_box(40, 370, 280, 99, "Verifikasjon", ["FHIR-resultat og", "lagret openEHR-innhold"], "#f2f3f5")
+    arrow([(320, 203), (460, 203)], "push")
+    text(390, 187, "Input", 18, PUSH, anchor="middle")
+    arrow([(740, 203), (880, 203)], "push")
+    text(810, 187, "FHIR", 18, PUSH, anchor="middle")
+    arrow([(1020, 252), (1020, 370)], "push")
+    text(1036, 303, "Subscription", 17, PUSH)
+    arrow([(880, 419), (740, 419)], "push")
+    text(810, 405, "openEHR", 18, PUSH, anchor="middle")
+    arrow([(460, 419), (320, 419)], dashed=True)
+    text(390, 405, "Kontroller", 17, MUTED, anchor="middle")
+    text(30, 524, "Stiplet pil viser kontroll av resultatet. En kvittering ved innsending bekrefter ikke hele kjeden.", 18, MUTED)
+    end("06-push.svg")
+
+
+def pull_flow():
+    sheet("Pull – fra klinisk kontekst til konsument", "Konsumenten initierer en forespørsel om utvalgt kontekst", 543,
+          "Forespørselen inneholder valgt pasient og kjent oppdateringstid. Etter validering koordineres "
+          "journaloppslag og tidsfiltrert AQL-uthenting. openEHR-konteksten transformeres til FHIR og "
+          "videre til konsumentformat. Ingen nye data gir en tom liste.")
+    panel(20, 99, 1160, 175, "#eaf3ff")
+    text(38, 128, "Forespørsel og uthenting", 19, weight=700)
+    panel(20, 322, 1160, 172, "#eaf3ff")
+    text(38, 350, "Klinisk kontekst tilbake til konsumenten", 19, weight=700)
+    technical_box(40, 153, 280, 99, "Konsument", ["Valgt pasient", "Sist kjente oppdatering"], "#fff3cd")
+    technical_box(460, 153, 280, 99, "Integrasjonsgrense", ["Validerer forespørselen", "Koordinerer kall"], "#f0eafa")
+    technical_box(880, 153, 280, 99, "Uthentingslag", ["Journaloppslag", "AQL / tidsfiltrering"], "#f0eafa")
+    technical_box(880, 370, 280, 99, "Klinisk repository", ["Strukturert klinisk kontekst", "openEHR"], "#e5f3e5")
+    technical_box(460, 370, 280, 99, "Mapping", ["openEHR → FHIR", "Legemiddelkontekst"], "#f0eafa")
+    technical_box(40, 370, 280, 99, "Respons via grensen", ["FHIR → konsumentformat", "Data eller tom liste"], "#dff2e2")
+    arrow([(320, 203), (460, 203)], "pull")
+    text(390, 187, "Forespørsel", 17, PULL, anchor="middle")
+    arrow([(740, 203), (880, 203)], "pull")
+    text(810, 187, "Pasient / tid", 17, PULL, anchor="middle")
+    arrow([(1020, 252), (1020, 370)], "pull")
+    text(1036, 303, "Uthenting", 17, PULL)
+    arrow([(880, 419), (740, 419)], "pull")
+    text(810, 405, "openEHR", 18, PULL, anchor="middle")
+    arrow([(460, 419), (320, 419)], "pull")
+    text(390, 405, "FHIR", 18, PULL, anchor="middle")
+    text(30, 524, "Verifikasjon: riktig utvalg, tidsfilter og respons. Integrasjonsgrensen har ingen egen polling.", 18, MUTED)
+    end("07-pull.svg")
 
 
 def quality():
-    begin("Kvalitet gjennom begge flytene", "Dokumenterte kontrollnivåer · struktur, modellskifte og faktisk resultat", 395,
-          "Begge flytene har inputvalidering og transformasjonstester. Push-verifikasjon omfatter "
-          "FHIR-resultat og separat kontroll av openEHR-persistens. Pull-verifikasjon omfatter "
-          "AQL-uthenting, tidsfiltrering og respons med data eller tom liste.")
-    headers = ["VALIDER", "TRANSFORMER", "LAGRE / HENT", "VERIFISER"]
-    for x, heading in zip([30, 285, 540, 795], headers):
-        text(x, 108, heading, 16, MUTED, 700)
+    sheet("Datakvalitet og verifisering", "Kontrollmodell for begge flytene – ikke et teknisk sekvensdiagram", 425,
+          "Validering, transformasjon og lagring eller uthenting skilles fra kontrollen av resultatet. "
+          "Push kontrolleres med FHIR-resultat og EHRbase-inspeksjon. Pull kontrolleres med "
+          "AQL/API-verifikasjon av utvalg og forventet respons, inkludert tom liste.")
+    xs = [30, 325, 620, 915]
+    for x, heading in zip(xs, ["VALIDER", "TRANSFORMER", "LAGRE / HENT", "VERIFISER"]):
+        text(x+10, 114, heading, 19, weight=700)
     push = [("Push · input", ["DTO-struktur", "API-grense"]),
             ("Mapping", ["Kilde → FHIR", "FHIR → openEHR"]),
-            ("Persistens", ["FHIR-resultat", "EHRbase-inspeksjon"]),
-            ("Sluttresultat", ["Forventet struktur", "i lagrede data"])]
+            ("Persister", ["openEHR composition", "i klinisk repository"]),
+            ("Kontroller persistens", ["FHIR-resultat og", "EHRbase-inspeksjon"])]
     pull = [("Pull · forespørsel", ["Pasienttilknytning", "Tidsgrense"]),
             ("Mapping / parsing", ["openEHR → FHIR", "→ konsumentformat"]),
-            ("Uthenting", ["AQL-verifikasjon", "Tidsfiltrering"]),
-            ("Sluttresultat", ["Utvalgt kontekst", "eller tom liste"])]
-    for y, data, color, fill, kind in [(124, push, PUSH, "#fff4eb", "push"),
-                                      (244, pull, PULL, "#edf9f6", "pull")]:
+            ("Hent utvalg", ["Pasient og tidsfilter", "fra klinisk repository"]),
+            ("Kontroller respons", ["AQL-/API-kontroll", "Riktig utvalg / tom liste"])]
+    for y, data, fill in [(133, push, "#fff0df"), (264, pull, "#e7f4e9")]:
+        panel(20, y, 1160, 108, fill)
         for i, (head, lines) in enumerate(data):
-            x = 30 + i * 255
-            box(x, y, 225, 100, head, lines, color, fill)
-            if i < 3:
-                arrow([(x + 225, y + 50), (x + 255, y + 50)], kind)
-    text(30, 377, "Unit tests og API-tester + lokal E2E og manuell kontroll. Full-stack E2E var utenfor standard CI.", 17, MUTED)
+            x = xs[i]
+            text(x+10, y+30, head, 19, weight=700)
+            for j, line in enumerate(lines):
+                text(x+10, y+58+j*24, line, 18)
+            if i<3:
+                arrow([(x+246, y+53), (x+287, y+53)])
+    text(30, 407, "Unit tests og API-tester ble supplert med lokal E2E og manuell verifikasjon av den samlede flyten.", 18, MUTED)
     end("08-datakvalitet.svg")
 
 
@@ -249,27 +293,7 @@ if __name__ == "__main__":
     domain()
     information()
     architecture()
-    flow("06-push.svg", "Push: nye treningsdata inn", "Initiert av kilden · les øvre rad mot høyre, deretter ned og tilbake", [
-        ("Kilden sender", ["Syntetiske øktdata", "Knyttet til pasient"]),
-        ("Integrasjonsgrense", ["Validerer input", "Kildeformat → FHIR"]),
-        ("FHIR-server", ["Lagrer ressurs", "Subscription videresender"]),
-        ("Mapping", ["Semantisk transformasjon", "FHIR → openEHR"]),
-        ("Klinisk repository", ["Strukturert composition", "Persistent lagring"]),
-        ("Kontroll av resultat", ["FHIR-representasjon", "Faktisk openEHR-innhold"]),
-    ], PUSH, "#fff4eb", "push",
-         "Kvittering ved innsending og kontroll av ferdig lagring er ulike verifikasjonspunkter.",
-         "Syntetiske treningsdata går fra kilde via inputvalidering og FHIR-representasjon til "
-         "Subscription, mapping til openEHR, lagring og kontroll av faktisk resultat.")
-    flow("07-pull.svg", "Pull: klinisk kontekst tilbake", "Initiert av konsumenten · les øvre rad mot høyre, deretter ned og tilbake", [
-        ("Konsumenten spør", ["Valgt pasient", "Sist kjente oppdatering"]),
-        ("Integrasjonsgrense", ["Validerer forespørselen", "Koordinerer uthenting"]),
-        ("Uthentingslag", ["Journaloppslag / tidsfilter", "AQL-basert uthenting"]),
-        ("Klinisk repository", ["Strukturert klinisk kontekst", "openEHR"]),
-        ("Mapping", ["openEHR → FHIR", "Legemiddelkontekst"]),
-        ("Respons via grensen", ["FHIR → konsumentformat", "Data eller tom liste"]),
-    ], PULL, "#edf9f6", "pull",
-         "Verifikasjon: uthentet innhold, tidsfilter og respons. Ingen egen polling i integrasjonsgrensen.",
-         "En validert forespørsel går til uthentingslaget og repositoryet. Utvalgt klinisk kontekst "
-         "transformeres fra openEHR via FHIR til konsumentformat. Ingen nye data gir tom liste.")
+    push_flow()
+    pull_flow()
     quality()
     print("Opprettet sju SVG-diagrammer i docs/diagrammer/.")

@@ -1,41 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="444" viewBox="0 0 1040 444" role="img" aria-labelledby="title desc">
-<title id="title">Pull: klinisk kontekst tilbake</title><desc id="desc">En validert forespørsel går til uthentingslaget og repositoryet. Utvalgt klinisk kontekst transformeres fra openEHR via FHIR til konsumentformat. Ingen nye data gir tom liste.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="543" viewBox="0 0 1200 543" role="img" aria-labelledby="title desc">
+<title id="title">Pull – fra klinisk kontekst til konsument</title><desc id="desc">Forespørselen inneholder valgt pasient og kjent oppdateringstid. Etter validering koordineres journaloppslag og tidsfiltrert AQL-uthenting. openEHR-konteksten transformeres til FHIR og videre til konsumentformat. Ingen nye data gir en tom liste.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
-<rect width="1040" height="444" rx="16" fill="#ffffff"/>
-<text x="30" y="37" font-size="25" fill="#172b44" font-weight="700" text-anchor="start">Pull: klinisk kontekst tilbake</text>
-<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Initiert av konsumenten · les øvre rad mot høyre, deretter ned og tilbake</text>
-<rect x="30" y="105" width="270" height="105" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="47" y="134" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">1. Konsumenten spør</text>
-<text x="47" y="161" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Valgt pasient</text>
-<text x="47" y="184" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Sist kjente oppdatering</text>
-<rect x="385" y="105" width="270" height="105" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="402" y="134" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">2. Integrasjonsgrense</text>
-<text x="402" y="161" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Validerer forespørselen</text>
-<text x="402" y="184" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Koordinerer uthenting</text>
-<rect x="740" y="105" width="270" height="105" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="757" y="134" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">3. Uthentingslag</text>
-<text x="757" y="161" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Journaloppslag / tidsfilter</text>
-<text x="757" y="184" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">AQL-basert uthenting</text>
-<rect x="740" y="282" width="270" height="105" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="757" y="311" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">4. Klinisk repository</text>
-<text x="757" y="338" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Strukturert klinisk kontekst</text>
-<text x="757" y="361" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">openEHR</text>
-<rect x="385" y="282" width="270" height="105" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="402" y="311" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">5. Mapping</text>
-<text x="402" y="338" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">openEHR → FHIR</text>
-<text x="402" y="361" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Legemiddelkontekst</text>
-<rect x="30" y="282" width="270" height="105" rx="12" fill="#edf9f6" stroke="#08776f" stroke-width="1.4"/>
-<text x="47" y="311" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">6. Respons via grensen</text>
-<text x="47" y="338" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">FHIR → konsumentformat</text>
-<text x="47" y="361" font-size="17" fill="#172b44" font-weight="400" text-anchor="start">Data eller tom liste</text>
-<polyline points="300,157 385,157" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<polyline points="655,157 740,157" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<polyline points="875,210 875,282" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<polyline points="740,334 655,334" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<polyline points="385,334 300,334" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<text x="30" y="427" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Verifikasjon: uthentet innhold, tidsfilter og respons. Ingen egen polling i integrasjonsgrensen.</text>
+<rect width="1200" height="543" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Pull – fra klinisk kontekst til konsument</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Konsumenten initierer en forespørsel om utvalgt kontekst</text>
+<rect x="20" y="99" width="1160" height="175" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="38" y="128" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Forespørsel og uthenting</text>
+<rect x="20" y="322" width="1160" height="172" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="38" y="350" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Klinisk kontekst tilbake til konsumenten</text>
+<rect x="40" y="153" width="280" height="99" rx="3" fill="#fff3cd" stroke="#87919c" stroke-width="1.2"/>
+<text x="180.0" y="182" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Konsument</text>
+<text x="180.0" y="209" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Valgt pasient</text>
+<text x="180.0" y="234" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Sist kjente oppdatering</text>
+<rect x="460" y="153" width="280" height="99" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="600.0" y="182" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsgrense</text>
+<text x="600.0" y="209" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Validerer forespørselen</text>
+<text x="600.0" y="234" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Koordinerer kall</text>
+<rect x="880" y="153" width="280" height="99" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="1020.0" y="182" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Uthentingslag</text>
+<text x="1020.0" y="209" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Journaloppslag</text>
+<text x="1020.0" y="234" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">AQL / tidsfiltrering</text>
+<rect x="880" y="370" width="280" height="99" rx="3" fill="#e5f3e5" stroke="#87919c" stroke-width="1.2"/>
+<text x="1020.0" y="399" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Klinisk repository</text>
+<text x="1020.0" y="426" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Strukturert klinisk kontekst</text>
+<text x="1020.0" y="451" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR</text>
+<rect x="460" y="370" width="280" height="99" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="600.0" y="399" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Mapping</text>
+<text x="600.0" y="426" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR → FHIR</text>
+<text x="600.0" y="451" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Legemiddelkontekst</text>
+<rect x="40" y="370" width="280" height="99" rx="3" fill="#dff2e2" stroke="#87919c" stroke-width="1.2"/>
+<text x="180.0" y="399" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Respons via grensen</text>
+<text x="180.0" y="426" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">FHIR → konsumentformat</text>
+<text x="180.0" y="451" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Data eller tom liste</text>
+<polyline points="320,203 460,203" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="390" y="187" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Forespørsel</text>
+<polyline points="740,203 880,203" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="810" y="187" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Pasient / tid</text>
+<polyline points="1020,252 1020,370" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="1036" y="303" font-size="17" fill="#08776f" font-weight="400" text-anchor="start">Uthenting</text>
+<polyline points="880,419 740,419" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="810" y="405" font-size="18" fill="#08776f" font-weight="400" text-anchor="middle">openEHR</text>
+<polyline points="460,419 320,419" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="390" y="405" font-size="18" fill="#08776f" font-weight="400" text-anchor="middle">FHIR</text>
+<text x="30" y="524" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Verifikasjon: riktig utvalg, tidsfilter og respons. Integrasjonsgrensen har ingen egen polling.</text>
 </g></svg>
