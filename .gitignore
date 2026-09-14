@@ -1,0 +1,8 @@
+sources-private/
+
+# Lokale hemmeligheter og verktøyfiler
+.env
+.env.*
+*.pem
+*.key
+__pycache__/
