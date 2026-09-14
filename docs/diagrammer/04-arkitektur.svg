@@ -1,60 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="825" viewBox="0 0 1200 825" role="img" aria-labelledby="title desc">
-<title id="title">Teknisk arkitektur</title><desc id="desc">Fire logiske lag: applikasjon, integrasjon, semantisk mapping og klinisk datalag. Push bruker FHIR-server og Subscription. Pull bruker en separat forespørselsstyrt uthentingsvei. EHRbase og HAPI FHIR bruker PostgreSQL til persistens.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="790" viewBox="0 0 1200 790" role="img" aria-labelledby="title desc">
+<title id="title">Implementert arkitektur</title><desc id="desc">Push går fra kilde gjennom integrasjonsklient og HAPI FHIR til bridge- og mappinglaget, EHRbase og persistens. Pull går fra konsument gjennom integrasjonsklient til bridge-laget og EHRbase, og returnerer transformert respons. HAPI FHIR og EHRbase bruker PostgreSQL. Komponentene gjentas for å vise hver flyt tydelig.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
-<rect width="1200" height="825" rx="0" fill="#ffffff"/>
-<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Teknisk arkitektur</text>
-<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Hvordan realiseres de to dataflytene?</text>
-<rect x="20" y="105" width="1160" height="128" rx="3" fill="#e4f0ff" stroke="#87919c" stroke-width="1.2"/>
-<text x="37" y="148" font-size="21" fill="#172b44" font-weight="700" text-anchor="start">Applikasjonslag</text>
-<text x="37" y="174" font-size="16" fill="#526477" font-weight="400" text-anchor="start">Kilde og konsument</text>
-<rect x="20" y="258" width="1160" height="158" rx="3" fill="#e4f0ff" stroke="#87919c" stroke-width="1.2"/>
-<text x="37" y="301" font-size="21" fill="#172b44" font-weight="700" text-anchor="start">Integrasjonslag</text>
-<text x="37" y="327" font-size="16" fill="#526477" font-weight="400" text-anchor="start">Validering og utveksling</text>
-<rect x="20" y="441" width="1160" height="139" rx="3" fill="#e4f0ff" stroke="#87919c" stroke-width="1.2"/>
-<text x="37" y="484" font-size="21" fill="#172b44" font-weight="700" text-anchor="start">Semantisk mapping</text>
-<text x="37" y="510" font-size="16" fill="#526477" font-weight="400" text-anchor="start">Transformasjon og uthenting</text>
-<rect x="20" y="605" width="1160" height="155" rx="3" fill="#e4f0ff" stroke="#87919c" stroke-width="1.2"/>
-<text x="37" y="648" font-size="21" fill="#172b44" font-weight="700" text-anchor="start">Klinisk datalag</text>
-<text x="37" y="674" font-size="16" fill="#526477" font-weight="400" text-anchor="start">Strukturert lagring</text>
-<rect x="680" y="273" width="490" height="476" rx="3" fill="none" stroke="#87919c" stroke-width="1.2" stroke-dasharray="8 6"/>
-<text x="1057" y="300" font-size="18" fill="#526477" font-weight="700" text-anchor="middle">Simulert</text>
-<text x="1057" y="325" font-size="18" fill="#526477" font-weight="700" text-anchor="middle">EPJ-miljø</text>
-<rect x="300" y="132" width="240" height="77" rx="3" fill="#fff3cd" stroke="#87919c" stroke-width="1.2"/>
-<text x="420.0" y="161" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Kilde / konsument</text>
-<text x="420.0" y="188" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Sender eller spør</text>
-<rect x="300" y="285" width="240" height="105" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
-<text x="420.0" y="314" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsgrense</text>
-<text x="420.0" y="341" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">NestJS / TypeScript</text>
-<text x="420.0" y="366" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Validerer og tilpasser</text>
-<rect x="715" y="285" width="230" height="105" rx="3" fill="#ffe6c9" stroke="#87919c" stroke-width="1.2"/>
-<text x="830.0" y="314" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">FHIR-server</text>
-<text x="830.0" y="341" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">HAPI FHIR</text>
-<text x="830.0" y="366" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Ressurser / Subscription</text>
-<rect x="715" y="467" width="230" height="87" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
-<text x="830.0" y="496" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Mapping / uthenting</text>
-<text x="830.0" y="523" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Java / Spring</text>
-<rect x="715" y="633" width="230" height="99" rx="3" fill="#e5f3e5" stroke="#87919c" stroke-width="1.2"/>
-<text x="830.0" y="662" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">EHRbase</text>
-<text x="830.0" y="689" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR-representasjon</text>
-<text x="830.0" y="714" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Lagrer og henter</text>
-<rect x="1000" y="633" width="160" height="99" rx="3" fill="#fff3cd" stroke="#87919c" stroke-width="1.2"/>
-<text x="1080.0" y="662" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">PostgreSQL</text>
-<text x="1080.0" y="689" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Persistent</text>
-<text x="1080.0" y="714" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">lagring</text>
-<polyline points="420,209 420,285" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)" marker-start="url(#neutral)"/>
-<polyline points="540,330 715,330" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<text x="627" y="316" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">Push · FHIR</text>
-<polyline points="830,390 830,467" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<text x="847" y="432" font-size="17" fill="#a54b13" font-weight="400" text-anchor="start">Subscription</text>
-<polyline points="420,390 420,511 715,511" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" marker-start="url(#pull)"/>
-<text x="558" y="470" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Pull · separat uthentingsvei</text>
-<text x="558" y="493" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Forespørsel / svar</text>
-<polyline points="830,554 830,633" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)" marker-start="url(#neutral)"/>
-<text x="847" y="596" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Lagre / hente</text>
-<polyline points="945,682 1000,682" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)" marker-start="url(#neutral)"/>
-<text x="30" y="792" font-size="18" fill="#526477" font-weight="400" text-anchor="start">HAPI FHIR bruker også PostgreSQL for tjenestedata. Docker Compose samordnet testmiljøet.</text>
+<rect width="1200" height="790" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Implementert arkitektur</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Samme komponenter, to forskjellige veier gjennom løsningen</text>
+<text x="30" y="112" font-size="20" fill="#a54b13" font-weight="700" text-anchor="start">PUSH · ny treningsinformasjon</text>
+<rect x="470" y="127" width="710" height="296" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2" stroke-dasharray="8 6"/>
+<text x="490" y="153" font-size="17" fill="#526477" font-weight="700" text-anchor="start">Simulert EPJ-miljø</text>
+<rect x="30" y="185" width="210" height="90" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="135.0" y="214" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Kilde</text>
+<text x="135.0" y="241" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Treningsdata</text>
+<rect x="260" y="185" width="210" height="90" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="365.0" y="214" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsklient</text>
+<text x="365.0" y="241" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Validerer / mapper</text>
+<rect x="490" y="185" width="210" height="90" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="595.0" y="214" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">HAPI FHIR</text>
+<text x="595.0" y="241" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Lagrer FHIR</text>
+<rect x="720" y="185" width="210" height="90" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="825.0" y="214" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Bridge / mapping</text>
+<text x="825.0" y="241" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">FHIR → openEHR</text>
+<rect x="950" y="185" width="210" height="90" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="1055.0" y="214" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">EHRbase</text>
+<text x="1055.0" y="241" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR repository</text>
+<polyline points="240,230 260,230" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<polyline points="470,230 490,230" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<polyline points="930,230 950,230" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<polyline points="595,185 595,170 825,170 825,185" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="785" y="158" font-size="16" fill="#a54b13" font-weight="400" text-anchor="middle">Subscription / event</text>
+<rect x="605" y="340" width="410" height="65" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="810.0" y="369" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">PostgreSQL</text>
+<text x="810.0" y="396" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Underliggende persistens</text>
+<polyline points="595,275 595,372 605,372" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<polyline points="1055,275 1055,372 1015,372" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="285" y="303" font-size="17" fill="#a54b13" font-weight="400" text-anchor="start">Input → FHIR</text>
+<text x="30" y="472" font-size="20" fill="#08776f" font-weight="700" text-anchor="start">PULL · konsumenten ber om klinisk kontekst</text>
+<rect x="630" y="492" width="550" height="222" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2" stroke-dasharray="8 6"/>
+<text x="648" y="518" font-size="17" fill="#526477" font-weight="700" text-anchor="start">Simulert EPJ-miljø</text>
+<rect x="30" y="570" width="210" height="90" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="135.0" y="599" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Konsument</text>
+<text x="135.0" y="626" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Data / tom respons</text>
+<rect x="340" y="570" width="210" height="90" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="445.0" y="599" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsklient</text>
+<text x="445.0" y="626" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Validerer / mapper</text>
+<rect x="650" y="570" width="210" height="90" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="755.0" y="599" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Bridge / uthenting</text>
+<text x="755.0" y="626" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">AQL / mapping</text>
+<rect x="950" y="570" width="210" height="90" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="1055.0" y="599" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">EHRbase</text>
+<text x="1055.0" y="626" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR-kontekst</text>
+<polyline points="240,588 340,588" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<polyline points="340,642 240,642" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<polyline points="550,588 650,588" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<polyline points="650,642 550,642" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<polyline points="860,588 950,588" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<polyline points="950,642 860,642" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="600" y="550" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Separat forespørselsstyrt uthentingsvei</text>
+<text x="285" y="688" font-size="16" fill="#08776f" font-weight="400" text-anchor="middle">Konsumentformat</text>
+<text x="600" y="688" font-size="16" fill="#08776f" font-weight="400" text-anchor="middle">FHIR</text>
+<text x="905" y="688" font-size="16" fill="#08776f" font-weight="400" text-anchor="middle">openEHR</text>
+<text x="30" y="749" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Stiplet grønn: forespørsel. Heltrukket grønn: respons. HAPI FHIR inngår ikke i implementert pull.</text>
+<text x="30" y="776" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Komponentene er vist på nytt for pull. Persistensen er den samme som i øvre del.</text>
 </g></svg>

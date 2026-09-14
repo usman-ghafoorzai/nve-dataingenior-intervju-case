@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+<title id="title">Kode, modeller og konfigurasjon</title><desc id="desc">API-grensen delegerer til service som koordinerer mapper og adapter. Push modelleres som input til FHIR til openEHR/template. Pull går fra openEHR via FHIR til konsumentformat. Miljøkonfigurasjon er separat fra forretningslogikk.</desc>
+<defs>
+<marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
+<marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
+<marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
+</defs><g font-family="Arial, Helvetica, sans-serif">
+<rect width="1200" height="650" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Kode, modeller og konfigurasjon</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Ulike ansvar krever tydelige grenser og eksplisitte modellskifter</text>
+<rect x="20" y="105" width="1160" height="185" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="38" y="134" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">Kode · integrasjonsklient</text>
+<rect x="40" y="175" width="230" height="80" rx="3" fill="#ffffff" stroke="#87919c" stroke-width="1.2"/>
+<text x="155.0" y="204" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">API-grense</text>
+<text x="155.0" y="231" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Controller / DTO</text>
+<rect x="350" y="175" width="230" height="80" rx="3" fill="#ffffff" stroke="#87919c" stroke-width="1.2"/>
+<text x="465.0" y="204" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Service</text>
+<text x="465.0" y="231" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Koordinerer brukstilfelle</text>
+<rect x="680" y="150" width="220" height="65" rx="3" fill="#ffffff" stroke="#87919c" stroke-width="1.2"/>
+<text x="790.0" y="179" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Mapper</text>
+<text x="790.0" y="206" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Transformasjon</text>
+<rect x="950" y="210" width="210" height="65" rx="3" fill="#ffffff" stroke="#87919c" stroke-width="1.2"/>
+<text x="1055.0" y="239" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Adapter / klient</text>
+<text x="1055.0" y="266" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Ekstern kommunikasjon</text>
+<polyline points="270,215 350,215" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<polyline points="580,195 630,195 630,182 680,182" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<polyline points="580,235 630,235 630,265 920,265 920,242 950,242" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<rect x="20" y="325" width="1160" height="175" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="38" y="354" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">Modeller · to retninger, forskjellige datasett</text>
+<text x="40" y="403" font-size="19" fill="#a54b13" font-weight="700" text-anchor="start">Push</text>
+<text x="300" y="403" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Input / DTO</text>
+<text x="650" y="403" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">FHIR</text>
+<text x="1000" y="403" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">openEHR / template</text>
+<polyline points="440,396 535,396" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<polyline points="725,396 835,396" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="40" y="465" font-size="19" fill="#08776f" font-weight="700" text-anchor="start">Pull</text>
+<text x="300" y="465" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">openEHR-data</text>
+<text x="650" y="465" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">FHIR</text>
+<text x="1000" y="465" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Konsumentformat</text>
+<polyline points="440,458 535,458" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<polyline points="725,458 835,458" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="20" y="540" width="1160" height="85" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="40" y="571" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">Konfigurasjon · separat fra forretningslogikken</text>
+<text x="40" y="603" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Docker Compose koordinerer EPJ-tjenestene. Miljø og testdata klargjøres for repeterbar verifikasjon.</text>
+</g></svg>

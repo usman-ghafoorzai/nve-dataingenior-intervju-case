@@ -1,50 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="543" viewBox="0 0 1200 543" role="img" aria-labelledby="title desc">
-<title id="title">Pull – fra klinisk kontekst til konsument</title><desc id="desc">Forespørselen inneholder valgt pasient og kjent oppdateringstid. Etter validering koordineres journaloppslag og tidsfiltrert AQL-uthenting. openEHR-konteksten transformeres til FHIR og videre til konsumentformat. Ingen nye data gir en tom liste.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1080" viewBox="0 0 1200 1080" role="img" aria-labelledby="title desc">
+<title id="title">Pull – faktisk forespørsel og respons</title><desc id="desc">Konsumenten ber om pasientens oppdateringer. Klienten validerer og sender til bridge-laget. Bridge-laget koordinerer journaloppslag og tidsfiltrert AQL mot EHRbase. Resultatet parses og mappes til FHIR. Klienten mapper til konsumentformat og returnerer data eller tom liste. Verifikasjon av utvalg og respons er separat.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
-<rect width="1200" height="543" rx="0" fill="#ffffff"/>
-<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Pull – fra klinisk kontekst til konsument</text>
-<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Konsumenten initierer en forespørsel om utvalgt kontekst</text>
-<rect x="20" y="99" width="1160" height="175" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
-<text x="38" y="128" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Forespørsel og uthenting</text>
-<rect x="20" y="322" width="1160" height="172" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
-<text x="38" y="350" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Klinisk kontekst tilbake til konsumenten</text>
-<rect x="40" y="153" width="280" height="99" rx="3" fill="#fff3cd" stroke="#87919c" stroke-width="1.2"/>
-<text x="180.0" y="182" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Konsument</text>
-<text x="180.0" y="209" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Valgt pasient</text>
-<text x="180.0" y="234" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Sist kjente oppdatering</text>
-<rect x="460" y="153" width="280" height="99" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
-<text x="600.0" y="182" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsgrense</text>
-<text x="600.0" y="209" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Validerer forespørselen</text>
-<text x="600.0" y="234" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Koordinerer kall</text>
-<rect x="880" y="153" width="280" height="99" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
-<text x="1020.0" y="182" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Uthentingslag</text>
-<text x="1020.0" y="209" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Journaloppslag</text>
-<text x="1020.0" y="234" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">AQL / tidsfiltrering</text>
-<rect x="880" y="370" width="280" height="99" rx="3" fill="#e5f3e5" stroke="#87919c" stroke-width="1.2"/>
-<text x="1020.0" y="399" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Klinisk repository</text>
-<text x="1020.0" y="426" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Strukturert klinisk kontekst</text>
-<text x="1020.0" y="451" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR</text>
-<rect x="460" y="370" width="280" height="99" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
-<text x="600.0" y="399" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Mapping</text>
-<text x="600.0" y="426" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR → FHIR</text>
-<text x="600.0" y="451" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Legemiddelkontekst</text>
-<rect x="40" y="370" width="280" height="99" rx="3" fill="#dff2e2" stroke="#87919c" stroke-width="1.2"/>
-<text x="180.0" y="399" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Respons via grensen</text>
-<text x="180.0" y="426" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">FHIR → konsumentformat</text>
-<text x="180.0" y="451" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Data eller tom liste</text>
-<polyline points="320,203 460,203" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<text x="390" y="187" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Forespørsel</text>
-<polyline points="740,203 880,203" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<text x="810" y="187" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Pasient / tid</text>
-<polyline points="1020,252 1020,370" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<text x="1036" y="303" font-size="17" fill="#08776f" font-weight="400" text-anchor="start">Uthenting</text>
-<polyline points="880,419 740,419" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<text x="810" y="405" font-size="18" fill="#08776f" font-weight="400" text-anchor="middle">openEHR</text>
-<polyline points="460,419 320,419" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<text x="390" y="405" font-size="18" fill="#08776f" font-weight="400" text-anchor="middle">FHIR</text>
-<text x="30" y="524" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Verifikasjon: riktig utvalg, tidsfilter og respons. Integrasjonsgrensen har ingen egen polling.</text>
+<rect width="1200" height="1080" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Pull – faktisk forespørsel og respons</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Klinisk kontekst ut · stiplet forespørsel, heltrukket respons</text>
+<rect x="20" y="110" width="260" height="840" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="150" y="145" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Konsument</text>
+<text x="150" y="170" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Initierer</text>
+<rect x="320" y="110" width="260" height="840" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="450" y="145" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsklient</text>
+<text x="450" y="170" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Validerer / mapper</text>
+<rect x="620" y="110" width="260" height="840" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="750" y="145" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Bridge / uthenting</text>
+<text x="750" y="170" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Oppslag / mapping</text>
+<rect x="920" y="110" width="260" height="840" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="1050" y="145" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">EHRbase</text>
+<text x="1050" y="170" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Klinisk repository</text>
+<rect x="25" y="195" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="140" y="222" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Ber om oppdateringer</text>
+<text x="140" y="247" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Pasient og tidspunkt</text>
+<polyline points="140,295 440,295" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<text x="290.0" y="283" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Forespørsel</text>
+<rect x="325" y="315" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="440" y="342" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Validerer forespørsel</text>
+<text x="440" y="367" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Service / adapter</text>
+<polyline points="440,415 740,415" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<text x="590.0" y="403" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Uthentingsbehov</text>
+<rect x="625" y="435" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="740" y="462" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Koordinerer oppslag</text>
+<text x="740" y="487" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Finner pasientens journal</text>
+<polyline points="740,535 1040,535" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<text x="890.0" y="523" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">AQL / tidsfilter</text>
+<rect x="925" y="555" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="1040" y="582" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Henter klinisk kontekst</text>
+<text x="1040" y="607" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Lagret openEHR</text>
+<polyline points="1040,655 740,655" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="890.0" y="643" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Resultat fra repository</text>
+<rect x="625" y="675" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="740" y="702" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Parser resultatet</text>
+<text x="740" y="727" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Mapper til FHIR</text>
+<polyline points="740,775 440,775" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="590.0" y="763" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">FHIR-basert respons</text>
+<rect x="325" y="795" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="440" y="822" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Mapper til</text>
+<text x="440" y="847" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">konsumentformat</text>
+<polyline points="440,910 140,910" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="290.0" y="898" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Data eller tom liste</text>
+<rect x="20" y="985" width="1160" height="70" rx="3" fill="#f2f3f5" stroke="#87919c" stroke-width="1.2" stroke-dasharray="8 6"/>
+<text x="40" y="1013" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">VERIFIKASJON · riktig utvalg, tidsfilter, transformasjon og respons</text>
+<text x="40" y="1040" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Separate tester og API-/AQL-kontroller. Konsumenten styrer når den spør; ingen egen polling i klienten.</text>
 </g></svg>
