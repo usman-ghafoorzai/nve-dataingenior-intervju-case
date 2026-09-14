@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="575" viewBox="0 0 1200 575" role="img" aria-labelledby="title desc">
+<title id="title">Use Case</title><desc id="desc">Kildeapplikasjonen overfører treningsdata til strukturert lagring. Konsumenten henter relevant klinisk kontekst. Det simulerte EPJ-miljøet deltar som støttesystem for begge handlinger.</desc>
+<defs>
+<marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
+<marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
+<marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
+</defs><g font-family="Arial, Helvetica, sans-serif">
+<rect width="1200" height="575" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Use Case</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Hvem trenger å gjøre hva?</text>
+<rect x="300" y="100" width="555" height="405" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="577" y="135" font-size="22" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsløsning</text>
+<circle cx="130" cy="163" r="17" fill="#ffffff" stroke="#a54b13" stroke-width="3"/>
+<polyline points="130,180 130,232" fill="none" stroke="#444444" stroke-width="2"/>
+<polyline points="99,200 161,200" fill="none" stroke="#444444" stroke-width="2"/>
+<polyline points="101,272 130,232 159,272" fill="none" stroke="#444444" stroke-width="2"/>
+<text x="130" y="303" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Kildeapplikasjon</text>
+<circle cx="130" cy="356" r="17" fill="#ffffff" stroke="#08776f" stroke-width="3"/>
+<polyline points="130,373 130,425" fill="none" stroke="#444444" stroke-width="2"/>
+<polyline points="99,393 161,393" fill="none" stroke="#444444" stroke-width="2"/>
+<polyline points="101,465 130,425 159,465" fill="none" stroke="#444444" stroke-width="2"/>
+<text x="130" y="496" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Konsument</text>
+<rect x="948" y="260" width="222" height="110" rx="3" fill="#fff3cd" stroke="#87919c" stroke-width="1.2"/>
+<text x="1059.0" y="309.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Simulert</text>
+<text x="1059.0" y="334.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">EPJ-miljø</text>
+<polyline points="130,232 377,232" fill="none" stroke="#444444" stroke-width="2"/>
+<polyline points="130,425 377,425" fill="none" stroke="#444444" stroke-width="2"/>
+<polyline points="778,232 905,232 905,292 948,292" fill="none" stroke="#444444" stroke-width="2"/>
+<polyline points="778,425 905,425 905,340 948,340" fill="none" stroke="#444444" stroke-width="2"/>
+<ellipse cx="577" cy="232" rx="200" ry="61" fill="#ffe6c9" stroke="#a54b13" stroke-width="2"/>
+<text x="577" y="225" font-size="22" fill="#172b44" font-weight="400" text-anchor="middle">Overføre treningsdata</text>
+<text x="577" y="250" font-size="22" fill="#172b44" font-weight="400" text-anchor="middle">til strukturert lagring</text>
+<ellipse cx="577" cy="425" rx="200" ry="61" fill="#dff2e2" stroke="#08776f" stroke-width="2"/>
+<text x="577" y="418" font-size="22" fill="#172b44" font-weight="400" text-anchor="middle">Hente relevant</text>
+<text x="577" y="443" font-size="22" fill="#172b44" font-weight="400" text-anchor="middle">klinisk kontekst</text>
+<text x="30" y="550" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Aktørene viser systemroller. Samme applikasjon kan være både kilde og konsument.</text>
+</g></svg>

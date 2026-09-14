@@ -1,4 +1,4 @@
-"""Lag fem selvstendige SVG-diagrammer fra sanitiserte begreper.
+"""Lag sju selvstendige SVG-diagrammer fra sanitiserte begreper.
 
 Krever bare Python 3. Ingen private filer eller nettverk brukes.
 """
@@ -59,31 +59,121 @@ def end(name):
     (OUT / name).write_text("\n".join(PARTS) + "\n", encoding="utf-8")
 
 
+def sheet(title, subtitle, height, description):
+    begin(title, subtitle, height, description)
+    PARTS[0] = PARTS[0].replace('width="1040"', 'width="1200"').replace('1040 ', '1200 ')
+    # Samme hvite flate, svart overskrift og diskrete rammer i alle analysefigurene.
+    for i, part in enumerate(PARTS):
+        if '<rect width="1040"' in part:
+            PARTS[i] = part.replace('1040', '1200').replace('rx="16"', 'rx="0"')
+        elif '<text x="30" y="37"' in part:
+            PARTS[i] = part.replace('font-size="25"', 'font-size="30"').replace(INK, '#111111')
+
+
+def panel(x, y, w, h, fill="#eaf3ff", dashed=False):
+    dash = ' stroke-dasharray="8 6"' if dashed else ''
+    PARTS.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="3" '
+                 f'fill="{fill}" stroke="#87919c" stroke-width="1.2"{dash}/>')
+
+
+def centered(x, y, lines, size=19, weight=400, color=INK):
+    for i, line in enumerate(lines):
+        text(x, y + i * 25, line, size, color, weight, "middle")
+
+
+def concept(x, y, w, h, lines, fill="#dcecff"):
+    panel(x, y, w, h, fill)
+    centered(x + w / 2, y + h / 2 - (len(lines)-1)*12.5 + 7, lines, 20, 700)
+
+
+def association(points, label=None, lx=0, ly=0):
+    pts = " ".join(f"{x},{y}" for x, y in points)
+    PARTS.append(f'<polyline points="{pts}" fill="none" stroke="#444444" stroke-width="2"/>')
+    if label:
+        text(lx, ly, label, 17, MUTED, anchor="middle")
+
+
+def actor(x, y, label, color):
+    PARTS.append(f'<circle cx="{x}" cy="{y}" r="17" fill="#ffffff" stroke="{color}" stroke-width="3"/>')
+    association([(x, y+17), (x, y+69)])
+    association([(x-31, y+37), (x+31, y+37)])
+    association([(x-29, y+109), (x, y+69), (x+29, y+109)])
+    text(x, y+140, label, 20, weight=700, anchor="middle")
+
+
+def use_case():
+    sheet("Use Case", "Hvem trenger å gjøre hva?", 575,
+          "Kildeapplikasjonen overfører treningsdata til strukturert lagring. Konsumenten henter relevant "
+          "klinisk kontekst. Det simulerte EPJ-miljøet deltar som støttesystem for begge handlinger.")
+    panel(300, 100, 555, 405)
+    centered(577, 135, ["Integrasjonsløsning"], 22, 700)
+    actor(130, 163, "Kildeapplikasjon", PUSH)
+    actor(130, 356, "Konsument", PULL)
+    concept(948, 260, 222, 110, ["Simulert", "EPJ-miljø"], "#fff3cd")
+    association([(130, 232), (377, 232)])
+    association([(130, 425), (377, 425)])
+    association([(778, 232), (905, 232), (905, 292), (948, 292)])
+    association([(778, 425), (905, 425), (905, 340), (948, 340)])
+    for cy, lines, color, fill in [(232, ["Overføre treningsdata", "til strukturert lagring"], PUSH, "#ffe6c9"),
+                                   (425, ["Hente relevant", "klinisk kontekst"], PULL, "#dff2e2")]:
+        PARTS.append(f'<ellipse cx="577" cy="{cy}" rx="200" ry="61" fill="{fill}" stroke="{color}" stroke-width="2"/>')
+        centered(577, cy-7, lines, 22)
+    text(30, 550, "Aktørene viser systemroller. Samme applikasjon kan være både kilde og konsument.", 18, MUTED)
+    end("02-use-case.svg")
+
+
 def domain():
-    begin("Domene og data", "Begrepsmodell · syntetiske scenarioer · ingen database- eller API-modell", 435,
-          "En pasient gjennomfører økter som gir treningsdata. Kildeapplikasjonen produserer treningsdata "
-          "og ber om klinisk kontekst. EPJ-miljøet inneholder konteksten. Helsepersonell er tiltenkt bruker.")
-    box(30, 113, 190, 90, "Pasient", ["Syntetisk identitet"])
-    box(330, 113, 240, 90, "Treningsøkt", ["Én pasient per økt"])
-    box(710, 113, 300, 90, "Treningsdata", ["Resultater fra økten"])
-    box(30, 288, 250, 90, "Klinisk kontekst", ["Legemiddelinformasjon"])
-    box(385, 288, 265, 90, "Simulert EPJ-miljø", ["Inneholder konteksten"])
-    box(760, 288, 250, 90, "Kildeapplikasjon", ["Også konsument"])
-    arrow([(220, 153), (330, 153)])
-    text(275, 137, "har økter", 16, MUTED, anchor="middle")
-    arrow([(570, 153), (710, 153)])
-    text(640, 137, "gir", 16, MUTED, anchor="middle")
-    arrow([(125, 288), (125, 203)])
-    text(140, 250, "gjelder", 16, MUTED)
-    arrow([(385, 333), (280, 333)])
-    text(333, 317, "inneholder", 16, MUTED, anchor="middle")
-    arrow([(885, 288), (885, 203)])
-    text(899, 250, "produserer", 16, MUTED)
-    arrow([(760, 333), (650, 333)])
-    text(705, 309, "ber om", 16, MUTED, anchor="middle")
-    text(705, 329, "kontekst", 16, MUTED, anchor="middle")
-    text(30, 413, "Helsepersonell er tiltenkt bruker av informasjonen; klinisk bruk ble ikke evaluert.", 17, MUTED)
-    end("01-domene.svg")
+    sheet("Domenemodell", "Hvilke begreper og data handler flytene om?", 540,
+          "En pasient gjennomfører treningsøkter som gir treningsdata. Kildeapplikasjonen produserer "
+          "dataene. Klinisk kontekst gjelder pasienten og finnes i det simulerte EPJ-miljøet.")
+    concept(35, 130, 225, 90, ["Pasient"], "#dcecff")
+    concept(410, 130, 240, 90, ["Treningsøkt"], "#fff2bf")
+    concept(860, 130, 305, 90, ["Treningsdata"], "#f6dde2")
+    concept(35, 325, 260, 95, ["Klinisk kontekst", "(legemiddelinformasjon)"], "#eaddf4")
+    concept(440, 325, 290, 95, ["Simulert EPJ-miljø"], "#dff0df")
+    concept(890, 325, 275, 95, ["Kildeapplikasjon", "(også konsument)"], "#dcecff")
+    arrow([(260, 175), (410, 175)])
+    text(335, 158, "gjennomfører", 18, MUTED, anchor="middle")
+    arrow([(650, 175), (860, 175)])
+    text(755, 158, "gir", 18, MUTED, anchor="middle")
+    arrow([(148, 325), (148, 220)])
+    text(166, 274, "gjelder", 18, MUTED)
+    arrow([(440, 372), (295, 372)])
+    text(367, 355, "inneholder", 18, MUTED, anchor="middle")
+    arrow([(1027, 325), (1027, 220)])
+    text(1045, 274, "produserer", 18, MUTED)
+    arrow([(165, 420), (165, 475), (1027, 475), (1027, 420)])
+    text(590, 461, "kan brukes av", 18, MUTED, anchor="middle")
+    text(30, 522, "Hver økt gjelder én pasient. Helsepersonell er tiltenkt bruker; klinisk bruk ble ikke evaluert.", 18, MUTED)
+    end("03-domene.svg")
+
+
+def information():
+    sheet("Informasjonsflyt", "Hvilken informasjon skal flyte hvor?", 568,
+          "Treningsdata går fra kilde via integrasjonsgrensen til EPJ. Konsumenten ber om klinisk "
+          "kontekst og får denne tilbake via integrasjonsgrensen. Dette er forskjellige datasett.")
+    for x, w, label, fill in [(30, 255, "Kilde / konsument", "#eaf3ff"),
+                              (465, 260, "Integrasjonsgrense", "#f0eafa"),
+                              (905, 265, "Simulert EPJ-miljø", "#e8f3e8")]:
+        panel(x, 110, w, 372, fill)
+        text(x+w/2, 144, label, 21, weight=700, anchor="middle")
+    centered(157, 213, ["Treningsdata", "oppstår her"], 20, 700)
+    centered(595, 213, ["Formidler", "treningsdata"], 20, 700)
+    centered(1037, 213, ["Treningsdata", "lagres strukturert"], 20, 700)
+    for a,b in [(285,465),(725,905)]:
+        arrow([(a, 247), (b, 247)], "push")
+        text((a+b)/2, 230, "Treningsdata", 18, PUSH, anchor="middle")
+    centered(157, 393, ["Konsumenten trenger", "klinisk kontekst"], 20, 700)
+    centered(595, 393, ["Formidler utvalgt", "klinisk kontekst"], 20, 700)
+    centered(1037, 393, ["Klinisk kontekst", "finnes her"], 20, 700)
+    for a,b in [(285,465),(725,905)]:
+        arrow([(a, 320), (b, 320)], "pull", dashed=True)
+        text((a+b)/2, 303, "Ber om kontekst", 17, PULL, anchor="middle")
+        arrow([(b, 445), (a, 445)], "pull")
+        text((a+b)/2, 430, "Klinisk kontekst", 17, PULL, anchor="middle")
+    text(30, 523, "Heltrukket pil: dataretning. Stiplet pil: forespørselen som initierer pull.", 18, MUTED)
+    text(30, 550, "Pull gjelder legemiddelkontekst, ikke en retur av treningsdataene fra push.", 18, MUTED)
+    end("04-informasjonsflyt.svg")
 
 
 def architecture():
@@ -110,7 +200,7 @@ def architecture():
     arrow([(772, 387), (812, 387)], both=True)
     text(582, 483, "PostgreSQL: persistens for EPJ-tjenestene", 17, MUTED)
     text(30, 554, "Pull går direkte til uthentingslaget. Docker Compose samordnet det lokale miljøet.", 17, MUTED)
-    end("02-arkitektur.svg")
+    end("05-arkitektur.svg")
 
 
 def flow(name, title, subtitle, labels, color, fill, kind, footer, desc):
@@ -151,13 +241,15 @@ def quality():
             if i < 3:
                 arrow([(x + 225, y + 50), (x + 255, y + 50)], kind)
     text(30, 377, "Unit tests og API-tester + lokal E2E og manuell kontroll. Full-stack E2E var utenfor standard CI.", 17, MUTED)
-    end("05-datakvalitet.svg")
+    end("08-datakvalitet.svg")
 
 
 if __name__ == "__main__":
+    use_case()
     domain()
+    information()
     architecture()
-    flow("03-push.svg", "Push: nye treningsdata inn", "Initiert av kilden · les øvre rad mot høyre, deretter ned og tilbake", [
+    flow("06-push.svg", "Push: nye treningsdata inn", "Initiert av kilden · les øvre rad mot høyre, deretter ned og tilbake", [
         ("Kilden sender", ["Syntetiske øktdata", "Knyttet til pasient"]),
         ("Integrasjonsgrense", ["Validerer input", "Kildeformat → FHIR"]),
         ("FHIR-server", ["Lagrer ressurs", "Subscription videresender"]),
@@ -168,7 +260,7 @@ if __name__ == "__main__":
          "Kvittering ved innsending og kontroll av ferdig lagring er ulike verifikasjonspunkter.",
          "Syntetiske treningsdata går fra kilde via inputvalidering og FHIR-representasjon til "
          "Subscription, mapping til openEHR, lagring og kontroll av faktisk resultat.")
-    flow("04-pull.svg", "Pull: klinisk kontekst tilbake", "Initiert av konsumenten · les øvre rad mot høyre, deretter ned og tilbake", [
+    flow("07-pull.svg", "Pull: klinisk kontekst tilbake", "Initiert av konsumenten · les øvre rad mot høyre, deretter ned og tilbake", [
         ("Konsumenten spør", ["Valgt pasient", "Sist kjente oppdatering"]),
         ("Integrasjonsgrense", ["Validerer forespørselen", "Koordinerer uthenting"]),
         ("Uthentingslag", ["Journaloppslag / tidsfilter", "AQL-basert uthenting"]),
@@ -180,4 +272,4 @@ if __name__ == "__main__":
          "En validert forespørsel går til uthentingslaget og repositoryet. Utvalgt klinisk kontekst "
          "transformeres fra openEHR via FHIR til konsumentformat. Ingen nye data gir tom liste.")
     quality()
-    print("Opprettet fem SVG-diagrammer i docs/diagrammer/.")
+    print("Opprettet sju SVG-diagrammer i docs/diagrammer/.")

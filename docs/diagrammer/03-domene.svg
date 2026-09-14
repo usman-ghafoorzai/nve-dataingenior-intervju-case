@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">
+<title id="title">Domenemodell</title><desc id="desc">En pasient gjennomfører treningsøkter som gir treningsdata. Kildeapplikasjonen produserer dataene. Klinisk kontekst gjelder pasienten og finnes i det simulerte EPJ-miljøet.</desc>
+<defs>
+<marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
+<marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
+<marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
+</defs><g font-family="Arial, Helvetica, sans-serif">
+<rect width="1200" height="540" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Domenemodell</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Hvilke begreper og data handler flytene om?</text>
+<rect x="35" y="130" width="225" height="90" rx="3" fill="#dcecff" stroke="#87919c" stroke-width="1.2"/>
+<text x="147.5" y="182.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Pasient</text>
+<rect x="410" y="130" width="240" height="90" rx="3" fill="#fff2bf" stroke="#87919c" stroke-width="1.2"/>
+<text x="530.0" y="182.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Treningsøkt</text>
+<rect x="860" y="130" width="305" height="90" rx="3" fill="#f6dde2" stroke="#87919c" stroke-width="1.2"/>
+<text x="1012.5" y="182.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Treningsdata</text>
+<rect x="35" y="325" width="260" height="95" rx="3" fill="#eaddf4" stroke="#87919c" stroke-width="1.2"/>
+<text x="165.0" y="367.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Klinisk kontekst</text>
+<text x="165.0" y="392.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">(legemiddelinformasjon)</text>
+<rect x="440" y="325" width="290" height="95" rx="3" fill="#dff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="585.0" y="379.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Simulert EPJ-miljø</text>
+<rect x="890" y="325" width="275" height="95" rx="3" fill="#dcecff" stroke="#87919c" stroke-width="1.2"/>
+<text x="1027.5" y="367.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Kildeapplikasjon</text>
+<text x="1027.5" y="392.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">(også konsument)</text>
+<polyline points="260,175 410,175" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="335" y="158" font-size="18" fill="#526477" font-weight="400" text-anchor="middle">gjennomfører</text>
+<polyline points="650,175 860,175" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="755" y="158" font-size="18" fill="#526477" font-weight="400" text-anchor="middle">gir</text>
+<polyline points="148,325 148,220" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="166" y="274" font-size="18" fill="#526477" font-weight="400" text-anchor="start">gjelder</text>
+<polyline points="440,372 295,372" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="367" y="355" font-size="18" fill="#526477" font-weight="400" text-anchor="middle">inneholder</text>
+<polyline points="1027,325 1027,220" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="1045" y="274" font-size="18" fill="#526477" font-weight="400" text-anchor="start">produserer</text>
+<polyline points="165,420 165,475 1027,475 1027,420" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="590" y="461" font-size="18" fill="#526477" font-weight="400" text-anchor="middle">kan brukes av</text>
+<text x="30" y="522" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Hver økt gjelder én pasient. Helsepersonell er tiltenkt bruker; klinisk bruk ble ikke evaluert.</text>
+</g></svg>

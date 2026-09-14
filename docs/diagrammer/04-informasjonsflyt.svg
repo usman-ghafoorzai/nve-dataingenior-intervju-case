@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="568" viewBox="0 0 1200 568" role="img" aria-labelledby="title desc">
+<title id="title">Informasjonsflyt</title><desc id="desc">Treningsdata går fra kilde via integrasjonsgrensen til EPJ. Konsumenten ber om klinisk kontekst og får denne tilbake via integrasjonsgrensen. Dette er forskjellige datasett.</desc>
+<defs>
+<marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
+<marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
+<marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
+</defs><g font-family="Arial, Helvetica, sans-serif">
+<rect width="1200" height="568" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Informasjonsflyt</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Hvilken informasjon skal flyte hvor?</text>
+<rect x="30" y="110" width="255" height="372" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="157.5" y="144" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">Kilde / konsument</text>
+<rect x="465" y="110" width="260" height="372" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="595.0" y="144" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsgrense</text>
+<rect x="905" y="110" width="265" height="372" rx="3" fill="#e8f3e8" stroke="#87919c" stroke-width="1.2"/>
+<text x="1037.5" y="144" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">Simulert EPJ-miljø</text>
+<text x="157" y="213" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Treningsdata</text>
+<text x="157" y="238" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">oppstår her</text>
+<text x="595" y="213" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Formidler</text>
+<text x="595" y="238" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">treningsdata</text>
+<text x="1037" y="213" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Treningsdata</text>
+<text x="1037" y="238" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">lagres strukturert</text>
+<polyline points="285,247 465,247" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="375.0" y="230" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">Treningsdata</text>
+<polyline points="725,247 905,247" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="815.0" y="230" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">Treningsdata</text>
+<text x="157" y="393" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Konsumenten trenger</text>
+<text x="157" y="418" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">klinisk kontekst</text>
+<text x="595" y="393" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Formidler utvalgt</text>
+<text x="595" y="418" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">klinisk kontekst</text>
+<text x="1037" y="393" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Klinisk kontekst</text>
+<text x="1037" y="418" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">finnes her</text>
+<polyline points="285,320 465,320" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<text x="375.0" y="303" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Ber om kontekst</text>
+<polyline points="465,445 285,445" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="375.0" y="430" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Klinisk kontekst</text>
+<polyline points="725,320 905,320" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<text x="815.0" y="303" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Ber om kontekst</text>
+<polyline points="905,445 725,445" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="815.0" y="430" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Klinisk kontekst</text>
+<text x="30" y="523" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Heltrukket pil: dataretning. Stiplet pil: forespørselen som initierer pull.</text>
+<text x="30" y="550" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Pull gjelder legemiddelkontekst, ikke en retur av treningsdataene fra push.</text>
+</g></svg>

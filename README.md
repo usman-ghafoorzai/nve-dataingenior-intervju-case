@@ -36,11 +36,13 @@ Behovene har to initiativtakere: kildeapplikasjonen sender treningsdata, mens ko
 
 Før vi velger tekniske mekanismer, må vi avklare hva hver aktør skal få utført. Integrasjonsløsningen skal støtte innsending til strukturert lagring og forespørsel om relevant klinisk kontekst. Det simulerte EPJ-miljøet deltar i begge handlingene.
 
+![Use Case: Kildeapplikasjonen overfører treningsdata til strukturert lagring; konsumenten henter klinisk kontekst. Begge bruker integrasjonsløsningen med støtte fra det simulerte EPJ-miljøet.](docs/diagrammer/02-use-case.svg)
+
 Handlingene forutsetter et felles begrepsgrunnlag: hva er en økt, hvem gjelder dataene, og hvilken kontekst trenger konsumenten?
 
 ## 2. Domene og data
 
-![Domenemodell: En pasient gjennomfører treningsøkter som gir treningsdata. Klinisk kontekst gjelder samme pasient. Helsepersonell er tiltenkt bruker av informasjonen.](docs/diagrammer/01-domene.svg)
+![Domenemodell: En pasient gjennomfører treningsøkter som gir treningsdata. Klinisk kontekst gjelder samme pasient. Helsepersonell er tiltenkt bruker av informasjonen.](docs/diagrammer/03-domene.svg)
 
 Modellen viser begreper og relasjoner. Hver økt tilhører én pasient i testscenarioet. Pull var avgrenset til **legemiddelinformasjon**, og denne ble opprettet som syntetiske testdata i EPJ-miljøet. Den var ikke et resultat av push-flyten.
 
@@ -51,6 +53,8 @@ Begrepene avklarer hva informasjonen gjelder. For å avgrense utvekslingen må v
 ## 3. Informasjonsflyt
 
 Informasjonsflyten knytter dataene til systemgrensene før transport og tekniske representasjoner velges.
+
+![Informasjonsflyt: Treningsdata går fra kilde til EPJ gjennom integrasjonsgrensen. Konsumenten ber om klinisk kontekst og får et annet datasett tilbake.](docs/diagrammer/04-informasjonsflyt.svg)
 
 **Push:** Kildeapplikasjonen sender treningsdata gjennom integrasjonsgrensen til det simulerte EPJ-miljøet. **Pull:** Konsumenten ber om klinisk kontekst fra EPJ-miljøet og får et utvalg tilbake gjennom samme grense.
 
@@ -71,7 +75,7 @@ Kravene gir konkrete oppgaver til løsningen: kontrollere input, skifte represen
 
 ## 5. Arkitektur og teknologier
 
-![Arkitektur: Integrasjonsgrensen sender push via FHIR-serveren til mapping og klinisk repository. Pull går direkte mellom integrasjonsgrensen og mapping- og uthentingslaget.](docs/diagrammer/02-arkitektur.svg)
+![Arkitektur: Integrasjonsgrensen sender push via FHIR-serveren til mapping og klinisk repository. Pull går direkte mellom integrasjonsgrensen og mapping- og uthentingslaget.](docs/diagrammer/05-arkitektur.svg)
 
 | Rolle | Teknologi og bruk i PoC-en |
 |---|---|
@@ -89,7 +93,7 @@ Komponentansvaret forklarer oppdelingen, men hver flyt må også vise hva som ut
 
 ### 6.1 Push – fra kildedata til strukturert lagring
 
-![Push: Syntetiske treningsdata valideres og representeres som FHIR, videresendes ved Subscription og transformeres til openEHR for lagring og kontroll.](docs/diagrammer/03-push.svg)
+![Push: Syntetiske treningsdata valideres og representeres som FHIR, videresendes ved Subscription og transformeres til openEHR for lagring og kontroll.](docs/diagrammer/06-push.svg)
 
 1. **Kilden sender:** En syntetisk pasient opprettes først. Treningsdata sendes med pasienttilknytning gjennom integrasjonsgrensen.
 2. **Grensen validerer og transformerer:** Input kontrolleres mot forventet struktur og representeres som en FHIR Observation.
@@ -102,7 +106,7 @@ Med treningsdata lagret er push-behovet dekket. Pull starter hos konsumenten, so
 
 ### 6.2 Pull – fra klinisk kontekst til konsument
 
-![Pull: Konsumenten ber om oppdateringer. Forespørselen valideres, klinisk kontekst hentes for pasient og tidspunkt, og resultatet transformeres via FHIR til konsumentformat.](docs/diagrammer/04-pull.svg)
+![Pull: Konsumenten ber om oppdateringer. Forespørselen valideres, klinisk kontekst hentes for pasient og tidspunkt, og resultatet transformeres via FHIR til konsumentformat.](docs/diagrammer/07-pull.svg)
 
 1. **Konsumenten spør:** Forespørselen angir pasient og sist kjente oppdateringstid. Integrasjonsgrensen validerer forespørselen.
 2. **Uthentingslaget finner data:** Pasienten knyttes til riktig journal i testmiljøet. AQL brukes til å hente strukturert legemiddelkontekst med tidsfiltrering.
@@ -127,7 +131,7 @@ Begge veiene inneholder flere representasjonsskifter. For å vurdere om de virke
 
 ## 7. Datakvalitet og verifisering
 
-![Datakvalitet: Validering og transformasjon kontrolleres i begge retninger, deretter kontrolleres lagring for push og uthenting for pull før sluttresultatet verifiseres.](docs/diagrammer/05-datakvalitet.svg)
+![Datakvalitet: Validering og transformasjon kontrolleres i begge retninger, deretter kontrolleres lagring for push og uthenting for pull før sluttresultatet verifiseres.](docs/diagrammer/08-datakvalitet.svg)
 
 **Kvalitet ble kontrollert på flere nivåer:**
 
