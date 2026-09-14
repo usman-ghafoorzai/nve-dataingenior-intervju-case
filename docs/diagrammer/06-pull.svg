@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1080" viewBox="0 0 1200 1080" role="img" aria-labelledby="title desc">
-<title id="title">Pull – faktisk forespørsel og respons</title><desc id="desc">Konsumenten ber om pasientens oppdateringer. Klienten validerer og sender til bridge-laget. Bridge-laget koordinerer journaloppslag og tidsfiltrert AQL mot EHRbase. Resultatet parses og mappes til FHIR. Klienten mapper til konsumentformat og returnerer data eller tom liste. Verifikasjon av utvalg og respons er separat.</desc>
+<title id="title">Pull – implementert flyt</title><desc id="desc">Konsumenten ber om pasientens oppdateringer. Klienten validerer og sender til bridge-laget. Bridge-laget koordinerer EHR-oppslag og tidsfiltrert AQL mot EHRbase. Resultatet parses og mappes til FHIR. Klienten mapper til konsumentformat og returnerer data eller tom liste. Verifikasjon av utvalg og respons er separat.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
 <rect width="1200" height="1080" rx="0" fill="#ffffff"/>
-<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Pull – faktisk forespørsel og respons</text>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Pull – implementert flyt</text>
 <text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Klinisk kontekst ut · stiplet forespørsel, heltrukket respons</text>
 <rect x="20" y="110" width="260" height="840" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
 <text x="150" y="145" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Konsument</text>
@@ -32,7 +32,7 @@
 <text x="590.0" y="403" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Uthentingsbehov</text>
 <rect x="625" y="435" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
 <text x="740" y="462" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Koordinerer oppslag</text>
-<text x="740" y="487" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Finner pasientens journal</text>
+<text x="740" y="487" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Finner pasientens EHR</text>
 <polyline points="740,535 1040,535" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
 <text x="890.0" y="523" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">AQL / tidsfilter</text>
 <rect x="925" y="555" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>

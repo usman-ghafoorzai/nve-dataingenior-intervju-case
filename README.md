@@ -1,14 +1,14 @@
-# NVE – 2. gangsintervju
+# NVE – Casepresentasjon
 
-**Usman Ghafoorzai**
+**2. gangsintervju · Usman Ghafoorzai**
 
 ## Case 1 – Strukturert datautveksling i to retninger
 
 Jeg tar utgangspunkt i **én interoperabilitetsløsning med to komplementære dataflyter** fra bachelorprosjektet: treningsdata inn til strukturert lagring og klinisk kontekst ut til konsumenten.
 
-Vi var to studenter som begge deltok gjennom hele prosjektløpet, fra behovsforståelse, forprosjekt og krav til modellering, arkitektur, implementasjon, testing og rapportering. Konkrete oppgaver ble fordelt underveis, og jeg arbeidet på tvers av analyse, design, implementasjon, verifikasjon og dokumentasjon.
+Vi var to studenter med felles ansvar for framdrift og kvalitet, og arbeidsformen var lagt opp slik at begge bidro til teknisk utvikling, dokumentasjon og kvalitetssikring gjennom prosjektet. Jeg arbeidet på tvers av analyse, design, implementasjon, testing/verifikasjon og rapportering.
 
-> **Ramme:** Lokal PoC, simulert EPJ-miljø og syntetiske data. Autentisering, autorisasjon og komplett synkronisering var utenfor implementasjonen. Produksjonsintegrasjon og klinisk validering inngikk ikke.
+> **Ramme:** Lokal PoC, simulert EPJ-miljø og syntetiske data. Produksjonsklar autentisering og autorisasjon, samt full synkroniserings- og konflikthåndtering, inngikk ikke i den implementerte PoC-en. Produksjonsintegrasjon og klinisk validering inngikk ikke.
 
 ### Problem, formål og verdi
 
@@ -35,15 +35,15 @@ Handlingene gjelder en pasient, treningsøkter og klinisk kontekst. **Pull hente
 
 Flytene ga fire sentrale krav: validere input, transformere representasjoner, gjøre sluttresultatet etterprøvbart og ha et testbart, repeterbart miljø. Arkitekturen måtte fordele disse oppgavene mellom komponentene.
 
-### Arkitekturen vi implementerte
+### Implementert løsning og teknologier
 
-![Implementert arkitektur: push via integrasjonsklient, HAPI FHIR og Subscription til bridge- og mappinglag og EHRbase; pull mellom klient, bridge og EHRbase. Begge repository-tjenestene bruker PostgreSQL.](docs/diagrammer/04-arkitektur.svg)
+![Implementert løsning: push via integrasjonsklient, HAPI FHIR og Subscription til bridge- og mappinglag og EHRbase; pull mellom klient, bridge og EHRbase. Begge repository-tjenestene bruker PostgreSQL.](docs/diagrammer/04-arkitektur.svg)
 
 | Komponent / rolle | Teknologi og ansvar |
 |---|---|
 | Integrasjonsklient | **NestJS / TypeScript:** API-/DTO-grense, koordinering og tilpasning til konsumentformat. |
 | Utveksling | **FHIR:** utvekslingsrepresentasjon. **HAPI FHIR:** ressurslagring og Subscription for push. |
-| Bridge- og mappinglag | **Java / Spring:** transformasjon, journaloppslag og koordinering av lagring/uthenting. |
+| Bridge- og mappinglag | **Java / Spring:** transformasjon, EHR-oppslag og koordinering av lagring/uthenting. |
 | Klinisk representasjon | **openEHR og template:** avgrenser forventet klinisk struktur for persistens. |
 | Repository og persistens | **EHRbase:** openEHR-tjeneste. **PostgreSQL:** underliggende lagring for EHRbase og HAPI FHIR. |
 
@@ -53,15 +53,15 @@ Push brukte HAPI FHIR før bridge-laget. Pull brukte en separat uthentingsvei me
 
 ![Push-swimlane: input valideres i klienten og mappes til FHIR. HAPI FHIR lagrer og varsler bridge-laget, som bygger openEHR-struktur og lagrer gjennom EHRbase. Verifikasjon skjer separat.](docs/diagrammer/05-push.svg)
 
-En syntetisk pasient var opprettet før innsending. Klienten validerte input, koordinerte flyten og mappet treningsdata til FHIR før videresending. HAPI FHIR lagret ressursen og utløste Subscription.
+En syntetisk pasient var opprettet før innsending. Klienten validerte input, koordinerte flyten og mappet treningsdata til FHIR før videresending. HAPI FHIR lagret ressursen, og en konfigurert Subscription videresendte relevante nye ressurser til bridge-laget.
 
-Bridge-laget fordelte mottaket til riktig behandling, hentet ut innholdet og bygde en openEHR composition mot forventet template-struktur. Journalen ble funnet eller opprettet før lagring gjennom EHRbase. Vi kontrollerte FHIR-resultatet og faktisk persistens separat fra kvitteringen ved inngangen.
+Bridge-laget fordelte mottaket til riktig behandling, hentet ut innholdet og bygde en openEHR composition mot forventet template-struktur. Riktig EHR ble funnet eller opprettet for den syntetiske pasienten før lagring gjennom EHRbase. Vi kontrollerte FHIR-resultatet og faktisk persistens separat fra kvitteringen ved inngangen.
 
 ### Pull – fra klinisk kontekst til konsument
 
-![Pull-swimlane: validert forespørsel til bridge-laget; journaloppslag og tidsfiltrert AQL-uthenting fra EHRbase; parsing og mapping til FHIR før klienten lager konsumentrespons.](docs/diagrammer/06-pull.svg)
+![Pull-swimlane: validert forespørsel til bridge-laget; EHR-oppslag og tidsfiltrert AQL-uthenting fra EHRbase; parsing og mapping til FHIR før klienten lager konsumentrespons.](docs/diagrammer/06-pull.svg)
 
-Konsumenten ba om oppdateringer for en pasient og et tidspunkt. Klienten validerte forespørselen; bridge-laget koordinerte journaloppslag og tidsfiltrert uthenting med **AQL** fra EHRbase.
+Konsumenten ba om oppdateringer for en pasient og et tidspunkt. Klienten validerte forespørselen; bridge-laget koordinerte EHR-oppslag og tidsfiltrert uthenting med **AQL** fra EHRbase.
 
 Resultatet ble parset og mappet fra openEHR-data til en FHIR-basert representasjon. Klienten mappet videre til konsumentformat og returnerte data eller tom liste. Vi verifiserte utvalg, tidsfilter og respons. Konsumenten styrte når den spurte; klienten hadde ingen egen periodisk polling.
 
@@ -91,21 +91,21 @@ Når data krysser disse grensene, må både struktur og betydning kontrolleres g
 
 ![Datakvalitet: valider, transformer, lagre/hent og verifiser. Persistens og kontroll av persistens er forskjellige aktiviteter.](docs/diagrammer/08-datakvalitet.svg)
 
-- **API → FHIR:** DTO-validering kontrollerte input. Unit tests, blant annet med **Jest**, kontrollerte mapping og logikk; API-kontroller undersøkte FHIR-resultatet.
-- **FHIR → openEHR:** Template-strukturen avgrenset representasjonen. Mappingtester og inspeksjon i **EHRbase** undersøkte om innholdet faktisk fikk forventet struktur og ble lagret. En template alene garanterer ikke datakvalitet eller klinisk riktighet.
+- **API → FHIR:** DTO-validering kontrollerte input. Enhetstester med **Jest** kontrollerte mapping og logikk; API-kontroller undersøkte FHIR-resultatet.
+- **FHIR → openEHR:** openEHR-templaten definerte forventet målstruktur. Tester av mappinglogikken og inspeksjon i **EHRbase** verifiserte transformasjonen og den faktiske persistensen. En template alene garanterer ikke datakvalitet eller klinisk riktighet.
 - **openEHR → konsument:** AQL-verifikasjon, lokale E2E-tester og API-kontroller undersøkte uthenting, transformasjon, tidsfiltrering og tom respons. **Swagger/OpenAPI** støttet dokumentasjon og manuell kontroll.
 
 Identifikatorer, responser og lagret/hentet innhold gjorde testdataene sporbare. **200 OK ved inngangen betyr ikke at hele dataflyten er korrekt.** Kontrollene gjaldt utvalgte tekniske scenarioer med syntetiske data.
 
 ### Ansvar, dataopprinnelse og kontrakter
 
-Kildeapplikasjonen produserte treningsdataene; EPJ-miljøet var kilden til klinisk kontekst. Integrasjonslaget validerte, transformerte og formidlet. Det var ingen ny autoritativ kilde eller permanent klinisk lagring.
+Kildeapplikasjonen produserte treningsdataene; EPJ-miljøet var kilden til klinisk kontekst. Integrasjonsklienten validerte, transformerte og formidlet. Den var ingen autoritativ klinisk datakilde eller permanent klinisk lagring.
 
-Vi hadde komponentansvar og tekniske kontrakter ved **DTO/API-, FHIR- og openEHR/repository-grensene**. Formelt dataeierskap, SLA og driftsansvar var ikke etablert som i produksjon. Jeg ville formalisert eiere, versjonering, kvalitetskrav og ansvar for feil og endringer.
+Vi hadde tydelige komponentansvar og tekniske grensesnittkontrakter gjennom **DTO/API-, FHIR- og openEHR-grensene**. Formaliserte datakontrakter, dataeierskap, SLA-er og driftsansvar var ikke etablert som i et produksjonsdataprodukt. I produksjon ville jeg formalisert eiere, versjonering, kvalitetskrav og ansvar ved feil og endringer.
 
 ### Største utfordring og designvalg
 
-**Problem:** Ett felles FHIR-lag skulle støtte både hendelsesdrevet push og forespørselsstyrt pull. Subscription reagerte på ressursendringer og løste ikke uthentingsbehovet.
+**Problem:** Den opprinnelige arkitekturen la opp til HAPI FHIR i begge retninger. Det fungerte for hendelsesdrevet push, men Subscription-mekanismen løste ikke behovet for forespørselsstyrt uthenting i pull.
 
 **Alternativ:** Endre FHIR-serverens interne oppførsel. Det ville økt kompleksiteten og omfanget.
 
@@ -131,44 +131,44 @@ Videre ville jeg prioritert bedre standardtilpasning av pull, automatisert E2E, 
 
 ## Case 2 – Etter 2–3 år som dataingeniør i NVE
 
-Case 1 er utgangspunktet mitt: erfaring med å følge data gjennom systemgrenser. I NVE vil jeg bygge videre fra software og integrasjon til dataprodukter som også skal fungere stabilt i daglig bruk.
+Hvis vi spoler 2–3 år fram, ser jeg for meg at jeg har utviklet en tydeligere dataingeniørprofil fra software- og integrasjonsbakgrunnen i Case 1. Tilbakeblikket nedenfor beskriver hva jeg håper å ha bidratt med og hvordan jeg har utviklet meg, ikke erfaring jeg allerede har.
 
 ![Min utviklingsreise i NVE: fra software- og integrasjonsbakgrunn via domene- og plattformlæring til selvstendig ansvar for større deler av dataprodukter.](docs/diagrammer/09-utviklingsreise-nve.svg)
 
-### I dag – software og integrasjon
+### Utgangspunktet – software og integrasjon
 
 Jeg har en software- og integrasjonsprofil med Java, TypeScript, SQL/databaser, API-er, modellering, testing og grunnlag i CI/CD. Bachelorprosjektet ga erfaring med systemdesign og med å følge data fra input til lagring og konsumentrespons.
 
-Styrken jeg tar med er å dele en løsning i forståelige ansvar, undersøke feil og teste det mottakeren faktisk får. Jeg har samtidig mer å lære om dataplattformer, analysemodeller og produksjonsdrift. Erfaringen fra en lokal PoC er et grunnlag å bygge videre på.
+Styrken jeg tar med er å dele en løsning i forståelige ansvar, undersøke feil og teste det mottakeren faktisk får. Jeg har samtidig mer å lære om dataplattformer, datamodellering for analyse og produksjonsdrift. Erfaringen fra en lokal PoC er et grunnlag å bygge videre på.
 
 ### Første tid – forstå domenet og arbeidsformen
 
-Jeg vil først forstå hvilke kilder teamet bruker, hva dataene betyr, hvem som konsumerer dem og hvilke kvalitetskrav som følger av bruken. Jeg vil følge et eksisterende dataprodukt gjennom arkitektur, eierskap, tester og drift sammen med en erfaren kollega.
+Jeg ser for meg at den første tiden handlet om å forstå kildene, dataenes betydning, konsumentene og kvalitetskravene. Sammen med en erfaren kollega fulgte jeg et eksisterende dataprodukt gjennom arkitektur, eierskap, tester og drift.
 
-En god start er en avgrenset endring: forstå behovet, avtale forventet resultat, gjennomføre endringen og følge den helt ut til konsumenten. Slik kan jeg lære teamets arbeidsform og se hvordan kodegjennomgang, dokumentasjon og hendelseshåndtering fungerer i praksis.
+Jeg startet med avgrensede endringer: forstå behovet, avtale forventet resultat, gjennomføre endringen og følge den helt ut til konsumenten. Slik lærte jeg teamets arbeidsform og hvordan kodegjennomgang, dokumentasjon og hendelseshåndtering fungerer i praksis.
 
-Jeg vil bygge mer dybde i **SQL og Python**, og lære **dbt, Azure, Databricks og Airflow** gjennom konkrete oppgaver. Dette er læringsmål, ikke verktøy jeg fremstiller meg som ekspert på i dag. Retningen samsvarer med [NVEs satsing på data og plattform](https://www.nve.no/om-nve/jobb-i-nve/bli-en-del-av-nves-satsing-paa-data-plattform-og-gis/). Teamets faktiske arkitektur og behov vil styre hva jeg lærer først.
+Gjennom konkrete oppgaver har jeg bygget mer dybde i **SQL og Python** og lært å bruke **dbt, Azure, Databricks og Airflow**. Dette er utviklingen jeg ser for meg, ikke verktøy jeg fremstiller meg som ekspert på i dag. Retningen samsvarer med [NVEs satsing på data og plattform](https://www.nve.no/om-nve/jobb-i-nve/bli-en-del-av-nves-satsing-paa-data-plattform-og-gis/). Teamets arkitektur og behov har styrt rekkefølgen på læringen.
 
 ### Gradvis mer ansvar – hele dataproduktets livsløp
 
 **Kilde → innhenting → transformasjon → modellering → datakvalitet → tilgjengeliggjøring → konsument → drift og overvåking.**
 
-Etter hvert vil jeg kunne ta større leveranser gjennom denne kjeden, med faglige avklaringer og review underveis. Jeg vil bidra til robuste dataflyter, forståelige modeller og dokumenterte kontrakter, og bruke integrasjonsbakgrunnen min når eksterne kilder eller API-er inngår.
+Etter hvert har jeg tatt ansvar for større deler av leveranser gjennom denne kjeden, med faglige avklaringer og kodegjennomgang underveis. Jeg har bidratt til robuste dataflyter, forståelige modeller og dokumenterte kontrakter og avhengigheter, og brukt integrasjonsbakgrunnen min når eksterne kilder eller API-er inngår.
 
-For eksempel ville jeg ved en ny datakilde avklart hva en rad eller hendelse betyr, hvordan oppdateringer håndteres, og hva konsumenten forventer. Deretter ville jeg gjort transformasjoner og kvalitetsregler testbare, dokumentert avvik og fulgt med på om dataene kommer frem som forventet. Dette er hvordan jeg ønsker å arbeide, ikke en påstand om en bestemt NVE-løsning.
+Et eksempel i dette scenarioet er en ny datakilde: Jeg har avklart hva en rad eller hendelse betyr, hvordan oppdateringer håndteres, og hva konsumenten forventer. Deretter har jeg gjort transformasjoner og kvalitetsregler testbare, dokumentert avvik og fulgt med på om dataene kommer frem som forventet.
 
-Jeg vil også bidra til automatisert testing og CI/CD, og til **observability** som gjør det mulig å oppdage forsinkelser, manglende data og feil. Målet er at teamet kan forstå og rette problemer, og at konsumentene vet når et datagrunnlag har begrensninger.
+Jeg har også bidratt til automatisert testing, CI/CD og **observability** som gjør det mulig å oppdage forsinkelser, manglende data og feil. Dette har gjort det enklere for teamet å forstå og rette problemer, og for konsumentene å kjenne datagrunnlagets begrensninger.
 
 ### Etter 2–3 år – selvstendig med helhetsforståelse
 
-Målet mitt er å være en selvstendig dataingeniør som kan ta ansvar for større deler av et dataprodukt fra behov til drift, samtidig som jeg vet når jeg bør involvere domeneeksperter og plattformkolleger.
+Etter 2–3 år ser jeg for meg at jeg har blitt en selvstendig dataingeniør som tar ansvar for større deler av et dataprodukt fra behov til drift, og vet når domeneeksperter og plattformkolleger bør involveres.
 
-Jeg ønsker å ha bidratt med dataflyter som er enklere å vedlikeholde, bedre modeller og kvalitetskontroller, og dokumentasjon som andre faktisk kan bruke. Faglig vil jeg ha utviklet dybde i plattformverktøyene, datamodellering og drift, samtidig som jeg beholder styrkene fra software engineering: systemgrenser, testing, feilsøking og integrasjon.
+Bidraget mitt har vært dataflyter som er enklere å vedlikeholde, tydeligere modeller og kvalitetskontroller, og dokumentasjon som andre kan bruke. Faglig har jeg utviklet dybde i plattformverktøyene, datamodellering og drift, samtidig som jeg har beholdt styrkene fra software engineering: systemgrenser, testing, feilsøking og integrasjon.
 
-For meg innebærer selvstendighet også å delta i arkitekturdiskusjoner, begrunne avveininger og dele kunnskap. Jeg vil gjøre det lettere for neste kollega å forstå løsningen, ikke bare levere min egen oppgave.
+Jeg har deltatt i arkitekturdiskusjoner, begrunnet avveininger og delt kunnskap. Samarbeidet har gjort meg tryggere på egne vurderinger og hjulpet neste kollega med å forstå løsningene.
 
 ### Team og samfunnsoppdrag
 
-NVE arbeider med blant annet energi, vassdrag og naturfare. Jeg vil forstå hvordan data brukes i disse fagområdene og hvem som er avhengig av dem. [NVEs samfunnsoppdrag](https://www.nve.no/om-nve/dette-er-nve/) gir en konkret grunn til å være opptatt av datakvalitet og tydelige begrensninger.
+NVE arbeider med blant annet energi, vassdrag og naturfare. I dette tilbakeblikket har jeg fått bedre forståelse for hvordan data brukes i fagområdene og hvem som er avhengig av dem. [NVEs samfunnsoppdrag](https://www.nve.no/om-nve/dette-er-nve/) gir en konkret grunn til å være opptatt av datakvalitet og tydelige begrensninger.
 
-Det motiverer meg å bygge løsninger der teknisk arbeid gir andre et mer pålitelig grunnlag for å gjøre jobben sin. Etter 2–3 år ønsker jeg å kunne koble domeneforståelse og teknisk gjennomføring: forstå behovet, levere data som kan brukes, og ta ansvar for at flyten fungerer over tid.
+Det motiverer meg å bygge løsninger der teknisk arbeid gir andre et mer pålitelig grunnlag for å gjøre jobben sin. Etter 2–3 år ser jeg for meg at jeg har koblet domeneforståelse og teknisk gjennomføring: forstått behovet, levert data som kan brukes, og tatt ansvar for at flyten fungerer over tid.

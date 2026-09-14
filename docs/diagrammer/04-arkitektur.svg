@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="790" viewBox="0 0 1200 790" role="img" aria-labelledby="title desc">
-<title id="title">Implementert arkitektur</title><desc id="desc">Push går fra kilde gjennom integrasjonsklient og HAPI FHIR til bridge- og mappinglaget, EHRbase og persistens. Pull går fra konsument gjennom integrasjonsklient til bridge-laget og EHRbase, og returnerer transformert respons. HAPI FHIR og EHRbase bruker PostgreSQL. Komponentene gjentas for å vise hver flyt tydelig.</desc>
+<title id="title">Implementert løsning – to dataflyter</title><desc id="desc">Push går fra kilde gjennom integrasjonsklient og HAPI FHIR til bridge- og mappinglaget, EHRbase og persistens. Pull går fra konsument gjennom integrasjonsklient til bridge-laget og EHRbase, og returnerer transformert respons. HAPI FHIR og EHRbase bruker PostgreSQL. Komponentene gjentas for å vise hver flyt tydelig.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
 <rect width="1200" height="790" rx="0" fill="#ffffff"/>
-<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Implementert arkitektur</text>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Implementert løsning – to dataflyter</text>
 <text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Samme komponenter, to forskjellige veier gjennom løsningen</text>
 <text x="30" y="112" font-size="20" fill="#a54b13" font-weight="700" text-anchor="start">PUSH · ny treningsinformasjon</text>
 <rect x="470" y="127" width="710" height="296" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2" stroke-dasharray="8 6"/>

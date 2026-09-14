@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1030" viewBox="0 0 1200 1030" role="img" aria-labelledby="title desc">
-<title id="title">Push – faktisk komponentsekvens</title><desc id="desc">Kilden sender treningsdata. Klienten validerer og mapper til FHIR før innsending til HAPI FHIR. HAPI FHIR lagrer og utløser Subscription. Bridge-laget mottar, fordeler, mapper og bygger openEHR mot template-struktur, finner eller oppretter journal og lagrer gjennom EHRbase. Sluttresultatet verifiseres separat.</desc>
+<title id="title">Push – implementert flyt</title><desc id="desc">Kilden sender treningsdata. Klienten validerer og mapper til FHIR før innsending til HAPI FHIR. HAPI FHIR lagrer; konfigurert Subscription videresender relevante ressurser. Bridge-laget mottar, fordeler, mapper og bygger openEHR mot template-struktur, finner eller oppretter EHR og lagrer gjennom EHRbase. Sluttresultatet verifiseres separat.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
 <rect width="1200" height="1030" rx="0" fill="#ffffff"/>
-<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Push – faktisk komponentsekvens</text>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Push – implementert flyt</text>
 <text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Treningsdata inn · les fra øverst mot nederst</text>
 <rect x="20" y="110" width="1160" height="175" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
 <text x="38" y="139" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">Kilde og integrasjonsklient</text>
@@ -46,7 +46,7 @@
 <text x="450.0" y="596" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR / template</text>
 <rect x="40" y="540" width="230" height="99" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
 <text x="155.0" y="569" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Repository-klient</text>
-<text x="155.0" y="596" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Finn / opprett journal</text>
+<text x="155.0" y="596" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Finn / opprett EHR</text>
 <polyline points="1045,425 1045,540" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
 <text x="1060" y="477" font-size="17" fill="#a54b13" font-weight="400" text-anchor="start">Subscription</text>
 <polyline points="930,590 865,590" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>

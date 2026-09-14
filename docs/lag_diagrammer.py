@@ -160,7 +160,7 @@ def technical_box(x, y, w, h, title, lines, fill="#ffffff"):
 
 
 def architecture():
-    sheet("Implementert arkitektur", "Samme komponenter, to forskjellige veier gjennom løsningen", 790,
+    sheet("Implementert løsning – to dataflyter", "Samme komponenter, to forskjellige veier gjennom løsningen", 790,
           "Push går fra kilde gjennom integrasjonsklient og HAPI FHIR til bridge- og mappinglaget, EHRbase og persistens. "
           "Pull går fra konsument gjennom integrasjonsklient til bridge-laget og EHRbase, og returnerer transformert respons. "
           "HAPI FHIR og EHRbase bruker PostgreSQL. Komponentene gjentas for å vise hver flyt tydelig.")
@@ -204,10 +204,10 @@ def lane(y,h,title):
 
 
 def push_flow():
-    sheet("Push – faktisk komponentsekvens", "Treningsdata inn · les fra øverst mot nederst", 1030,
+    sheet("Push – implementert flyt", "Treningsdata inn · les fra øverst mot nederst", 1030,
           "Kilden sender treningsdata. Klienten validerer og mapper til FHIR før innsending til HAPI FHIR. "
-          "HAPI FHIR lagrer og utløser Subscription. Bridge-laget mottar, fordeler, mapper og bygger openEHR "
-          "mot template-struktur, finner eller oppretter journal og lagrer gjennom EHRbase. Sluttresultatet verifiseres separat.")
+          "HAPI FHIR lagrer; konfigurert Subscription videresender relevante ressurser. Bridge-laget mottar, fordeler, mapper og bygger openEHR "
+          "mot template-struktur, finner eller oppretter EHR og lagrer gjennom EHRbase. Sluttresultatet verifiseres separat.")
     lane(110,175,"Kilde og integrasjonsklient")
     for x,w,title,lines in [(40,210,"Kilde",["Treningsdata", "Pasienttilknytning"]),
                            (330,220,"API / service",["Validerer input", "Koordinerer"]),
@@ -222,7 +222,7 @@ def push_flow():
     for x,w,title,lines in [(930,230,"Mottak / fordeling",["Relevant hendelse"]),
                            (635,230,"Mapper",["Tolker FHIR-innhold"]),
                            (335,230,"Bygger composition",["openEHR / template"]),
-                           (40,230,"Repository-klient",["Finn / opprett journal"] )]:
+                           (40,230,"Repository-klient",["Finn / opprett EHR"] )]:
         technical_box(x,540,w,99,title,lines,"#fff0df")
     arrow([(1045,425),(1045,540)],"push")
     text(1060,477,"Subscription",17,PUSH)
@@ -241,9 +241,9 @@ def push_flow():
 
 
 def pull_flow():
-    sheet("Pull – faktisk forespørsel og respons", "Klinisk kontekst ut · stiplet forespørsel, heltrukket respons", 1080,
+    sheet("Pull – implementert flyt", "Klinisk kontekst ut · stiplet forespørsel, heltrukket respons", 1080,
           "Konsumenten ber om pasientens oppdateringer. Klienten validerer og sender til bridge-laget. "
-          "Bridge-laget koordinerer journaloppslag og tidsfiltrert AQL mot EHRbase. Resultatet parses og mappes til FHIR. "
+          "Bridge-laget koordinerer EHR-oppslag og tidsfiltrert AQL mot EHRbase. Resultatet parses og mappes til FHIR. "
           "Klienten mapper til konsumentformat og returnerer data eller tom liste. Verifikasjon av utvalg og respons er separat.")
     # Vertikale lanes viser ansvar; tiden går nedover.
     centers=[140,440,740,1040]
@@ -261,7 +261,7 @@ def pull_flow():
     message(0,1,295,"Forespørsel",True)
     step(1,315,["Validerer forespørsel","Service / adapter"])
     message(1,2,415,"Uthentingsbehov",True)
-    step(2,435,["Koordinerer oppslag","Finner pasientens journal"])
+    step(2,435,["Koordinerer oppslag","Finner pasientens EHR"])
     message(2,3,535,"AQL / tidsfilter",True)
     step(3,555,["Henter klinisk kontekst","Lagret openEHR"])
     message(3,2,655,"Resultat fra repository")
@@ -302,9 +302,9 @@ def organization():
 
 def journey():
     sheet("Min utviklingsreise i NVE", "Fra software og integrasjon til ansvar for større deler av dataprodukter",420,
-          "I dag: software- og integrasjonsbakgrunn. Første tid: lære domene, team og dataplattform gjennom avgrensede leveranser. "
+          "Utgangspunkt: software- og integrasjonsbakgrunn. Første tid: lære domene, team og dataplattform gjennom avgrensede leveranser. "
           "Etter to til tre år: selvstendig ansvar for større deler av dataprodukter med kvalitet og drift.")
-    for x,title,lines,fill in [(30,"I DAG",["Software / integrasjon","API-er, databaser og testing","Erfaring fra lokal PoC"],"#eaf3ff"),
+    for x,title,lines,fill in [(30,"UTGANGSPUNKT",["Software / integrasjon","API-er, databaser og testing","Erfaring fra lokal PoC"],"#eaf3ff"),
                               (450,"FØRSTE TID I NVE",["Domene, brukere og team","Lære plattformen i praksis","Avgrensede leveranser"],"#f0eafa"),
                               (870,"ETTER 2–3 ÅR",["Selvstendig dataingeniør","Større deler av dataprodukter","Kvalitet, vedlikehold og drift"],"#e7f4e9")]:
         panel(x,135,300,185,fill)
@@ -341,7 +341,7 @@ def quality():
                 text(x+10, y+58+j*24, line, 18)
             if i<3:
                 arrow([(x+246, y+53), (x+287, y+53)])
-    text(30, 407, "Unit tests og API-tester ble supplert med lokal E2E og manuell verifikasjon av den samlede flyten.", 18, MUTED)
+    text(30, 407, "Enhetstester og API-tester ble supplert med lokal E2E og manuell verifikasjon av den samlede flyten.", 18, MUTED)
     end("08-datakvalitet.svg")
 
 

@@ -44,5 +44,5 @@
 <text x="925" y="294" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">Kontroller respons</text>
 <text x="925" y="322" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">AQL-/API-kontroll</text>
 <text x="925" y="346" font-size="18" fill="#172b44" font-weight="400" text-anchor="start">Riktig utvalg / tom liste</text>
-<text x="30" y="407" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Unit tests og API-tester ble supplert med lokal E2E og manuell verifikasjon av den samlede flyten.</text>
+<text x="30" y="407" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Enhetstester og API-tester ble supplert med lokal E2E og manuell verifikasjon av den samlede flyten.</text>
 </g></svg>
