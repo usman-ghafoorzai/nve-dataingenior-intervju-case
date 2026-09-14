@@ -104,7 +104,7 @@ def use_case():
         PARTS.append(f'<ellipse cx="577" cy="{cy}" rx="200" ry="61" fill="{fill}" stroke="{color}" stroke-width="2"/>')
         centered(577, cy-7, lines, 22)
     text(30, 550, "Aktørene viser systemroller. Samme applikasjon kan være både kilde og konsument.", 18, MUTED)
-    end("02-use-case.svg")
+    end("01-use-case.svg")
 
 
 def domain():
@@ -130,7 +130,7 @@ def domain():
     arrow([(165, 420), (165, 475), (1027, 475), (1027, 420)])
     text(590, 461, "kan brukes av", 18, MUTED, anchor="middle")
     text(30, 522, "Hver økt gjelder én pasient. Helsepersonell er tiltenkt bruker; klinisk bruk ble ikke evaluert.", 18, MUTED)
-    end("03-domene.svg")
+    end("02-domene.svg")
 
 
 def information():
@@ -158,7 +158,7 @@ def information():
         text((a+b)/2, 430, "Klinisk kontekst", 17, PULL, anchor="middle")
     text(30, 523, "Heltrukket pil: dataretning. Stiplet pil: forespørselen som initierer pull.", 18, MUTED)
     text(30, 550, "Pull gjelder legemiddelkontekst, ikke en retur av treningsdataene fra push.", 18, MUTED)
-    end("04-informasjonsflyt.svg")
+    end("03-informasjonsflyt.svg")
 
 
 def technical_box(x, y, w, h, title, lines, fill="#ffffff"):
@@ -170,7 +170,7 @@ def technical_box(x, y, w, h, title, lines, fill="#ffffff"):
 def architecture():
     sheet("Teknisk arkitektur", "Hvordan realiseres de to dataflytene?", 825,
           "Fire logiske lag: applikasjon, integrasjon, semantisk mapping og klinisk datalag. "
-          "Push bruker FHIR-server og Subscription. Pull går direkte til mapping og uthenting. "
+          "Push bruker FHIR-server og Subscription. Pull bruker en separat forespørselsstyrt uthentingsvei. "
           "EHRbase og HAPI FHIR bruker PostgreSQL til persistens.")
     for y, h, label, line in [(105, 128, "Applikasjonslag", "Kilde og konsument"),
                               (258, 158, "Integrasjonslag", "Validering og utveksling"),
@@ -185,7 +185,7 @@ def architecture():
     technical_box(300, 285, 240, 105, "Integrasjonsgrense", ["NestJS / TypeScript", "Validerer og tilpasser"], "#f0eafa")
     technical_box(715, 285, 230, 105, "FHIR-server", ["HAPI FHIR", "Ressurser / Subscription"], "#ffe6c9")
     technical_box(715, 467, 230, 87, "Mapping / uthenting", ["Java / Spring"], "#f0eafa")
-    technical_box(715, 633, 230, 99, "Klinisk repository", ["openEHR / EHRbase", "Lagrer og henter"], "#e5f3e5")
+    technical_box(715, 633, 230, 99, "EHRbase", ["openEHR-representasjon", "Lagrer og henter"], "#e5f3e5")
     technical_box(1000, 633, 160, 99, "PostgreSQL", ["Persistent", "lagring"], "#fff3cd")
     arrow([(420, 209), (420, 285)], both=True)
     arrow([(540, 330), (715, 330)], "push")
@@ -193,12 +193,13 @@ def architecture():
     arrow([(830, 390), (830, 467)], "push")
     text(847, 432, "Subscription", 17, PUSH)
     arrow([(420, 390), (420, 511), (715, 511)], "pull", both=True)
-    text(558, 493, "Pull · forespørsel / svar", 18, PULL, anchor="middle")
+    text(558, 470, "Pull · separat uthentingsvei", 17, PULL, anchor="middle")
+    text(558, 493, "Forespørsel / svar", 17, PULL, anchor="middle")
     arrow([(830, 554), (830, 633)], both=True)
     text(847, 596, "Lagre / hente", 17, MUTED)
     arrow([(945, 682), (1000, 682)], both=True)
     text(30, 792, "HAPI FHIR bruker også PostgreSQL for tjenestedata. Docker Compose samordnet testmiljøet.", 18, MUTED)
-    end("05-arkitektur.svg")
+    end("04-arkitektur.svg")
 
 
 def push_flow():
@@ -227,7 +228,7 @@ def push_flow():
     arrow([(460, 419), (320, 419)], dashed=True)
     text(390, 405, "Kontroller", 17, MUTED, anchor="middle")
     text(30, 524, "Stiplet pil viser kontroll av resultatet. En kvittering ved innsending bekrefter ikke hele kjeden.", 18, MUTED)
-    end("06-push.svg")
+    end("05-push.svg")
 
 
 def pull_flow():
@@ -256,7 +257,7 @@ def pull_flow():
     arrow([(460, 419), (320, 419)], "pull")
     text(390, 405, "FHIR", 18, PULL, anchor="middle")
     text(30, 524, "Verifikasjon: riktig utvalg, tidsfilter og respons. Integrasjonsgrensen har ingen egen polling.", 18, MUTED)
-    end("07-pull.svg")
+    end("06-pull.svg")
 
 
 def quality():
@@ -285,7 +286,7 @@ def quality():
             if i<3:
                 arrow([(x+246, y+53), (x+287, y+53)])
     text(30, 407, "Unit tests og API-tester ble supplert med lokal E2E og manuell verifikasjon av den samlede flyten.", 18, MUTED)
-    end("08-datakvalitet.svg")
+    end("07-datakvalitet.svg")
 
 
 if __name__ == "__main__":

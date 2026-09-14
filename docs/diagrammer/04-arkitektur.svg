@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="825" viewBox="0 0 1200 825" role="img" aria-labelledby="title desc">
-<title id="title">Teknisk arkitektur</title><desc id="desc">Fire logiske lag: applikasjon, integrasjon, semantisk mapping og klinisk datalag. Push bruker FHIR-server og Subscription. Pull går direkte til mapping og uthenting. EHRbase og HAPI FHIR bruker PostgreSQL til persistens.</desc>
+<title id="title">Teknisk arkitektur</title><desc id="desc">Fire logiske lag: applikasjon, integrasjon, semantisk mapping og klinisk datalag. Push bruker FHIR-server og Subscription. Pull bruker en separat forespørselsstyrt uthentingsvei. EHRbase og HAPI FHIR bruker PostgreSQL til persistens.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
@@ -38,8 +38,8 @@
 <text x="830.0" y="496" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Mapping / uthenting</text>
 <text x="830.0" y="523" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Java / Spring</text>
 <rect x="715" y="633" width="230" height="99" rx="3" fill="#e5f3e5" stroke="#87919c" stroke-width="1.2"/>
-<text x="830.0" y="662" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Klinisk repository</text>
-<text x="830.0" y="689" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR / EHRbase</text>
+<text x="830.0" y="662" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">EHRbase</text>
+<text x="830.0" y="689" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR-representasjon</text>
 <text x="830.0" y="714" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Lagrer og henter</text>
 <rect x="1000" y="633" width="160" height="99" rx="3" fill="#fff3cd" stroke="#87919c" stroke-width="1.2"/>
 <text x="1080.0" y="662" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">PostgreSQL</text>
@@ -51,7 +51,8 @@
 <polyline points="830,390 830,467" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
 <text x="847" y="432" font-size="17" fill="#a54b13" font-weight="400" text-anchor="start">Subscription</text>
 <polyline points="420,390 420,511 715,511" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" marker-start="url(#pull)"/>
-<text x="558" y="493" font-size="18" fill="#08776f" font-weight="400" text-anchor="middle">Pull · forespørsel / svar</text>
+<text x="558" y="470" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Pull · separat uthentingsvei</text>
+<text x="558" y="493" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Forespørsel / svar</text>
 <polyline points="830,554 830,633" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)" marker-start="url(#neutral)"/>
 <text x="847" y="596" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Lagre / hente</text>
 <polyline points="945,682 1000,682" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)" marker-start="url(#neutral)"/>
