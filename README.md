@@ -1,127 +1,154 @@
 # NVE – Casepresentasjon
 
-**2. gangsintervju · Usman Ghafoorzai**
+**2. gangsintervju – Usman Ghafoorzai**
 
 ## Case 1 – Strukturert datautveksling i to retninger
 
-Jeg tar utgangspunkt i **én interoperabilitetsløsning med to komplementære dataflyter** fra bachelorprosjektet: treningsdata inn til strukturert lagring og klinisk kontekst ut til konsumenten.
+Jeg har valgt å ta utgangspunkt i bachelorprosjektet mitt, der vi jobbet med et ganske konkret problem: **Hvordan får vi data fra en ekstern helseteknologi inn i systemene helsepersonell faktisk bruker, og hvordan får vi relevant klinisk informasjon tilbake?**
 
-Vi var to studenter med felles ansvar for framdrift og kvalitet, og arbeidsformen var lagt opp slik at begge bidro til teknisk utvikling, dokumentasjon og kvalitetssikring gjennom prosjektet. Jeg arbeidet på tvers av analyse, design, implementasjon, testing/verifikasjon og rapportering.
+Løsningen vi bygde var én integrasjonsløsning med to komplementære dataflyter: treningsdata inn til strukturert lagring og klinisk kontekst tilbake til konsumenten.
 
-> **Ramme:** Lokal PoC, simulert EPJ-miljø og syntetiske data. Produksjonsklar autentisering og autorisasjon, samt full synkroniserings- og konflikthåndtering, inngikk ikke i den implementerte PoC-en. Produksjonsintegrasjon og klinisk validering inngikk ikke.
+Vi var to studenter på prosjektet, og arbeidsformen vår var lagt opp slik at begge jobbet på tvers av hele løsningen. Så det jeg viser her er arbeid jeg selv har vært med på å utvikle, teste og dokumentere.
 
-### Problem, formål og verdi
+> **Ramme:** Dette var en lokal Proof of Concept med syntetiske data og et simulert EPJ-miljø. Målet var å undersøke om løsningen var teknisk gjennomførbar, ikke å bygge en produksjonsklar helseintegrasjon.
 
-Treningsdata og klinisk kontekst finnes i forskjellige systemer og representasjoner. Pasienttilknytning, struktur, tidspunkt og betydning må bevares slik at mottakeren kan bruke informasjonen. Formålet var å demonstrere strukturert utveksling i begge retninger.
+### 1. Hvilket problem skulle vi løse, og hvilken verdi kunne løsningen gi?
 
-- **Demonstrert verdi:** Redusert teknisk usikkerhet ved å vise at data kunne valideres, transformeres, lagres, hentes og verifiseres.
-- **Potensiell virksomhetsverdi:** Informasjon fra separate systemer kan bli tilgjengelig der den trengs. Mindre manuell innhenting og overføring er mulige gevinster, ikke målte kliniske, økonomiske eller produksjonsmessige effekter.
+Digitale helseteknologier kan samle inn nyttige data uten at informasjonen automatisk blir tilgjengelig i systemene der den skal brukes. Ulike systemer bruker forskjellige representasjoner og har ulike krav til struktur, pasienttilknytning og betydning. Resultatet kan bli informasjonssiloer og manuelle overføringer.
 
-### Use Case – hvem trenger å gjøre hva?
+Det var også utgangspunktet for prosjektet vårt. Aible har treningsplattformen Origo, som kan samle inn data fra treningen til pasienten fra en ekstern applikasjon. Hvis disse dataene bare blir liggende i Origo, er de ikke nødvendigvis tilgjengelige der helsepersonell faktisk jobber.
 
-Kilden sender treningsdata til strukturert lagring. Konsumenten henter klinisk kontekst gjennom integrasjonsløsningen og det simulerte EPJ-miljøet.
+I problembildet vårt var **Velferdsteknologisk knutepunkt (VKP)** et eksempel på et mellomledd mellom velferdsteknologi og elektroniske pasientjournal-systemer. Utfordringen vi ønsket å se nærmere på var at informasjonsflyten fortsatt kan bli fragmentert når relevante data ligger utenfor den kliniske arbeidsflaten og må hentes eller overføres mellom systemer.
 
-![Use Case: sende treningsdata og hente klinisk kontekst.](docs/diagrammer/01-use-case.svg)
+Derfor undersøkte vi om vi kunne få til en mer direkte og strukturert utveksling mellom Origo og et simulert-EPJ-miljø:
 
-### Domene – hva betyr dataene?
+- **Push:** Kan treningsdata sendes fra Origo, valideres og transformeres til riktig struktur før de lagres på EPJ-siden?
+- **Pull:** Kan Origo be om relevant klinisk kontekst og få tilbake det den trenger?
 
-Handlingene gjelder en pasient, treningsøkter og klinisk kontekst. **Pull hentet legemiddelinformasjon, ikke treningsdataene fra push.**
+**Verdien vi faktisk demonstrerte** var: vi viste at data kunne valideres, transformeres, lagres, hentes og verifiseres gjennom flyten.
 
-![Domene: pasient, treningsøkt, treningsdata og klinisk kontekst med sine relasjoner.](docs/diagrammer/02-domene.svg)
+**Den potensielle virksomhetsverdien** er at informasjon fra separate systemer kan bli tilgjengelig der den trengs, og føre til mindre behov for manuell innhenting og overføring. PoC-en vår målte ikke kliniske eller økonomiske gevinster.
 
-Nå har vi sett hva slags data vi snakker, neste steg er hvordan vi løste det teknisk. 
+### 2. Hva bygde vi løsningen med?
 
-### Implementert løsning og teknologier
-
-![Implementert løsning: push via integrasjonsklient, HAPI FHIR og Subscription til bridge- og mappinglag og EHRbase; pull mellom klient, bridge og EHRbase. Begge repository-tjenestene bruker PostgreSQL.](docs/diagrammer/04-arkitektur.svg)
-
-| Komponent / rolle | Teknologi og ansvar |
+| Område | Teknologi og rolle |
 |---|---|
-| Integrasjonsklient | **NestJS / TypeScript:** API-/DTO-grense, koordinering og tilpasning til konsumentformat. |
-| Utveksling | **FHIR:** utvekslingsrepresentasjon. **HAPI FHIR:** ressurslagring og Subscription for push. |
-| Bridge- og mappinglag | **Java / Spring:** transformasjon, EHR-oppslag og koordinering av lagring/uthenting. |
-| Klinisk representasjon | **openEHR og template:** avgrenser forventet klinisk struktur for persistens. |
-| Repository og persistens | **EHRbase:** openEHR-tjeneste. **PostgreSQL:** underliggende lagring for EHRbase og HAPI FHIR. |
+| Integrasjonsklient | **NestJS / TypeScript:** tok imot forespørsler, validerte input, koordinerte flyten og tilpasset data mellom systemgrensene. |
+| Utveksling | **FHIR:** representasjon for strukturert utveksling. **HAPI FHIR:** FHIR-server og Subscription-mekanisme i push-flyten. |
+| Bridge og mapping | **Java / Spring:** routing, transformasjon, EHR-oppslag og koordinering av lagring og uthenting. |
+| Klinisk struktur | **openEHR og template:** strukturen dataene skulle ha ved klinisk persistens. |
+| Lagring | **EHRbase:** openEHR-tjeneste. **PostgreSQL:** underliggende persistens for EHRbase og HAPI FHIR. |
+| Uthenting | **AQL:** brukt til å hente kliniske data fra EHRbase i pull-flyten. |
+| Miljø og testing | **Docker Compose, Jest, API-kontroller og lokale E2E-tester.** |
+| CI | **GitHub Actions:** automatiserte tester og byggkontroller. |
 
-Push brukte HAPI FHIR før bridge-laget. Pull brukte en separat uthentingsvei mellom integrasjonsklienten og bridge-laget. Applikasjonslogikken brukte tjenestegrensesnitt; PostgreSQL var underliggende persistens.
+Teknologiene gir mer mening når vi ser dem i selve dataflyten.
 
-### Push – fra treningsdata til persistens
+### 3. Hvordan gikk dataene gjennom løsningen?
 
-![Push-swimlane: input valideres i klienten og mappes til FHIR. HAPI FHIR lagrer og varsler bridge-laget, som bygger openEHR-struktur og lagrer gjennom EHRbase. Verifikasjon skjer separat.](docs/diagrammer/05-push.svg)
+![Implementert løsning: push via integrasjonsklient, HAPI FHIR og Subscription til FHIR Bridge og EHRbase; pull mellom klient, FHIR Bridge og EHRbase.](docs/diagrammer/04-arkitektur.svg)
 
-En syntetisk pasient var opprettet før innsending. Klienten validerte input, koordinerte flyten og mappet treningsdata til FHIR før videresending. HAPI FHIR lagret ressursen, og en konfigurert Subscription videresendte relevante nye ressurser til bridge-laget.
+På overordnet nivå hadde vi de samme sentrale systemene, men push og pull løste to forskjellige behov. Derfor endte de også med forskjellige tekniske mekanismer.
 
-Bridge-laget fordelte mottaket til riktig behandling, hentet ut innholdet og bygde en openEHR composition mot forventet template-struktur. Riktig EHR ble funnet eller opprettet for den syntetiske pasienten før lagring gjennom EHRbase. Vi kontrollerte FHIR-resultatet og faktisk persistens separat fra kvitteringen ved inngangen.
+#### Push – treningsdata inn
 
-### Pull – fra klinisk kontekst til konsument
+![Push – implementert komponentflyt fra game session-data til openEHR-persistens.](docs/diagrammer/05-push.svg)
 
-![Pull-swimlane: validert forespørsel til bridge-laget; EHR-oppslag og tidsfiltrert AQL-uthenting fra EHRbase; parsing og mapping til FHIR før klienten lager konsumentrespons.](docs/diagrammer/06-pull.svg)
+I push var den syntetiske pasienten registrert først. Når en treningsøkt skulle sendes inn, tok Integration Client imot dataene, validerte dem og mappet dem til en **FHIR Observation**.
 
-Konsumenten ba om oppdateringer for en pasient og et tidspunkt. Klienten validerte forespørselen; bridge-laget koordinerte EHR-oppslag og tidsfiltrert uthenting med **AQL** fra EHRbase.
+Observation ble sendt til **HAPI FHIR**, som lagret ressursen. En konfigurert **Subscription** reagerte på relevante nye Observations og sendte dem videre til **FHIR Bridge**.
 
-Resultatet ble parset og mappet fra openEHR-data til en FHIR-basert representasjon. Klienten mappet videre til konsumentformat og returnerte data eller tom liste. Vi verifiserte utvalg, tidsfilter og respons. Konsumenten styrte når den spurte; klienten hadde ingen egen periodisk polling.
+Bridge-laget tok over derfra: det routet innholdet til riktig behandling, mappet fra FHIR til forventet **openEHR-struktur**, fant riktig EHR og lagret resultatet gjennom **EHRbase**.
 
-**Forskjellen:** Push startet med nye data og endte i strukturert persistens. Pull startet med konsumentbehov og endte i en filtrert respons. Hendelsesdrevet videresending og forespørselsstyrt uthenting krevde ulike mekanismer.
+**Kort fortalt:**
 
-### Hvordan vi organiserte løsningen
+**Game session-data → FHIR Observation → HAPI FHIR → Subscription → FHIR Bridge → openEHR composition → EHRbase**
 
-#### Kode
+#### Pull – klinisk kontekst tilbake
 
-Integrasjonsklientens **controller/DTO** håndterte API-grensen, **service** koordinerte brukstilfellet, **mapper** transformerte data og **adapter/client** håndterte ekstern kommunikasjon. Det skilte ansvar, begrenset kobling til transportdetaljer og gjorde endringer og testing enklere.
+![Pull – implementert forespørsels- og responsflyt fra konsument via AQL til konsumentrespons.](docs/diagrammer/06-pull.svg)
 
-Bridge-laget hadde separat push- og pull-logikk for mapping og uthenting, med delt EHRbase-kommunikasjon der ansvaret var felles.
+Pull startet motsatt: her var det konsumenten som hadde et behov og spurte etter oppdatert klinisk kontekst for en pasient.
 
-![Organisering: service koordinerer mapper og klient; modellskiftene er forskjellige i push og pull; miljøkonfigurasjon holdes separat.](docs/diagrammer/07-kode-modeller-konfig.svg)
+Integration Client validerte forespørselen og sendte den videre til FHIR Bridge. Bridge fant riktig EHR og brukte **AQL** med tidsfilter mot EHRbase.
 
-#### Modeller
+Resultatet fra AQL ble parset og mappet til **FHIR MedicationRequest**-ressurser. Disse ble sendt tilbake i en FHIR-basert respons, før Integration Client tilpasset resultatet til formatet konsumenten trengte. Hvis det ikke fantes nyere data, fikk konsumenten en tom respons.
 
-**DTO** definerte forventet API-struktur, **FHIR** representerte informasjon under utveksling, og **openEHR/template** avgrenset den kliniske strukturen ved persistens. **Konsumentformatet** ga mottakeren det utvalget den trengte. Ulike ansvar krevde ulike modeller og eksplisitt mapping mellom dem.
+**Kort fortalt:**
 
-#### Konfigurasjon
+**Konsument → Integration Client → FHIR Bridge → AQL/EHRbase → FHIR-basert respons → konsumentformat**
 
-**Docker Compose** koordinerte det lokale EPJ-miljøet med separate database-, FHIR-, bridge- og EHR-tjenester. Miljøkonfigurasjon var skilt fra forretningslogikken. Miljøet kunne startes og resettes med klargjorte testdata for repeterbar verifikasjon.
+Det viktige skillet er at **HAPI FHIR ikke var med i den implementerte pull-flyten**. Push var hendelsesdrevet gjennom Subscription, mens pull var forespørselsstyrt.
 
-Når data krysser disse grensene, må både struktur og betydning kontrolleres gjennom representasjonsskiftene.
+### 4. Hvordan visste vi at dataene faktisk ble riktige?
 
-### Datakvalitet gjennom flyten
+![Datakvalitet: valider, transformer, lagre eller hent og verifiser.](docs/diagrammer/08-datakvalitet.svg)
 
-![Datakvalitet: valider, transformer, lagre/hent og verifiser. Persistens og kontroll av persistens er forskjellige aktiviteter.](docs/diagrammer/08-datakvalitet.svg)
+Vi prøvde å kontrollere dataene flere steder i flyten, ikke bare ved første API-kall.
 
-- **API → FHIR:** DTO-validering kontrollerte input. Enhetstester med **Jest** kontrollerte mapping og logikk; API-kontroller undersøkte FHIR-resultatet.
-- **FHIR → openEHR:** openEHR-templaten definerte forventet målstruktur. Tester av mappinglogikken og inspeksjon i **EHRbase** verifiserte transformasjonen og den faktiske persistensen. En template alene garanterer ikke datakvalitet eller klinisk riktighet.
-- **openEHR → konsument:** AQL-verifikasjon, lokale E2E-tester og API-kontroller undersøkte uthenting, transformasjon, tidsfiltrering og tom respons. **Swagger/OpenAPI** støttet dokumentasjon og manuell kontroll.
+- **Ved inngangen** brukte vi DTO-validering for å sjekke at input hadde forventet struktur.
+- **I mappingen** brukte vi enhetstester med Jest for å kontrollere transformasjon og logikk.
+- **Ved lagring** brukte vi openEHR-templaten som forventet målstruktur, og kontrollerte i EHRbase hva som faktisk var blitt lagret.
+- **I pull-flyten** brukte vi AQL-verifikasjon, lokale E2E-tester og API-kontroller for å sjekke uthenting, tidsfiltrering, transformasjon og tom respons.
 
-Identifikatorer, responser og lagret/hentet innhold gjorde testdataene sporbare. **200 OK ved inngangen betyr ikke at hele dataflyten er korrekt.** Kontrollene gjaldt utvalgte tekniske scenarioer med syntetiske data.
+Det viktigste poenget for meg er egentlig ganske enkelt:
 
-### Ansvar, dataopprinnelse og kontrakter
+**En `200 OK` ved inngangen betyr ikke at hele dataflyten er riktig.**
 
-Kildeapplikasjonen produserte treningsdataene; EPJ-miljøet var kilden til klinisk kontekst. Integrasjonsklienten validerte, transformerte og formidlet. Den var ingen autoritativ klinisk datakilde eller permanent klinisk lagring.
+Derfor kontrollerte vi både det som faktisk ble lagret og det konsumenten faktisk fikk tilbake.
 
-Vi hadde tydelige komponentansvar og tekniske grensesnittkontrakter gjennom **DTO/API-, FHIR- og openEHR-grensene**. Formaliserte datakontrakter, dataeierskap, SLA-er og driftsansvar var ikke etablert som i et produksjonsdataprodukt. I produksjon ville jeg formalisert eiere, versjonering, kvalitetskrav og ansvar ved feil og endringer.
+### 5. Hvem hadde ansvar for hva?
 
-### Største utfordring og designvalg
+Kildeapplikasjonen var opprinnelsen til treningsdataene, mens EPJ-miljøet var kilden til den kliniske konteksten. Integration Client skulle ikke bli enda en klinisk datakilde. Jobben dens var å validere, transformere og formidle mellom systemene.
 
-**Problem:** Den opprinnelige arkitekturen la opp til HAPI FHIR i begge retninger. Det fungerte for hendelsesdrevet push, men Subscription-mekanismen løste ikke behovet for forespørselsstyrt uthenting i pull.
+Vi hadde tydelige tekniske grenser gjennom **DTO/API, FHIR og openEHR**, og komponentene hadde forskjellige ansvar.
 
-**Alternativ:** Endre FHIR-serverens interne oppførsel. Det ville økt kompleksiteten og omfanget.
+Det vi ikke hadde i denne PoC-en var et formalisert dataeierskap, SLA-er, driftsansvar og fullverdige datakontrakter slik jeg ville forventet i et produksjonsdataprodukt.
 
-**Beslutning:** Beholde Subscription for push og bruke en separat forespørselsstyrt uthentingsvei for pull.
+Hvis løsningen skulle i produksjon, ville jeg vært mye tydeligere på hvem som eier hvilke data, hvordan kontrakter versjoneres, hvilke kvalitetskrav som gjelder og hvem som har ansvar når noe feiler eller endres.
 
-**Trade-off:** Begge retninger kunne implementeres og verifiseres, men pull var ikke et fullt standardkompatibelt FHIR-søk. Standardisert søk og validering fulgte ikke automatisk med denne veien.
+### 6. Hva var det vanskeligste?
 
-**Læring:** En felles representasjon betyr ikke at samme transportmekanisme dekker alle behov. Begge retninger må prøves før arkitekturen låses.
+Den største arkitekturutfordringen kom egentlig av at vi først ønsket å bruke **HAPI FHIR i begge retninger**.
 
-### Utviklingsflyt og CI/CD
+Det fungerte godt i push. Når en ny relevant Observation kom inn, kunne Subscription-mekanismen reagere og sende den videre.
 
-**Avgrenset endring → PR → automatiserte tester og byggkontroller → merge/integrasjon.** GitHub Actions støttet dette. Full Docker-E2E lå utenfor standard CI, så vi supplerte med lokal verifikasjon gjennom flytene. Dette var ingen automatisert produksjonsleveranse.
+Pull var annerledes. Der var behovet at konsumenten aktivt skulle kunne spørre: **Har det kommet ny klinisk informasjon for denne pasienten siden sist?**
 
-### Resultat, læring og videre arbeid
+Subscription løser ikke det problemet. Vi vurderte å endre FHIR-serverens interne oppførsel, men det ville gjort løsningen større og mer komplisert enn nødvendig for PoC-en.
 
-Den lokale PoC-en verifiserte strukturert push og selektiv pull med syntetiske data. Resultatet viste teknisk gjennomførbarhet, ikke klinisk effekt.
+Derfor beholdt vi **Subscription for push**, men lagde en egen forespørselsstyrt uthentingsvei for pull.
 
-Jeg lærte å forstå dataenes betydning, plassere ansvar ved systemgrenser og behandle mapping som en sentral engineering-oppgave. **Verifiser det konsumenten faktisk får, og det som faktisk blir lagret.**
+Trade-offen var at pull fungerte og kunne verifiseres, men den ble ikke et fullt standardkompatibelt FHIR-søk.
 
-Videre ville jeg prioritert bedre standardtilpasning av pull, automatisert E2E, kvalitetskrav og observability. Tilgangskontroll, domenevalidering og testing i et produksjonsnært miljø måtte også på plass.
+Det viktigste jeg lærte av akkurat dette var at **selv om to dataflyter bruker samme representasjon, betyr ikke det at de bør bruke samme transportmekanisme**.
+
+### 7. Hva lærte jeg, og hva ville jeg gjort videre?
+
+Det jeg sitter mest igjen med er hvor viktig det er å forstå **hva dataene faktisk betyr**, ikke bare hvordan man flytter dem fra A til B.
+
+Jeg lærte også hvor mye ansvar som ligger i mapping mellom systemer. Det holder ikke at et API svarer OK hvis informasjonen har mistet betydning underveis eller aldri havner riktig hos mottakeren.
+
+Hvis jeg skulle jobbet videre med løsningen, ville jeg særlig sett på:
+
+- bedre standardtilpasning av pull
+- mer automatisert E2E-testing
+- tydeligere kvalitetskrav og bedre overvåking
+- produksjonsklar autentisering og autorisasjon
+- mer domene- og klinisk validering
+- testing i et mer produksjonsnært miljø
+
+### Valgfritt – hvordan organiserte vi kode og utviklingsflyt?
+
+I Integration Client prøvde vi å holde ansvarene tydelige: **controller/DTO** håndterte API-grensen, **service** koordinerte det som skulle skje, **mapper** oversatte mellom representasjoner og **adapter/client** håndterte kommunikasjonen med eksterne tjenester.
+
+Docker Compose ga oss et repeterbart lokalt miljø, og konfigurasjon ble holdt separat fra forretningslogikken.
+
+Utviklingsflyten var i hovedsak:
+
+**Avgrenset endring → Pull Request → automatiserte tester og byggkontroller → merge**
+
+Vi brukte **GitHub Actions** til de automatiserte kontrollene. Den fulle Docker-baserte E2E-flyten lå ikke i standard CI, så den verifiserte vi lokalt i tillegg.
 
 ---
 
