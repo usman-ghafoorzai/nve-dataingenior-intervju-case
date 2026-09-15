@@ -1,56 +1,96 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1080" viewBox="0 0 1200 1080" role="img" aria-labelledby="title desc">
-<title id="title">Pull – implementert flyt</title><desc id="desc">Konsumenten ber om pasientens oppdateringer. Klienten validerer og sender til bridge-laget. Bridge-laget koordinerer EHR-oppslag og tidsfiltrert AQL mot EHRbase. Resultatet parses og mappes til FHIR. Klienten mapper til konsumentformat og returnerer data eller tom liste. Verifikasjon av utvalg og respons er separat.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="2060" viewBox="0 0 1200 2060" role="img" aria-labelledby="title desc">
+<title id="title">Pull – implementert flyt</title><desc id="desc">Origo dashboard sender patientId + lastUpdatedAt til PullController, PullService og FhirBridgeClient. MedicationPullController og MedicationPullService koordinerer EhrbaseHelper og EhrbaseMedicationQueryClient. AQL rows fra EHRbase parses av MedicationOrderAqlRowParser til MedicationOrderAqlRowDto og mappes av MedicationRequestMapper til FHIR MedicationRequest. FHIR Bundle returneres til MedicationPullMapper, som lager PullMedicationResponseDto med patientId, pulledAt og medications[] til Origo.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
-<rect width="1200" height="1080" rx="0" fill="#ffffff"/>
+<rect width="1200" height="2060" rx="0" fill="#ffffff"/>
 <text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Pull – implementert flyt</text>
-<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Klinisk kontekst ut · stiplet forespørsel, heltrukket respons</text>
-<rect x="20" y="110" width="260" height="840" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
-<text x="150" y="145" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Konsument</text>
-<text x="150" y="170" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Initierer</text>
-<rect x="320" y="110" width="260" height="840" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
-<text x="450" y="145" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Integrasjonsklient</text>
-<text x="450" y="170" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Validerer / mapper</text>
-<rect x="620" y="110" width="260" height="840" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
-<text x="750" y="145" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Bridge / uthenting</text>
-<text x="750" y="170" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Oppslag / mapping</text>
-<rect x="920" y="110" width="260" height="840" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
-<text x="1050" y="145" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">EHRbase</text>
-<text x="1050" y="170" font-size="19" fill="#172b44" font-weight="700" text-anchor="middle">Klinisk repository</text>
-<rect x="25" y="195" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
-<text x="140" y="222" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Ber om oppdateringer</text>
-<text x="140" y="247" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Pasient og tidspunkt</text>
-<polyline points="140,295 440,295" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
-<text x="290.0" y="283" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Forespørsel</text>
-<rect x="325" y="315" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
-<text x="440" y="342" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Validerer forespørsel</text>
-<text x="440" y="367" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Service / adapter</text>
-<polyline points="440,415 740,415" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
-<text x="590.0" y="403" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Uthentingsbehov</text>
-<rect x="625" y="435" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
-<text x="740" y="462" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Koordinerer oppslag</text>
-<text x="740" y="487" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Finner pasientens EHR</text>
-<polyline points="740,535 1040,535" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
-<text x="890.0" y="523" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">AQL / tidsfilter</text>
-<rect x="925" y="555" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
-<text x="1040" y="582" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Henter klinisk kontekst</text>
-<text x="1040" y="607" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Lagret openEHR</text>
-<polyline points="1040,655 740,655" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<text x="890.0" y="643" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Resultat fra repository</text>
-<rect x="625" y="675" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
-<text x="740" y="702" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Parser resultatet</text>
-<text x="740" y="727" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Mapper til FHIR</text>
-<polyline points="740,775 440,775" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<text x="590.0" y="763" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">FHIR-basert respons</text>
-<rect x="325" y="795" width="230" height="65" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
-<text x="440" y="822" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">Mapper til</text>
-<text x="440" y="847" font-size="17" fill="#172b44" font-weight="400" text-anchor="middle">konsumentformat</text>
-<polyline points="440,910 140,910" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
-<text x="290.0" y="898" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">Data eller tom liste</text>
-<rect x="20" y="985" width="1160" height="70" rx="3" fill="#f2f3f5" stroke="#87919c" stroke-width="1.2" stroke-dasharray="8 6"/>
-<text x="40" y="1013" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">VERIFIKASJON · riktig utvalg, tidsfilter, transformasjon og respons</text>
-<text x="40" y="1040" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Separate tester og API-/AQL-kontroller. Konsumenten styrer når den spør; ingen egen polling i klienten.</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Klinisk kontekst ut – forespørsel og respons</text>
+<rect x="20" y="110" width="260" height="1910" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="150" y="150" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">Origo dashboard</text>
+<rect x="320" y="110" width="260" height="1910" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="450" y="150" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">Integration Client</text>
+<rect x="620" y="110" width="260" height="1910" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="750" y="150" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">FHIR Bridge</text>
+<rect x="920" y="110" width="260" height="1910" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="1050" y="150" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">EHRbase</text>
+<rect x="30" y="195" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="150" y="220" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">Origo dashboard</text>
+<text x="150" y="248" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">Requests medication updates</text>
+<polyline points="150,305 150,345" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<polyline points="150,345 450,345" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<text x="300.0" y="333" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">patientId + lastUpdatedAt</text>
+<polyline points="450,345 450,370" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="330" y="370" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="450" y="395" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">PullController</text>
+<text x="450" y="423" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">GET /pull/medications</text>
+<polyline points="450,480 450,515" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="330" y="515" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="450" y="540" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">PullService</text>
+<text x="450" y="568" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">Coordinates request</text>
+<polyline points="450,625 450,660" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="330" y="660" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="450" y="685" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">FhirBridgeClient</text>
+<text x="450" y="713" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">Request to FHIR Bridge</text>
+<polyline points="450,770 450,810" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<polyline points="450,810 750,810" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<text x="600.0" y="798" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">patient + lastUpdatedAt</text>
+<polyline points="750,810 750,835" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="630" y="835" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="750" y="860" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">MedicationPullController</text>
+<text x="750" y="888" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">/custom/MedicationRequest</text>
+<polyline points="750,945 750,980" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="630" y="980" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="750" y="1005" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">MedicationPullService</text>
+<text x="750" y="1033" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">Patient lookup, AQL query,</text>
+<text x="750" y="1058" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">mapping, FHIR bundle creation</text>
+<polyline points="750,1090 750,1125" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="630" y="1125" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="750" y="1150" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">EhrbaseHelper</text>
+<text x="750" y="1178" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">patientId → ehrId</text>
+<polyline points="750,1235 750,1270" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="630" y="1270" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="750" y="1295" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">EhrbaseMedication</text>
+<text x="750" y="1320" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">QueryClient</text>
+<text x="750" y="1348" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">Executes AQL query</text>
+<text x="750" y="1373" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">Applies lastUpdated filter</text>
+<polyline points="750,1380 750,1420" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<polyline points="750,1420 1050,1420" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)" stroke-dasharray="6 5"/>
+<text x="900.0" y="1408" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">AQL query</text>
+<polyline points="1050,1420 1050,1445" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="930" y="1445" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="1050" y="1470" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">EHRbase</text>
+<text x="1050" y="1498" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">Stored medication order</text>
+<text x="1050" y="1523" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">composition</text>
+<polyline points="1050,1555 1050,1595" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<polyline points="1050,1595 750,1595" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="900.0" y="1583" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">AQL rows</text>
+<polyline points="750,1595 750,1620" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="630" y="1620" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="750" y="1645" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">MedicationOrder</text>
+<text x="750" y="1670" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">AqlRowParser</text>
+<text x="750" y="1698" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">AQL row →</text>
+<text x="750" y="1723" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">MedicationOrderAqlRowDto</text>
+<polyline points="750,1730 750,1765" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="630" y="1765" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="750" y="1790" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">MedicationRequestMapper</text>
+<text x="750" y="1818" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">DTO → FHIR MedicationRequest</text>
+<polyline points="750,1875 750,1915" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<polyline points="750,1915 450,1915" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="600.0" y="1903" font-size="17" fill="#08776f" font-weight="400" text-anchor="middle">FHIR Bundle</text>
+<rect x="330" y="1700" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="450" y="1725" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">MedicationPullMapper</text>
+<text x="450" y="1753" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">FHIR Bundle →</text>
+<text x="450" y="1778" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">PullMedicationResponseDto</text>
+<polyline points="450,1915 450,1810" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<rect x="330" y="1490" width="240" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="450" y="1515" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">PullMedication</text>
+<text x="450" y="1540" font-size="18" fill="#172b44" font-weight="700" text-anchor="middle">ResponseDto</text>
+<text x="450" y="1568" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">patientId, pulledAt</text>
+<text x="450" y="1593" font-size="16" fill="#172b44" font-weight="400" text-anchor="middle">medications[]</text>
+<polyline points="450,1700 450,1600" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<polyline points="450,1490 450,1370 295,1370 295,250 270,250" fill="none" stroke="#08776f" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#pull)"/>
+<text x="375" y="1355" font-size="16" fill="#08776f" font-weight="400" text-anchor="middle">Response to Origo</text>
 </g></svg>

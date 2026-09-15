@@ -1,68 +1,77 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1030" viewBox="0 0 1200 1030" role="img" aria-labelledby="title desc">
-<title id="title">Push – implementert flyt</title><desc id="desc">Kilden sender treningsdata. Klienten validerer og mapper til FHIR før innsending til HAPI FHIR. HAPI FHIR lagrer; konfigurert Subscription videresender relevante ressurser. Bridge-laget mottar, fordeler, mapper og bygger openEHR mot template-struktur, finner eller oppretter EHR og lagrer gjennom EHRbase. Sluttresultatet verifiseres separat.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1740" viewBox="0 0 1200 1740" role="img" aria-labelledby="title desc">
+<title id="title">Push – implementert flyt</title><desc id="desc">Origo dashboard sender Game session data til PushController, PushService, GameSessionObservationMapper og HapiFhirClient. HAPI FHIR lagrer Observation og bruker Subscription callback til CustomController. ResourceRoutingService ruter til GameSessionResultObservationHandler, GameSessionResultObservationMapper og GameSessionResultCompositionBuilder. EhrbaseHelper lagrer openEHR composition i EHRbase.</desc>
 <defs>
 <marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
 <marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
 <marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
 </defs><g font-family="Arial, Helvetica, sans-serif">
-<rect width="1200" height="1030" rx="0" fill="#ffffff"/>
+<rect width="1200" height="1740" rx="0" fill="#ffffff"/>
 <text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Push – implementert flyt</text>
-<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Treningsdata inn · les fra øverst mot nederst</text>
-<rect x="20" y="110" width="1160" height="175" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
-<text x="38" y="139" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">Kilde og integrasjonsklient</text>
-<rect x="40" y="165" width="210" height="99" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
-<text x="145.0" y="194" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Kilde</text>
-<text x="145.0" y="221" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Treningsdata</text>
-<text x="145.0" y="246" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Pasienttilknytning</text>
-<rect x="330" y="165" width="220" height="99" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
-<text x="440.0" y="194" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">API / service</text>
-<text x="440.0" y="221" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Validerer input</text>
-<text x="440.0" y="246" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Koordinerer</text>
-<rect x="625" y="165" width="220" height="99" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
-<text x="735.0" y="194" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Mapper</text>
-<text x="735.0" y="221" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Input → FHIR</text>
-<rect x="930" y="165" width="230" height="99" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
-<text x="1045.0" y="194" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Adapter / klient</text>
-<text x="1045.0" y="221" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Sender FHIR</text>
-<polyline points="250,215 330,215" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<polyline points="550,215 625,215" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<polyline points="845,215 930,215" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<rect x="20" y="320" width="1160" height="125" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
-<text x="38" y="349" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">HAPI FHIR</text>
-<rect x="930" y="350" width="230" height="75" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
-<text x="1045.0" y="379" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Lagrer ressurs</text>
-<text x="1045.0" y="406" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">FHIR</text>
-<polyline points="1045,264 1045,350" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<rect x="20" y="490" width="1160" height="180" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
-<text x="38" y="519" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">Bridge- og mappinglag</text>
-<rect x="930" y="540" width="230" height="99" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
-<text x="1045.0" y="569" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Mottak / fordeling</text>
-<text x="1045.0" y="596" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Relevant hendelse</text>
-<rect x="635" y="540" width="230" height="99" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
-<text x="750.0" y="569" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Mapper</text>
-<text x="750.0" y="596" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Tolker FHIR-innhold</text>
-<rect x="335" y="540" width="230" height="99" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
-<text x="450.0" y="569" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Bygger composition</text>
-<text x="450.0" y="596" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">openEHR / template</text>
-<rect x="40" y="540" width="230" height="99" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
-<text x="155.0" y="569" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Repository-klient</text>
-<text x="155.0" y="596" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Finn / opprett EHR</text>
-<polyline points="1045,425 1045,540" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<text x="1060" y="477" font-size="17" fill="#a54b13" font-weight="400" text-anchor="start">Subscription</text>
-<polyline points="930,590 865,590" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<polyline points="635,590 565,590" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<polyline points="335,590 270,590" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<rect x="20" y="720" width="1160" height="145" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
-<text x="38" y="749" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">EHRbase</text>
-<rect x="40" y="765" width="300" height="80" rx="3" fill="#e5f3e5" stroke="#87919c" stroke-width="1.2"/>
-<text x="190.0" y="794" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Lagrer composition</text>
-<text x="190.0" y="821" font-size="18" fill="#172b44" font-weight="400" text-anchor="middle">Persistens i PostgreSQL</text>
-<polyline points="155,639 155,765" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
-<text x="173" y="695" font-size="17" fill="#a54b13" font-weight="400" text-anchor="start">openEHR</text>
-<text x="410" y="792" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Forutsetning: syntetisk pasient er opprettet før innsending.</text>
-<text x="410" y="822" font-size="18" fill="#526477" font-weight="400" text-anchor="start">HAPI FHIR lagrer også sine ressurser i PostgreSQL.</text>
-<rect x="20" y="920" width="1160" height="85" rx="3" fill="#f2f3f5" stroke="#87919c" stroke-width="1.2" stroke-dasharray="8 6"/>
-<text x="40" y="950" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">VERIFIKASJON · separat kontrollaktivitet</text>
-<text x="40" y="980" font-size="18" fill="#526477" font-weight="400" text-anchor="start">Kontroller FHIR-resultatet og lagret openEHR-innhold. API-kvittering er ikke bevis på fullført kjede.</text>
-<polyline points="190,845 190,920" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)" stroke-dasharray="6 5"/>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Treningsdata inn – les fra øverst mot nederst</text>
+<rect x="20" y="105" width="1160" height="530" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="38" y="134" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">Origo + Integration Client</text>
+<rect x="40" y="155" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="300" y="185" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">Origo dashboard</text>
+<text x="300" y="214" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Game session data</text>
+<rect x="640" y="155" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="900" y="185" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">PushController</text>
+<text x="900" y="214" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">POST /push/game-results</text>
+<polyline points="560,210 640,210" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="600" y="145" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">Game session data</text>
+<rect x="640" y="325" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="900" y="355" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">PushService</text>
+<text x="900" y="384" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Coordinates request</text>
+<polyline points="900,265 900,325" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<rect x="40" y="325" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="300" y="355" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">GameSessionObservationMapper</text>
+<text x="300" y="384" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">CreateGameSessionDTO → FHIR Observation</text>
+<polyline points="640,380 560,380" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<rect x="40" y="495" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="300" y="525" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">HapiFhirClient</text>
+<text x="300" y="554" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Post Observation</text>
+<polyline points="300,435 300,495" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<rect x="20" y="690" width="1160" height="190" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="38" y="719" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">HAPI FHIR</text>
+<rect x="40" y="740" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="300" y="770" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">HAPI FHIR</text>
+<text x="300" y="799" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Stores Observation, triggers subscription</text>
+<text x="300" y="824" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Observation?status=final</text>
+<polyline points="300,605 300,740" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="415" y="666" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">FHIR Observation</text>
+<rect x="20" y="940" width="1160" height="570" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="38" y="969" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">FHIR Bridge</text>
+<rect x="40" y="990" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="300" y="1020" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">CustomController</text>
+<text x="300" y="1049" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Receives Observation</text>
+<polyline points="300,850 300,990" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="430" y="917" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">Subscription callback</text>
+<rect x="640" y="990" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="900" y="1020" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">ResourceRoutingService</text>
+<text x="900" y="1049" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Routes Observation to matching handler</text>
+<polyline points="560,1045 640,1045" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<rect x="640" y="1170" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="900" y="1200" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">GameSessionResultObservationHandler</text>
+<text x="900" y="1229" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Coordinates map → build → post</text>
+<polyline points="900,1100 900,1170" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<rect x="40" y="1170" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="300" y="1200" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">GameSessionResultObservationMapper</text>
+<text x="300" y="1229" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">FHIR Observation → DTO</text>
+<polyline points="640,1225 560,1225" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<rect x="40" y="1350" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="300" y="1380" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">GameSessionResultCompositionBuilder</text>
+<text x="300" y="1409" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Builds openEHR composition</text>
+<text x="300" y="1434" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Aible_Game_Session_Result.v1</text>
+<polyline points="300,1280 300,1350" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<rect x="640" y="1350" width="520" height="110" rx="3" fill="#fff0df" stroke="#87919c" stroke-width="1.2"/>
+<text x="900" y="1380" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">EhrbaseHelper</text>
+<text x="900" y="1409" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">GET/create EHR</text>
+<text x="900" y="1434" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">POST composition</text>
+<polyline points="560,1405 640,1405" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<rect x="20" y="1570" width="1160" height="150" rx="3" fill="#f3f7fb" stroke="#87919c" stroke-width="1.2"/>
+<text x="38" y="1599" font-size="20" fill="#172b44" font-weight="700" text-anchor="start">EHRbase</text>
+<rect x="640" y="1605" width="520" height="110" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="900" y="1635" font-size="21" fill="#172b44" font-weight="700" text-anchor="middle">EHRbase</text>
+<text x="900" y="1664" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Stored openEHR composition</text>
+<polyline points="900,1460 900,1605" fill="none" stroke="#a54b13" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#push)"/>
+<text x="1015" y="1535" font-size="18" fill="#a54b13" font-weight="400" text-anchor="middle">Post composition</text>
 </g></svg>

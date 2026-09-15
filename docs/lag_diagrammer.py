@@ -204,74 +204,109 @@ def lane(y,h,title):
 
 
 def push_flow():
-    sheet("Push – implementert flyt", "Treningsdata inn · les fra øverst mot nederst", 1030,
-          "Kilden sender treningsdata. Klienten validerer og mapper til FHIR før innsending til HAPI FHIR. "
-          "HAPI FHIR lagrer; konfigurert Subscription videresender relevante ressurser. Bridge-laget mottar, fordeler, mapper og bygger openEHR "
-          "mot template-struktur, finner eller oppretter EHR og lagrer gjennom EHRbase. Sluttresultatet verifiseres separat.")
-    lane(110,175,"Kilde og integrasjonsklient")
-    for x,w,title,lines in [(40,210,"Kilde",["Treningsdata", "Pasienttilknytning"]),
-                           (330,220,"API / service",["Validerer input", "Koordinerer"]),
-                           (625,220,"Mapper",["Input → FHIR"]),
-                           (930,230,"Adapter / klient",["Sender FHIR"])]:
-        technical_box(x,165,w,99,title,lines,"#fff0df")
-    for a,b in [(250,330),(550,625),(845,930)]: arrow([(a,215),(b,215)],"push")
-    lane(320,125,"HAPI FHIR")
-    technical_box(930,350,230,75,"Lagrer ressurs",["FHIR"],"#fff0df")
-    arrow([(1045,264),(1045,350)],"push")
-    lane(490,180,"Bridge- og mappinglag")
-    for x,w,title,lines in [(930,230,"Mottak / fordeling",["Relevant hendelse"]),
-                           (635,230,"Mapper",["Tolker FHIR-innhold"]),
-                           (335,230,"Bygger composition",["openEHR / template"]),
-                           (40,230,"Repository-klient",["Finn / opprett EHR"] )]:
-        technical_box(x,540,w,99,title,lines,"#fff0df")
-    arrow([(1045,425),(1045,540)],"push")
-    text(1060,477,"Subscription",17,PUSH)
-    for a,b in [(930,865),(635,565),(335,270)]: arrow([(a,590),(b,590)],"push")
-    lane(720,145,"EHRbase")
-    technical_box(40,765,300,80,"Lagrer composition",["Persistens i PostgreSQL"],"#e5f3e5")
-    arrow([(155,639),(155,765)],"push")
-    text(173,695,"openEHR",17,PUSH)
-    text(410,792,"Forutsetning: syntetisk pasient er opprettet før innsending.",18,MUTED)
-    text(410,822,"HAPI FHIR lagrer også sine ressurser i PostgreSQL.",18,MUTED)
-    panel(20,920,1160,85,"#f2f3f5",dashed=True)
-    text(40,950,"VERIFIKASJON · separat kontrollaktivitet",19,weight=700)
-    text(40,980,"Kontroller FHIR-resultatet og lagret openEHR-innhold. API-kvittering er ikke bevis på fullført kjede.",18,MUTED)
-    arrow([(190,845),(190,920)],dashed=True)
+    sheet("Push – implementert flyt", "Treningsdata inn – les fra øverst mot nederst", 1740,
+          "Origo dashboard sender Game session data til PushController, PushService, GameSessionObservationMapper og HapiFhirClient. "
+          "HAPI FHIR lagrer Observation og bruker Subscription callback til CustomController. ResourceRoutingService ruter til "
+          "GameSessionResultObservationHandler, GameSessionResultObservationMapper og GameSessionResultCompositionBuilder. "
+          "EhrbaseHelper lagrer openEHR composition i EHRbase.")
+    def box(x,y,title,lines,fill="#fff0df"):
+        panel(x,y,520,110,fill)
+        centered(x+260,y+30,[title],21,700)
+        centered(x+260,y+59,lines,19)
+    def flow(points,label=None,lx=0,ly=0):
+        arrow(points,"push")
+        if label: text(lx,ly,label,18,PUSH,anchor="middle")
+    lane(105,530,"Origo + Integration Client")
+    box(40,155,"Origo dashboard",["Game session data"])
+    box(640,155,"PushController",["POST /push/game-results"])
+    flow([(560,210),(640,210)],"Game session data",600,145)
+    box(640,325,"PushService",["Coordinates request"])
+    flow([(900,265),(900,325)])
+    box(40,325,"GameSessionObservationMapper",["CreateGameSessionDTO → FHIR Observation"])
+    flow([(640,380),(560,380)])
+    box(40,495,"HapiFhirClient",["Post Observation"])
+    flow([(300,435),(300,495)])
+    lane(690,190,"HAPI FHIR")
+    box(40,740,"HAPI FHIR",["Stores Observation, triggers subscription","Observation?status=final"])
+    flow([(300,605),(300,740)],"FHIR Observation",415,666)
+    lane(940,570,"FHIR Bridge")
+    box(40,990,"CustomController",["Receives Observation"])
+    flow([(300,850),(300,990)],"Subscription callback",430,917)
+    box(640,990,"ResourceRoutingService",["Routes Observation to matching handler"])
+    flow([(560,1045),(640,1045)])
+    box(640,1170,"GameSessionResultObservationHandler",["Coordinates map → build → post"])
+    flow([(900,1100),(900,1170)])
+    box(40,1170,"GameSessionResultObservationMapper",["FHIR Observation → DTO"])
+    flow([(640,1225),(560,1225)])
+    box(40,1350,"GameSessionResultCompositionBuilder",["Builds openEHR composition","Aible_Game_Session_Result.v1"])
+    flow([(300,1280),(300,1350)])
+    box(640,1350,"EhrbaseHelper",["GET/create EHR","POST composition"])
+    flow([(560,1405),(640,1405)])
+    lane(1570,150,"EHRbase")
+    box(640,1605,"EHRbase",["Stored openEHR composition"],"#e7f4e9")
+    flow([(900,1460),(900,1605)],"Post composition",1015,1535)
     end("05-push.svg")
 
 
 def pull_flow():
-    sheet("Pull – implementert flyt", "Klinisk kontekst ut · stiplet forespørsel, heltrukket respons", 1080,
-          "Konsumenten ber om pasientens oppdateringer. Klienten validerer og sender til bridge-laget. "
-          "Bridge-laget koordinerer EHR-oppslag og tidsfiltrert AQL mot EHRbase. Resultatet parses og mappes til FHIR. "
-          "Klienten mapper til konsumentformat og returnerer data eller tom liste. Verifikasjon av utvalg og respons er separat.")
-    # Vertikale lanes viser ansvar; tiden går nedover.
-    centers=[140,440,740,1040]
-    for x,title,sub in [(20,"Konsument","Initierer"),(320,"Integrasjonsklient","Validerer / mapper"),
-                        (620,"Bridge / uthenting","Oppslag / mapping"),(920,"EHRbase","Klinisk repository")]:
-        panel(x,110,260,840,"#f3f7fb")
-        centered(x+130,145,[title,sub],19,700)
-    def step(col,y,lines):
-        panel(centers[col]-115,y,230,65,"#e7f4e9")
-        centered(centers[col],y+27,lines,17)
-    def message(a,b,y,label,request=False):
-        arrow([(centers[a],y),(centers[b],y)],"pull",dashed=request)
+    sheet("Pull – implementert flyt", "Klinisk kontekst ut – forespørsel og respons", 2060,
+          "Origo dashboard sender patientId + lastUpdatedAt til PullController, PullService og FhirBridgeClient. "
+          "MedicationPullController og MedicationPullService koordinerer EhrbaseHelper og EhrbaseMedicationQueryClient. "
+          "AQL rows fra EHRbase parses av MedicationOrderAqlRowParser til MedicationOrderAqlRowDto og mappes av "
+          "MedicationRequestMapper til FHIR MedicationRequest. FHIR Bundle returneres til MedicationPullMapper, "
+          "som lager PullMedicationResponseDto med patientId, pulledAt og medications[] til Origo.")
+    xs=[20,320,620,920]
+    centers=[150,450,750,1050]
+    for x,title in zip(xs,["Origo dashboard","Integration Client","FHIR Bridge","EHRbase"]):
+        panel(x,110,260,1910,"#f3f7fb")
+        centered(x+130,150,[title],21,700)
+    def box(col,y,title,lines):
+        x=xs[col]+10
+        panel(x,y,240,110,"#e7f4e9")
+        centered(x+120,y+25,title,18,700)
+        centered(x+120,y+28+25*len(title),lines,16)
+    def msg(a,b,y,label):
+        arrow([(centers[a],y),(centers[b],y)],"pull",dashed=a<b)
         text((centers[a]+centers[b])/2,y-12,label,17,PULL,anchor="middle")
-    step(0,195,["Ber om oppdateringer","Pasient og tidspunkt"])
-    message(0,1,295,"Forespørsel",True)
-    step(1,315,["Validerer forespørsel","Service / adapter"])
-    message(1,2,415,"Uthentingsbehov",True)
-    step(2,435,["Koordinerer oppslag","Finner pasientens EHR"])
-    message(2,3,535,"AQL / tidsfilter",True)
-    step(3,555,["Henter klinisk kontekst","Lagret openEHR"])
-    message(3,2,655,"Resultat fra repository")
-    step(2,675,["Parser resultatet","Mapper til FHIR"])
-    message(2,1,775,"FHIR-basert respons")
-    step(1,795,["Mapper til","konsumentformat"])
-    message(1,0,910,"Data eller tom liste")
-    panel(20,985,1160,70,"#f2f3f5",dashed=True)
-    text(40,1013,"VERIFIKASJON · riktig utvalg, tidsfilter, transformasjon og respons",19,weight=700)
-    text(40,1040,"Separate tester og API-/AQL-kontroller. Konsumenten styrer når den spør; ingen egen polling i klienten.",17,MUTED)
+    def down(col,a,b): arrow([(centers[col],a),(centers[col],b)],"pull")
+    box(0,195,["Origo dashboard"],["Requests medication updates"])
+    down(0,305,345)
+    msg(0,1,345,"patientId + lastUpdatedAt")
+    down(1,345,370)
+    box(1,370,["PullController"],["GET /pull/medications"])
+    down(1,480,515)
+    box(1,515,["PullService"],["Coordinates request"])
+    down(1,625,660)
+    box(1,660,["FhirBridgeClient"],["Request to FHIR Bridge"])
+    down(1,770,810)
+    msg(1,2,810,"patient + lastUpdatedAt")
+    down(2,810,835)
+    box(2,835,["MedicationPullController"],["/custom/MedicationRequest"])
+    down(2,945,980)
+    box(2,980,["MedicationPullService"],["Patient lookup, AQL query,","mapping, FHIR bundle creation"])
+    down(2,1090,1125)
+    box(2,1125,["EhrbaseHelper"],["patientId → ehrId"])
+    down(2,1235,1270)
+    box(2,1270,["EhrbaseMedication", "QueryClient"],["Executes AQL query","Applies lastUpdated filter"])
+    down(2,1380,1420)
+    msg(2,3,1420,"AQL query")
+    down(3,1420,1445)
+    box(3,1445,["EHRbase"],["Stored medication order","composition"])
+    down(3,1555,1595)
+    msg(3,2,1595,"AQL rows")
+    down(2,1595,1620)
+    box(2,1620,["MedicationOrder", "AqlRowParser"],["AQL row →","MedicationOrderAqlRowDto"])
+    down(2,1730,1765)
+    box(2,1765,["MedicationRequestMapper"],["DTO → FHIR MedicationRequest"])
+    down(2,1875,1915)
+    msg(2,1,1915,"FHIR Bundle")
+    # Responsen følger klientens venstre side oppover til konsumenten.
+    box(1,1700,["MedicationPullMapper"],["FHIR Bundle →","PullMedicationResponseDto"])
+    arrow([(450,1915),(450,1810)],"pull")
+    box(1,1490,["PullMedication", "ResponseDto"],["patientId, pulledAt","medications[]"])
+    arrow([(450,1700),(450,1600)],"pull")
+    arrow([(450,1490),(450,1370),(295,1370),(295,250),(270,250)],"pull")
+    text(375,1355,"Response to Origo",16,PULL,anchor="middle")
     end("06-pull.svg")
 
 
