@@ -131,44 +131,34 @@ Videre ville jeg prioritert bedre standardtilpasning av pull, automatisert E2E, 
 
 ## Case 2 – Etter 2–3 år som dataingeniør i NVE
 
-Hvis vi spoler 2–3 år fram, ser jeg for meg at jeg har utviklet en tydeligere dataingeniørprofil fra software- og integrasjonsbakgrunnen i Case 1. Tilbakeblikket nedenfor beskriver hva jeg håper å ha bidratt med og hvordan jeg har utviklet meg, ikke erfaring jeg allerede har.
+Hvis vi spoler 2–3 år fram, ser jeg for meg at jeg har utviklet en tydeligere dataingeniørprofil fra bakgrunnen i Case 1. Dette er et tenkt tilbakeblikk på hvordan jeg håper å ha utviklet meg og bidratt.
 
-![Min utviklingsreise i NVE: fra software- og integrasjonsbakgrunn via domene- og plattformlæring til selvstendig ansvar for større deler av dataprodukter.](docs/diagrammer/09-utviklingsreise-nve.svg)
+![Min utviklingsreise i NVE: fra software og integrasjon til større ansvar for dataprodukter.](docs/diagrammer/09-utviklingsreise-nve.svg)
 
 ### Utgangspunktet – software og integrasjon
 
-Jeg har en software- og integrasjonsprofil med Java, TypeScript, SQL/databaser, API-er, modellering, testing og grunnlag i CI/CD. Bachelorprosjektet ga erfaring med systemdesign og med å følge data fra input til lagring og konsumentrespons.
+Jeg kommer inn med erfaring i Java, TypeScript, SQL/databaser, API-er, modellering, testing og grunnlag i CI/CD. Styrken min er å forstå systemgrenser og dataflyt, feilsøke og verifisere det konsumenten får.
 
-Styrken jeg tar med er å dele en løsning i forståelige ansvar, undersøke feil og teste det mottakeren faktisk får. Jeg har samtidig mer å lære om dataplattformer, datamodellering for analyse og produksjonsdrift. Erfaringen fra en lokal PoC er et grunnlag å bygge videre på.
+Jeg har mer å lære om dataplattformer, datamodellering for analyse og produksjonsdrift.
 
-### Første tid – forstå domenet og arbeidsformen
+### Første tid – forstå domene og plattform
 
-Jeg ser for meg at den første tiden handlet om å forstå kildene, dataenes betydning, konsumentene og kvalitetskravene. Sammen med en erfaren kollega fulgte jeg et eksisterende dataprodukt gjennom arkitektur, eierskap, tester og drift.
+Den første tiden ser jeg for meg at jeg lærte kildene, dataenes betydning, brukerne og kvalitetskravene gjennom avgrensede leveranser med erfarne kolleger.
 
-Jeg startet med avgrensede endringer: forstå behovet, avtale forventet resultat, gjennomføre endringen og følge den helt ut til konsumenten. Slik lærte jeg teamets arbeidsform og hvordan kodegjennomgang, dokumentasjon og hendelseshåndtering fungerer i praksis.
-
-Gjennom konkrete oppgaver har jeg bygget mer dybde i **SQL og Python** og lært å bruke **dbt, Azure, Databricks og Airflow**. Dette er utviklingen jeg ser for meg, ikke verktøy jeg fremstiller meg som ekspert på i dag. Retningen samsvarer med [NVEs satsing på data og plattform](https://www.nve.no/om-nve/jobb-i-nve/bli-en-del-av-nves-satsing-paa-data-plattform-og-gis/). Teamets arkitektur og behov har styrt rekkefølgen på læringen.
+Jeg har fordypet meg i SQL og Python og lært dbt, Azure, Databricks og Airflow gjennom oppgaver. Dette er en [utviklingsretning i NVE](https://www.nve.no/om-nve/jobb-i-nve/bli-en-del-av-nves-satsing-paa-data-plattform-og-gis/), ikke ekspertise jeg har i dag.
 
 ### Gradvis mer ansvar – hele dataproduktets livsløp
 
-**Kilde → innhenting → transformasjon → modellering → datakvalitet → tilgjengeliggjøring → konsument → drift og overvåking.**
+![Dataproduktets livsløp, fra kilde til konsument og drift, støttet av testing, CI/CD, observability og dokumentasjon.](docs/diagrammer/10-dataprodukt-livslop.svg)
 
-Etter hvert har jeg tatt ansvar for større deler av leveranser gjennom denne kjeden, med faglige avklaringer og kodegjennomgang underveis. Jeg har bidratt til robuste dataflyter, forståelige modeller og dokumenterte kontrakter og avhengigheter, og brukt integrasjonsbakgrunnen min når eksterne kilder eller API-er inngår.
+Etter hvert har jeg tatt ansvar for større deler av kjeden: robuste dataflyter, forståelige modeller, testbare kvalitetsregler og tydelige kontrakter og avhengigheter.
 
-Et eksempel i dette scenarioet er en ny datakilde: Jeg har avklart hva en rad eller hendelse betyr, hvordan oppdateringer håndteres, og hva konsumenten forventer. Deretter har jeg gjort transformasjoner og kvalitetsregler testbare, dokumentert avvik og fulgt med på om dataene kommer frem som forventet.
-
-Jeg har også bidratt til automatisert testing, CI/CD og **observability** som gjør det mulig å oppdage forsinkelser, manglende data og feil. Dette har gjort det enklere for teamet å forstå og rette problemer, og for konsumentene å kjenne datagrunnlagets begrensninger.
+Integrasjonsbakgrunnen har vært nyttig med eksterne kilder og API-er. Testing, CI/CD og observability har gjort det lettere å oppdage feil, forsinkelser og manglende data.
 
 ### Etter 2–3 år – selvstendig med helhetsforståelse
 
-Etter 2–3 år ser jeg for meg at jeg har blitt en selvstendig dataingeniør som tar ansvar for større deler av et dataprodukt fra behov til drift, og vet når domeneeksperter og plattformkolleger bør involveres.
+Jeg ser for meg at jeg har blitt mer selvstendig fra behov til drift, med større dybde i datamodellering og dataplattform. Softwarebakgrunnen har blitt supplert med erfaring fra dataplattformen og med å holde dataflyter i drift. Jeg involverer domeneeksperter og plattformkolleger ved behov og bidrar til løsninger andre kan forstå, drifte og videreutvikle.
 
-Bidraget mitt har vært dataflyter som er enklere å vedlikeholde, tydeligere modeller og kvalitetskontroller, og dokumentasjon som andre kan bruke. Faglig har jeg utviklet dybde i plattformverktøyene, datamodellering og drift, samtidig som jeg har beholdt styrkene fra software engineering: systemgrenser, testing, feilsøking og integrasjon.
+Jeg har også blitt tryggere i teamet og i faglige og arkitekturmessige diskusjoner. Jeg deler det jeg kan og spør når jeg trenger andres kompetanse. Jeg vil være en kollega andre samarbeider godt med og stoler på.
 
-Jeg har deltatt i arkitekturdiskusjoner, begrunnet avveininger og delt kunnskap. Samarbeidet har gjort meg tryggere på egne vurderinger og hjulpet neste kollega med å forstå løsningene.
-
-### Team og samfunnsoppdrag
-
-NVE arbeider med blant annet energi, vassdrag og naturfare. I dette tilbakeblikket har jeg fått bedre forståelse for hvordan data brukes i fagområdene og hvem som er avhengig av dem. [NVEs samfunnsoppdrag](https://www.nve.no/om-nve/dette-er-nve/) gir en konkret grunn til å være opptatt av datakvalitet og tydelige begrensninger.
-
-Det motiverer meg å bygge løsninger der teknisk arbeid gir andre et mer pålitelig grunnlag for å gjøre jobben sin. Etter 2–3 år ser jeg for meg at jeg har koblet domeneforståelse og teknisk gjennomføring: forstått behovet, levert data som kan brukes, og tatt ansvar for at flyten fungerer over tid.
+[NVEs samfunnsoppdrag](https://www.nve.no/om-nve/dette-er-nve/) innen energi, vassdrag og naturfare gir arbeidet mening. Målet mitt er å bidra til et pålitelig datagrunnlag som andre kan bruke og stole på over tid.

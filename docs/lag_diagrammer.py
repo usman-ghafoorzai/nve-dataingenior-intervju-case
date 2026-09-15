@@ -1,4 +1,4 @@
-"""Lag ni selvstendige SVG-diagrammer fra sanitiserte begreper.
+"""Lag ti selvstendige SVG-diagrammer fra sanitiserte begreper.
 
 Krever bare Python 3. Ingen private filer eller nettverk brukes.
 """
@@ -345,6 +345,23 @@ def quality():
     end("08-datakvalitet.svg")
 
 
+def lifecycle():
+    sheet("Dataproduktets livsløp", "Gradvis ansvar for større deler av kjeden, en generell modell", 500,
+          "Kilde, innhenting, transformasjon, modellering, datakvalitet, tilgjengeliggjøring, konsument og drift og overvåking. "
+          "Testing, CI/CD, observability og dokumentasjon støtter arbeidet gjennom livsløpet. Dette er ikke NVEs interne arkitektur.")
+    labels=[["Kilde"],["Innhenting"],["Transformasjon"],["Modellering"],
+            ["Datakvalitet"],["Tilgjengeliggjøring"],["Konsument"],["Drift og overvåking"]]
+    xs=[30,330,630,930]
+    for i,lines in enumerate(labels):
+        x=xs[i%4];y=135 if i<4 else 295
+        concept(x,y,240,75,lines,"#eaf3ff" if i<4 else "#e7f4e9")
+        if i%4<3: arrow([(x+240,y+37),(x+300,y+37)])
+    arrow([(1050,210),(1050,252),(150,252),(150,295)])
+    panel(30,410,1140,65,"#f0eafa")
+    centered(600,437,["Testing, CI/CD, observability og dokumentasjon", "Støtter arbeidet gjennom livsløpet"],19)
+    end("10-dataprodukt-livslop.svg")
+
+
 if __name__ == "__main__":
     use_case()
     domain()
@@ -355,4 +372,5 @@ if __name__ == "__main__":
     organization()
     quality()
     journey()
-    print("Opprettet ni SVG-diagrammer i docs/diagrammer/.")
+    lifecycle()
+    print("Opprettet ti SVG-diagrammer i docs/diagrammer/.")

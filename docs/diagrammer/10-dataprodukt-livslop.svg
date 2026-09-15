@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+<title id="title">Dataproduktets livsløp</title><desc id="desc">Kilde, innhenting, transformasjon, modellering, datakvalitet, tilgjengeliggjøring, konsument og drift og overvåking. Testing, CI/CD, observability og dokumentasjon støtter arbeidet gjennom livsløpet. Dette er ikke NVEs interne arkitektur.</desc>
+<defs>
+<marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
+<marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
+<marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
+</defs><g font-family="Arial, Helvetica, sans-serif">
+<rect width="1200" height="500" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Dataproduktets livsløp</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Gradvis ansvar for større deler av kjeden, en generell modell</text>
+<rect x="30" y="135" width="240" height="75" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="150.0" y="179.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Kilde</text>
+<polyline points="270,172 330,172" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<rect x="330" y="135" width="240" height="75" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="450.0" y="179.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Innhenting</text>
+<polyline points="570,172 630,172" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<rect x="630" y="135" width="240" height="75" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="750.0" y="179.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Transformasjon</text>
+<polyline points="870,172 930,172" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<rect x="930" y="135" width="240" height="75" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="1050.0" y="179.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Modellering</text>
+<rect x="30" y="295" width="240" height="75" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="150.0" y="339.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Datakvalitet</text>
+<polyline points="270,332 330,332" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<rect x="330" y="295" width="240" height="75" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="450.0" y="339.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Tilgjengeliggjøring</text>
+<polyline points="570,332 630,332" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<rect x="630" y="295" width="240" height="75" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="750.0" y="339.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Konsument</text>
+<polyline points="870,332 930,332" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<rect x="930" y="295" width="240" height="75" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="1050.0" y="339.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Drift og overvåking</text>
+<polyline points="1050,210 1050,252 150,252 150,295" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<rect x="30" y="410" width="1140" height="65" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="600" y="437" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Testing, CI/CD, observability og dokumentasjon</text>
+<text x="600" y="462" font-size="19" fill="#172b44" font-weight="400" text-anchor="middle">Støtter arbeidet gjennom livsløpet</text>
+</g></svg>
