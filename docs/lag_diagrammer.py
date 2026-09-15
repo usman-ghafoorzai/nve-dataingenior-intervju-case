@@ -1,4 +1,4 @@
-"""Lag ti selvstendige SVG-diagrammer fra sanitiserte begreper.
+"""Lag elleve selvstendige SVG-diagrammer fra sanitiserte begreper.
 
 Krever bare Python 3. Ingen private filer eller nettverk brukes.
 """
@@ -362,6 +362,21 @@ def lifecycle():
     end("10-dataprodukt-livslop.svg")
 
 
+def development():
+    sheet("Tre sider av utviklingen", "Slik håper jeg å ha utviklet meg etter 2–3 år", 525,
+          "Faglig: lære plattformen, bli tryggere og jobbe mer selvstendig. Ansvar: fra avgrensede oppgaver til større leveranser og ansvar fra behov til drift. "
+          "Arbeidsmiljø: bli kjent med kollegene, bli en del av miljøet og bidra til trivsel og inkludere andre.")
+    rows=[(115,"FAGLIG",[["Lære plattformen"],["Bli tryggere"],["Jobbe mer","selvstendig"]],"#eaf3ff"),
+          (245,"ANSVAR",[["Avgrensede oppgaver"],["Større leveranser"],["Mer ansvar fra","behov til drift"]],"#f0eafa"),
+          (375,"ARBEIDSMILJØ",[["Bli kjent med","kollegene"],["Bli en del av miljøet"],["Bidra til trivsel","og inkludere andre"]],"#e7f4e9")]
+    for y,label,steps,fill in rows:
+        text(30,y+50,label,19,weight=700)
+        for x,lines in zip([240,570,900],steps): concept(x,y,270,95,lines,fill)
+        arrow([(510,y+47),(570,y+47)])
+        arrow([(840,y+47),(900,y+47)])
+    end("11-utvikling-faglig-ansvar-sosialt.svg")
+
+
 if __name__ == "__main__":
     use_case()
     domain()
@@ -373,4 +388,5 @@ if __name__ == "__main__":
     quality()
     journey()
     lifecycle()
-    print("Opprettet ti SVG-diagrammer i docs/diagrammer/.")
+    development()
+    print("Opprettet elleve SVG-diagrammer i docs/diagrammer/.")

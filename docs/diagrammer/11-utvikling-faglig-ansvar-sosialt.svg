@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="525" viewBox="0 0 1200 525" role="img" aria-labelledby="title desc">
+<title id="title">Tre sider av utviklingen</title><desc id="desc">Faglig: lære plattformen, bli tryggere og jobbe mer selvstendig. Ansvar: fra avgrensede oppgaver til større leveranser og ansvar fra behov til drift. Arbeidsmiljø: bli kjent med kollegene, bli en del av miljøet og bidra til trivsel og inkludere andre.</desc>
+<defs>
+<marker id="neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526477"/></marker>
+<marker id="push" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a54b13"/></marker>
+<marker id="pull" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#08776f"/></marker>
+</defs><g font-family="Arial, Helvetica, sans-serif">
+<rect width="1200" height="525" rx="0" fill="#ffffff"/>
+<text x="30" y="37" font-size="30" fill="#111111" font-weight="700" text-anchor="start">Tre sider av utviklingen</text>
+<text x="30" y="66" font-size="17" fill="#526477" font-weight="400" text-anchor="start">Slik håper jeg å ha utviklet meg etter 2–3 år</text>
+<text x="30" y="165" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">FAGLIG</text>
+<rect x="240" y="115" width="270" height="95" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="375.0" y="169.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Lære plattformen</text>
+<rect x="570" y="115" width="270" height="95" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="705.0" y="169.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Bli tryggere</text>
+<rect x="900" y="115" width="270" height="95" rx="3" fill="#eaf3ff" stroke="#87919c" stroke-width="1.2"/>
+<text x="1035.0" y="157.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Jobbe mer</text>
+<text x="1035.0" y="182.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">selvstendig</text>
+<polyline points="510,162 570,162" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<polyline points="840,162 900,162" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="30" y="295" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">ANSVAR</text>
+<rect x="240" y="245" width="270" height="95" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="375.0" y="299.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Avgrensede oppgaver</text>
+<rect x="570" y="245" width="270" height="95" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="705.0" y="299.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Større leveranser</text>
+<rect x="900" y="245" width="270" height="95" rx="3" fill="#f0eafa" stroke="#87919c" stroke-width="1.2"/>
+<text x="1035.0" y="287.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Mer ansvar fra</text>
+<text x="1035.0" y="312.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">behov til drift</text>
+<polyline points="510,292 570,292" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<polyline points="840,292 900,292" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<text x="30" y="425" font-size="19" fill="#172b44" font-weight="700" text-anchor="start">ARBEIDSMILJØ</text>
+<rect x="240" y="375" width="270" height="95" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="375.0" y="417.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Bli kjent med</text>
+<text x="375.0" y="442.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">kollegene</text>
+<rect x="570" y="375" width="270" height="95" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="705.0" y="429.5" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Bli en del av miljøet</text>
+<rect x="900" y="375" width="270" height="95" rx="3" fill="#e7f4e9" stroke="#87919c" stroke-width="1.2"/>
+<text x="1035.0" y="417.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">Bidra til trivsel</text>
+<text x="1035.0" y="442.0" font-size="20" fill="#172b44" font-weight="700" text-anchor="middle">og inkludere andre</text>
+<polyline points="510,422 570,422" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+<polyline points="840,422 900,422" fill="none" stroke="#526477" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#neutral)"/>
+</g></svg>

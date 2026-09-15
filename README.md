@@ -131,34 +131,32 @@ Videre ville jeg prioritert bedre standardtilpasning av pull, automatisert E2E, 
 
 ## Case 2 – Etter 2–3 år som dataingeniør i NVE
 
-Hvis vi spoler 2–3 år fram, ser jeg for meg at jeg har utviklet en tydeligere dataingeniørprofil fra bakgrunnen i Case 1. Dette er et tenkt tilbakeblikk på hvordan jeg håper å ha utviklet meg og bidratt.
+Hvis vi spoler 2–3 år fram, håper jeg å ha blitt sterkere faglig, fått mer ansvar og blitt en ordentlig del av miljøet i NVE.
 
-![Min utviklingsreise i NVE: fra software og integrasjon til større ansvar for dataprodukter.](docs/diagrammer/09-utviklingsreise-nve.svg)
+![Utviklingsreisen fra utgangspunktet, gjennom første tid i NVE, til mer selvstendig arbeid.](docs/diagrammer/09-utviklingsreise-nve.svg)
 
-### Utgangspunktet – software og integrasjon
+### Dette tar jeg med inn
 
-Jeg kommer inn med erfaring i Java, TypeScript, SQL/databaser, API-er, modellering, testing og grunnlag i CI/CD. Styrken min er å forstå systemgrenser og dataflyt, feilsøke og verifisere det konsumenten får.
+Jeg har software- og integrasjonsbakgrunn med Java, TypeScript, SQL/databaser, API-er og testing. Jeg er vant til å følge data gjennom systemer og feilsøke, men har mye å lære om dataplattform, datamodellering og drift.
 
-Jeg har mer å lære om dataplattformer, datamodellering for analyse og produksjonsdrift.
+### Første tid – lære NVE og bli en del av teamet
 
-### Første tid – forstå domene og plattform
+Jeg ser for meg å lære dataene, domenet og [plattformen](https://www.nve.no/om-nve/jobb-i-nve/bli-en-del-av-nves-satsing-paa-data-plattform-og-gis/) gjennom avgrensede oppgaver med erfarne kolleger. Jeg bygger videre på SQL og Python og lærer dbt, Azure, Databricks og Airflow i praksis.
 
-Den første tiden ser jeg for meg at jeg lærte kildene, dataenes betydning, brukerne og kvalitetskravene gjennom avgrensede leveranser med erfarne kolleger.
+Samtidig vil jeg bli kjent med folk, tørre å spørre når jeg ikke vet og ta imot tilbakemeldinger. Jeg vil delta både faglig og sosialt.
 
-Jeg har fordypet meg i SQL og Python og lært dbt, Azure, Databricks og Airflow gjennom oppgaver. Dette er en [utviklingsretning i NVE](https://www.nve.no/om-nve/jobb-i-nve/bli-en-del-av-nves-satsing-paa-data-plattform-og-gis/), ikke ekspertise jeg har i dag.
+### Etter hvert – mer ansvar
 
-### Gradvis mer ansvar – hele dataproduktets livsløp
+![Dataproduktets livsløp, fra kilde til konsument og drift.](docs/diagrammer/10-dataprodukt-livslop.svg)
 
-![Dataproduktets livsløp, fra kilde til konsument og drift, støttet av testing, CI/CD, observability og dokumentasjon.](docs/diagrammer/10-dataprodukt-livslop.svg)
+Etter hvert håper jeg å kunne følge større deler av en dataflyt helt fram til dem som trenger dataene. Erfaringen med integrasjoner og feilsøking gir meg noe å bygge videre på.
 
-Etter hvert har jeg tatt ansvar for større deler av kjeden: robuste dataflyter, forståelige modeller, testbare kvalitetsregler og tydelige kontrakter og avhengigheter.
+### Etter 2–3 år – tryggere og en del av miljøet
 
-Integrasjonsbakgrunnen har vært nyttig med eksterne kilder og API-er. Testing, CI/CD og observability har gjort det lettere å oppdage feil, forsinkelser og manglende data.
+![Tre sider av utviklingen: faglig trygghet, større ansvar og å bli en del av arbeidsmiljøet og inkludere andre.](docs/diagrammer/11-utvikling-faglig-ansvar-sosialt.svg)
 
-### Etter 2–3 år – selvstendig med helhetsforståelse
+Jeg håper å kunne ta større oppgaver fra behov til løsning og drift, gjøre egne vurderinger og vite når jeg trenger hjelp.
 
-Jeg ser for meg at jeg har blitt mer selvstendig fra behov til drift, med større dybde i datamodellering og dataplattform. Softwarebakgrunnen har blitt supplert med erfaring fra dataplattformen og med å holde dataflyter i drift. Jeg involverer domeneeksperter og plattformkolleger ved behov og bidrar til løsninger andre kan forstå, drifte og videreutvikle.
+Jeg håper også å kjenne kollegene godt, delta på sosiale ting og bidra til at det er hyggelig å komme på jobb. Da vil jeg gjerne hjelpe nye kolleger inn i miljøet, og være en folk både jobber godt med og trives sammen med.
 
-Jeg har også blitt tryggere i teamet og i faglige og arkitekturmessige diskusjoner. Jeg deler det jeg kan og spør når jeg trenger andres kompetanse. Jeg vil være en kollega andre samarbeider godt med og stoler på.
-
-[NVEs samfunnsoppdrag](https://www.nve.no/om-nve/dette-er-nve/) innen energi, vassdrag og naturfare gir arbeidet mening. Målet mitt er å bidra til et pålitelig datagrunnlag som andre kan bruke og stole på over tid.
+[NVEs arbeid](https://www.nve.no/om-nve/dette-er-nve/) med energi, vassdrag og naturfare gir dette mening. Jeg vil bidra til data andre kan stole på.
