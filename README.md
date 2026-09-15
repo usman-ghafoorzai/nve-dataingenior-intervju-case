@@ -29,11 +29,7 @@ Handlingene gjelder en pasient, treningsøkter og klinisk kontekst. **Pull hente
 
 ![Domene: pasient, treningsøkt, treningsdata og klinisk kontekst med sine relasjoner.](docs/diagrammer/02-domene.svg)
 
-### Informasjonsflyt – fra opprinnelse til bruk
-
-![Informasjonsflyt: treningsdata går inn til EPJ; en forespørsel utløser klinisk kontekst tilbake til konsumenten.](docs/diagrammer/03-informasjonsflyt.svg)
-
-Flytene ga fire sentrale krav: validere input, transformere representasjoner, gjøre sluttresultatet etterprøvbart og ha et testbart, repeterbart miljø. Arkitekturen måtte fordele disse oppgavene mellom komponentene.
+Nå har vi sett hva slags data vi snakker, neste steg er hvordan vi løste det teknisk. 
 
 ### Implementert løsning og teknologier
 
